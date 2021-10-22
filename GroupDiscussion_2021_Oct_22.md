@@ -25,7 +25,7 @@
 
 # Game Concepts and Project Content
 
-Game specific
+## Game specific
 - Top-down Classic JRPG (e.g. Pokemon, Final Fantasy, Undertale)
 - 4 directions (+ diagonals = 8)
 - Encounters in map ("A wild <something> appeared")
