@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: grass-sand-oben-links
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: c8aae5fb34307e246a76b40ba73bd564, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6c5038218ff74f4ba72c88afe329ec6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

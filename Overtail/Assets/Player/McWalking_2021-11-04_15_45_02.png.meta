@@ -1,34 +1,22 @@
 fileFormatVersion: 2
-guid: d80c70fd537487849b8f9ddc1e916b6c
+guid: 282d3a8650b7f0d4f88c5219530b299a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3601974716605634016
-    second: McWalking_0
+      213: -5700291211426869653
+    second: McWalking_2021-11-04_15_45_02_0
   - first:
-      213: 4979579799056972228
-    second: McWalking_1
+      213: -6671717060080635075
+    second: McWalking_2021-11-04_15_45_02_1
   - first:
-      213: 5797241142515837652
-    second: McWalking_2
+      213: -9087302168218149676
+    second: McWalking_2021-11-04_15_45_02_2
   - first:
-      213: 5626579191828992054
-    second: McWalking_3
+      213: 8820344243392468380
+    second: McWalking_2021-11-04_15_45_02_3
   - first:
-      213: -2227245675658746436
-    second: McWalking_4
-  - first:
-      213: -558075350135612128
-    second: McWalking_5
-  - first:
-      213: 1721849350468186668
-    second: McWalking_6
-  - first:
-      213: 7926919799974632643
-    second: McWalking_7
-  - first:
-      213: 3547256808291355959
-    second: McWalking_8
+      213: 1704212055121459275
+    second: McWalking_2021-11-04_15_45_02_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -59,7 +47,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -95,7 +83,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -107,7 +95,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -118,70 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: McWalking_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02a68ce4417330ec0800000000000000
-      internalID: -3601974716605634016
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: McWalking_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 64
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4c9708db1750b1540800000000000000
-      internalID: 4979579799056972228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: McWalking_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4daafe0aa10f37050800000000000000
-      internalID: 5797241142515837652
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: McWalking_3
+      name: McWalking_2021-11-04_15_45_02_0
       rect:
         serializedVersion: 2
         x: 0
@@ -195,14 +120,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 630529dc6ff951e40800000000000000
-      internalID: 5626579191828992054
+      spriteID: b6ece9a385f74e0b0800000000000000
+      internalID: -5700291211426869653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: McWalking_4
+      name: McWalking_2021-11-04_15_45_02_1
       rect:
         serializedVersion: 2
         x: 16
@@ -216,14 +141,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb5e5d2cbdb3711e0800000000000000
-      internalID: -2227245675658746436
+      spriteID: d33faff9eac4963a0800000000000000
+      internalID: -6671717060080635075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: McWalking_5
+      name: McWalking_2021-11-04_15_45_02_2
       rect:
         serializedVersion: 2
         x: 32
@@ -237,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 02dd3450d615148f0800000000000000
-      internalID: -558075350135612128
+      spriteID: 4dc58b813da63e180800000000000000
+      internalID: -9087302168218149676
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: McWalking_6
+      name: McWalking_2021-11-04_15_45_02_3
       rect:
         serializedVersion: 2
         x: 0
@@ -258,14 +183,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c22b46b8cdc35e710800000000000000
-      internalID: 1721849350468186668
+      spriteID: c95d1107b58286a70800000000000000
+      internalID: 8820344243392468380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: McWalking_7
+      name: McWalking_2021-11-04_15_45_02_4
       rect:
         serializedVersion: 2
         x: 16
@@ -279,29 +204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3cc9f783f83120e60800000000000000
-      internalID: 7926919799974632643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: McWalking_8
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 73dca41e5436a3130800000000000000
-      internalID: 3547256808291355959
+      spriteID: b48f377b5d396a710800000000000000
+      internalID: 1704212055121459275
       vertices: []
       indices: 
       edges: []
