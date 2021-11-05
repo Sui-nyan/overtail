@@ -224,8 +224,13 @@ build-StandaloneWindows64:
 
 workflow:
   rules:
-    - if: $CI_MERGE_REQUEST_ID
-      when: never
-    - if: $CI_COMMIT_TAG
-      when: never
-    - when: always
+    # - if: $CI_MERGE_REQUEST_ID
+    #   when: never
+    # - if: $CI_COMMIT_TAG
+    #   when: never
+    - changes:
+      - Overtail/**/*
+    - if: $CI_DEFAULT_BRANCH == $CI_COMMIT_BRANCH
+      when: always
+    - if: $CI_DEFAULT_BRANCH == $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+      when: always
