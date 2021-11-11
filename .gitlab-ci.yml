@@ -220,7 +220,7 @@ build-StandaloneWindows64:
 #     paths:
 #       - public
 #   only:
-#    - master
+#    - main
 
 workflow:
   rules:
@@ -234,3 +234,4 @@ workflow:
       when: always
     - if: $CI_DEFAULT_BRANCH == $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
       when: always
+    - when: never
