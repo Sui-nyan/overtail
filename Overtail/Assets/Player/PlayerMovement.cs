@@ -2,18 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO remove unused methods
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementFix : MonoBehaviour
 {
-    private float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     public Rigidbody2D rb;
-    private Vector2 movement;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    public Vector2 movement;
 
     // Update is called once per frame
     void Update()
@@ -25,6 +18,6 @@ public class PlayerMovement : MonoBehaviour
     // FixedUpdate is called 50 times per second
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);      // fixedDeltaTime == time since last function call
+        rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);      // fixedDeltaTime == time since last function call
     }
 }
