@@ -238,9 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a850a9aa7cfeec24a8eb1ff203cec83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 5
   rb: {fileID: 1487686182}
   movement: {x: 0, y: 0}
+  animator: {fileID: 1487686183}
 --- !u!50 &1487686182
 Rigidbody2D:
   serializedVersion: 4
