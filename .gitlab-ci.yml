@@ -230,7 +230,7 @@ workflow:
     #   when: never
     - changes:
       - Overtail/**/*
-    - if: $CI_DEFAULT_BRANCH == $CI_COMMIT_BRANCH
+    - if: '"main" == $CI_COMMIT_BRANCH'
       when: always
-    - if: $CI_DEFAULT_BRANCH == $CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+    - if: '"main" == $CI_MERGE_REQUEST_TARGET_BRANCH_NAME'
       when: always
