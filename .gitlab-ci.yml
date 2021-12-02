@@ -231,7 +231,5 @@ workflow:
     - changes:
       - Overtail/**/*
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: always
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
-      when: always
     - when: never
