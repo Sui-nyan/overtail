@@ -220,7 +220,7 @@ build-StandaloneWindows64:
 #     paths:
 #       - public
 #   only:
-#    - master
+#    - main
 
 workflow:
   rules:
