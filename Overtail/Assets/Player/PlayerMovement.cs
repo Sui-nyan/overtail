@@ -26,6 +26,16 @@ public class PlayerMovement : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
         if (movement.x != 0 || movement.y != 0) {
+            if (movement.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            if (movement.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
             animator.SetBool("isWalking", true);
             rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
         } else {
