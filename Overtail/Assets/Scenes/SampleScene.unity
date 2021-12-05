@@ -206,6 +206,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &877868440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 877868442}
+  - component: {fileID: 877868441}
+  m_Layer: 0
+  m_Name: EncounterSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &877868441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877868440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2ae3793546d47419332f5b93c97717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerGO: {fileID: 1487686180}
+  state: {fileID: 11400000, guid: b58e9d8de10137f4fad8b3fdb0a37090, type: 2}
+  DistanceCap: 15
+--- !u!4 &877868442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877868440}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.43104824, y: -0.13557285, z: -2.2286544}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1487686180
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +266,7 @@ GameObject:
   - component: {fileID: 1487686182}
   - component: {fileID: 1487686181}
   m_Layer: 0
-  m_Name: McWalking
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,6 +288,7 @@ MonoBehaviour:
   rb: {fileID: 1487686182}
   movement: {x: 0, y: 0}
   animator: {fileID: 1487686183}
+  state: {fileID: 11400000, guid: e599c9b4440cd8748adffb85f1dd47c2, type: 2}
 --- !u!50 &1487686182
 Rigidbody2D:
   serializedVersion: 4

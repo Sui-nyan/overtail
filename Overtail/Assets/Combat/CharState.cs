@@ -9,8 +9,11 @@ public class CharState : ScriptableObject
     public int level;
     public int maxHP;
     public int currentHP;
-    public float[] position = new float[2];
-    public GameObject characterGO; //?
+    public Vector3 position;
 
+    public void UpdatePosition(Vector3 vec)
+    {
+        position = vec;
+    }
 
 }

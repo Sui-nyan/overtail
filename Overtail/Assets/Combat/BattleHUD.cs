@@ -10,6 +10,7 @@ public class BattleHUD : MonoBehaviour
 
     public void SetHUD(Unit unit)
     {
+
         Debug.Log(unit);
         nameText.text = unit.name;
         levelText.text = "Lvl " + unit.level;

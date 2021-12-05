@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 
 // Credits to Brackeys - https://www.youtube.com/watch?v=_1pz_ohupPs 
 public class BattleSystem : MonoBehaviour
 {
     BattleState state;
+
+    public CharState playerState;
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
 
@@ -23,10 +25,13 @@ public class BattleSystem : MonoBehaviour
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
 
+    public CharState characterState;
+
     // Start is called before the first frame update
     void Start()
     {
         state = BattleState.START;
+        Debug.Log(playerState.position);
         StartCoroutine(SetupBattle());
     }
 
@@ -34,12 +39,17 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
         playerUnit = playerGO.GetComponent<Unit>();
-        
+
+        {
+            playerUnit.currentHP = playerState.currentHP;
+            playerUnit.maxHP = playerState.maxHP;
+            playerUnit.level = playerState.level;
+        }
+
         GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
         enemyUnit = enemyGO.GetComponent<Unit>();
 
         dialogue.text = playerUnit.name + " vs. " + enemyUnit.name;
-        Debug.Log(playerUnit);
         playerHUD.SetHUD(playerUnit);
         enemyHUD.SetHUD(enemyUnit);
 
@@ -62,7 +72,6 @@ public class BattleSystem : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        
         if (isDead)
         {
             state = BattleState.WON;
@@ -81,6 +90,13 @@ public class BattleSystem : MonoBehaviour
             dialogue.text = "You won.";
         else
             dialogue.text = "You didnt win";
+
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void _ENDBATTLE()
+    {
+        EndBattle();
     }
 
     void PlayerTurn()
