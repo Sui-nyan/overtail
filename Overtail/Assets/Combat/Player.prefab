@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5259660652032446240}
-  - component: {fileID: 5259660652032446241}
+  - component: {fileID: -6839073226635434990}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5259660652032446241
+--- !u!114 &-6839073226635434990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259e807bc0835204382609ec69476fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: PlayerPrefabName
-  level: 7
-  attack: 3
-  maxHP: 30
-  currentHP: 30
+  name: 
+  level: 0
+  exp: 0
+  attack: 0
+  maxHP: 0
+  currentHP: 0
 --- !u!1 &5259660652136119356
 GameObject:
   m_ObjectHideFlags: 0

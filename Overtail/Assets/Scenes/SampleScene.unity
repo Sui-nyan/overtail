@@ -232,12 +232,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 877868440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2ae3793546d47419332f5b93c97717, type: 3}
+  m_Script: {fileID: 11500000, guid: 206dd5947a8f00846bfba596a1bb553b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerGO: {fileID: 1487686180}
-  state: {fileID: 11400000, guid: b58e9d8de10137f4fad8b3fdb0a37090, type: 2}
-  DistanceCap: 15
+  setup: {fileID: 11400000, guid: e2b024582a8cd9a49ad9f659cffc2ddf, type: 2}
+  PlayerInfo: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
+  enemyPre: {fileID: 0}
+  DistanceCap: 5
+  spawnables:
+  - {fileID: 1735059968253583550, guid: 79167337f583e394c9d5f08639b426d1, type: 3}
 --- !u!4 &877868442
 Transform:
   m_ObjectHideFlags: 0
@@ -288,7 +292,7 @@ MonoBehaviour:
   rb: {fileID: 1487686182}
   movement: {x: 0, y: 0}
   animator: {fileID: 1487686183}
-  state: {fileID: 11400000, guid: e599c9b4440cd8748adffb85f1dd47c2, type: 2}
+  playerStatus: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
 --- !u!50 &1487686182
 Rigidbody2D:
   serializedVersion: 4

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 338202084267771500}
   - component: {fileID: 338202084267771501}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: EnemyBasePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,11 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259e807bc0835204382609ec69476fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: EnemyPrefabName
-  level: 5
-  attack: 3
-  maxHP: 30
-  currentHP: 30
+  name: EnemyBasePrefab
+  level: 1
+  exp: 0
+  attack: 5
+  maxHP: 20
+  currentHP: 20
 --- !u!1 &338202084379833712
 GameObject:
   m_ObjectHideFlags: 0

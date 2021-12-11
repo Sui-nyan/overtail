@@ -10,44 +10,37 @@ public class BattleSystem : MonoBehaviour
 {
     BattleState state;
 
-    public CharState playerState;
-    public GameObject playerPrefab;
-    public GameObject enemyPrefab;
+    public BattleSetup battleSetup;
 
-    public Transform playerStation;
-    public Transform enemyStation;
-
-    Unit playerUnit;
-    Unit enemyUnit;
-
-    public Text dialogue;
+    public GameObject playerPrefab_unused;
+    public GameObject enemyPrefab_unused;
 
     public BattleHUD playerHUD;
     public BattleHUD enemyHUD;
 
-    public CharState characterState;
+    public Transform playerStation;
+    public Transform enemyStation;
 
-    // Start is called before the first frame update
+    BattleUnit playerUnit;
+    BattleUnit enemyUnit;
+
+    public Text dialogue;
+
     void Start()
     {
         state = BattleState.START;
-        Debug.Log(playerState.position);
         StartCoroutine(SetupBattle());
     }
 
     IEnumerator SetupBattle()
     {
-        GameObject playerGO = Instantiate(playerPrefab, playerStation);
-        playerUnit = playerGO.GetComponent<Unit>();
+        GameObject playerGO = Instantiate(battleSetup.playerPrefab, playerStation);
+        playerUnit = playerGO.GetComponent<BattleUnit>();
 
-        {
-            playerUnit.currentHP = playerState.currentHP;
-            playerUnit.maxHP = playerState.maxHP;
-            playerUnit.level = playerState.level;
-        }
+        playerUnit.Load(battleSetup.playerStats);
 
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
-        enemyUnit = enemyGO.GetComponent<Unit>();
+        GameObject enemyGO = Instantiate(battleSetup.enemyPrefab, enemyStation);
+        enemyUnit = enemyGO.GetComponent<BattleUnit>();
 
         dialogue.text = playerUnit.name + " vs. " + enemyUnit.name;
         playerHUD.SetHUD(playerUnit);
@@ -84,6 +77,22 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    IEnumerator EnemyTurn()
+    {
+        //...
+        yield return new WaitForSeconds(2f);
+        if (false) //player is dead, NEVER WHAHAHAAHAHA, GODMODE ACTIVATED
+        {
+            state = BattleState.LOST;
+            EndBattle();
+        }
+
+        if (state == BattleState.ENEMYTURN)
+        {
+            PlayerTurn();
+        }
+    }
+
     void EndBattle()
     {
         if (state == BattleState.WON)
@@ -96,6 +105,7 @@ public class BattleSystem : MonoBehaviour
 
     public void _ENDBATTLE()
     {
+        playerUnit.Save(battleSetup.playerStats);
         EndBattle();
     }
 

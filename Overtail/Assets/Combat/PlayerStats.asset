@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0abf74279ab66b4cbb777a8abfc696e, type: 3}
-  m_Name: CharStateData
+  m_Script: {fileID: 11500000, guid: 45ba931394864f2469489545b7554d00, type: 3}
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  name: Whooper
-  level: 5
-  maxHP: 30
-  currentHP: 30
-  position:
-  - 0
-  - 0
-  characterGO: {fileID: 0}
+  name: McWhopper
+  level: 6
+  exp: 0
+  maxHP: 5
+  currentHP: 5
+  position: {x: 1.5564942, y: 1.312131, z: 0}
