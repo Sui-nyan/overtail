@@ -7,15 +7,13 @@ public class EncounterSystem : MonoBehaviour
 {
     public GameObject playerGO;
     public BattleSetup setup;
-    public PlayerStats PlayerInfo;
 
-    public float DistanceCap = 10f;
+    public float maxWalkingDistance = 10f;
     float walkedDistance = 0f;
     float cumulativeTime = 0f;
 
     public int minLevel = 1;
     public int maxLevel = 99;
-
 
     public List<EnemyEncounter> spawnableEnemies = new List<EnemyEncounter>();
 
@@ -23,7 +21,7 @@ public class EncounterSystem : MonoBehaviour
     private void Start()
     {
         playerMovement = playerGO.GetComponent<PlayerMovement>();
-        setup.playerStats = playerMovement.playerStatus;
+        setup.playerStats = playerMovement.playerStatus; // get here or manually prepare beforehand
     }
 
     void Update()
@@ -46,11 +44,10 @@ public class EncounterSystem : MonoBehaviour
 
     bool encounterFormula()
     {
-        // whatever
-        return walkedDistance > DistanceCap; // return Random.value * 0.5 + walkedDistance / DistanceCap > 1;
+        return walkedDistance > maxWalkingDistance; // return Random.value * 0.5 + walkedDistance / DistanceCap > 1;
     }
 
-    void StartEncounter()
+    /*IEnumerator*/ void StartEncounter()
     {
         Debug.Log("<Random Encounter!>");
         SetRandomEnemy();
@@ -71,16 +68,16 @@ public class EncounterSystem : MonoBehaviour
         var e = setup.enemyPrefab.GetComponent<BattleUnit>();
         var encounter = spawnableEnemies[rnd];
         e.name = encounter.placeholderString != "" ? encounter.placeholderString : e.name; // placeholder example
-        e.level = encounter.overwriteRandomLevel > 0 ? encounter.overwriteRandomLevel : UnityEngine.Random.Range(minLevel, maxLevel + 1);
+        e.level = encounter.levelOverride > 0 ? encounter.levelOverride : UnityEngine.Random.Range(minLevel, maxLevel + 1);
     }
 }
 
 [System.Serializable]
 public class EnemyEncounter
 {
-    public GameObject enemyPrefab;
     public string placeholderString;
-    public int overwriteRandomLevel;
+    public GameObject enemyPrefab;
+    public int levelOverride;
     public int weightedProbability;
 }
 
