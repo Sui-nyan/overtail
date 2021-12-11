@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b4c4fe5f76e9d84483c4836bb1be2ae, type: 3}
-  m_Name: 
+  m_Name: BattleSetup
   m_EditorClassIdentifier: 
-  playerStatus: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
+  playerStats: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
+  playerPrefab: {fileID: 5259660652032446243, guid: 7274430f9b1fdb543b43fa543b1292f9, type: 3}
   enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}

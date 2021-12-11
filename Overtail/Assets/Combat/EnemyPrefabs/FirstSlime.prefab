@@ -53,11 +53,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 338202084267771501, guid: e043c29120baa294b9b310fde57b8143, type: 3}
       propertyPath: name
-      value: Enemy12
+      value: Small Green Slime
+      objectReference: {fileID: 0}
+    - target: {fileID: 338202084267771501, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+      propertyPath: level
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 338202084267771501, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+      propertyPath: attack
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
       propertyPath: m_Name
-      value: Slime1
+      value: FirstSlime
       objectReference: {fileID: 0}
     - target: {fileID: 338202084379833718, guid: e043c29120baa294b9b310fde57b8143, type: 3}
       propertyPath: m_Color.b

@@ -307,8 +307,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34.541, y: 18.08}
-  m_SizeDelta: {x: 112.15, y: 16.624}
+  m_AnchoredPosition: {x: -22.786, y: 7.82}
+  m_SizeDelta: {x: 135.66, y: 37.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &256408005
 MonoBehaviour:
@@ -1754,15 +1754,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46913be14272d841a6d4c05ee6070ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInfo: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
-  playerPrefab: {fileID: 5259660652032446243, guid: 7274430f9b1fdb543b43fa543b1292f9, type: 3}
-  enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+  battleSetup: {fileID: 11400000, guid: e2b024582a8cd9a49ad9f659cffc2ddf, type: 2}
+  playerPrefab_unused: {fileID: 0}
+  enemyPrefab_unused: {fileID: 0}
+  playerHUD: {fileID: 849414260}
+  enemyHUD: {fileID: 1449386911}
   playerStation: {fileID: 1929546384}
   enemyStation: {fileID: 1202270077}
   dialogue: {fileID: 1854852741}
-  playerHUD: {fileID: 849414260}
-  enemyHUD: {fileID: 1449386911}
-  battleSetup: {fileID: 11400000, guid: e2b024582a8cd9a49ad9f659cffc2ddf, type: 2}
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0
@@ -2307,8 +2306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67.83, y: 18.08}
-  m_SizeDelta: {x: 45.5711, y: 16.6242}
+  m_AnchoredPosition: {x: 166.47, y: 13.196}
+  m_SizeDelta: {x: 242.86, y: 26.392}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925625647
 MonoBehaviour:

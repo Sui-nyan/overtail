@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isWalking", true);
             rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
             playerStatus.SetPosition(transform.localPosition);
-            Debug.Log(playerStatus.position);
         } else {
             IsMoving = false;
             animator.SetBool("isWalking", false);
