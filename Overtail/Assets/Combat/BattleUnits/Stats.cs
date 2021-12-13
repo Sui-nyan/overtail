@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+
+/// <summary>
+/// Combat related stats encapsulated into seperate class
+/// Redundant if we only have too little different stats.
+/// </summary>
 [System.Serializable]
 public class Stats
 {
-    //public int level;
     public int ATK;
     public int DEF;
     public int HP;
@@ -14,7 +18,6 @@ public class Stats
         Stats total = new Stats();
 
         // Base Scaling
-        //total.level = level;
         total.ATK = baseStats.ATK + level;
         total.DEF = baseStats.DEF + level;
         total.HP = baseStats.HP + level * 10;
@@ -58,7 +61,6 @@ public class Stats
     {
         Stats sum = new Stats();
 
-        //sum.level = a.level + b.level;
         sum.ATK = a.ATK + b.ATK;
         sum.DEF = a.DEF + b.DEF;
         sum.HP = a.HP + b.HP;

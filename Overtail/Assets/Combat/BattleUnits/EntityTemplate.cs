@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+
+/// <summary>
+/// Base class to define Monsters, NPCs (and main character)
+/// Base stats to define their strengths and dynamically scale with with levels depending on progress
+/// </summary>
 [System.Serializable]
 public class EntityTemplate // : ScriptableObject if other stats, like love/affection
 {

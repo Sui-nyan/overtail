@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+
+/// <summary>
+/// Class to generate a random encounter and transition into battle.
+/// Attach to any GameObject.
+/// </summary>
 public class EncounterSystem : MonoBehaviour
 {
     public GameObject playerGO;

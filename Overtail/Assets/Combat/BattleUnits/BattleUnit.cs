@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+/// <summary>
+/// Main class for characters participating in combat.
+/// Main Interface to the battle system and vice versa.
+/// </summary>
 public class BattleUnit : MonoBehaviour
 {
     [SerializeField] private EntityTemplate baseUnit;

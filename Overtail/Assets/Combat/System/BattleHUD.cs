@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+
+/// <summary>
+/// Class managing HUDs in battle.
+/// Attach to parent HUD object.
+/// </summary>
 public class BattleHUD : MonoBehaviour
 {
     public Text nameText;

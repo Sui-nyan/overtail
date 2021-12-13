@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+
+/// <summary>
+/// Equpment definition. Probably inherits from `class Item` later.
+/// </summary>
 [CreateAssetMenu(fileName = "equipment_generic", menuName = "Create Equipment/generic")]
 public class Equipment : ScriptableObject
 {

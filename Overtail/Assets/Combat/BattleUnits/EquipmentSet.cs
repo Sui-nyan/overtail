@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Encapsulated whole equipment set for more compact method calls
+/// </summary>
+
 [System.Serializable]
 public class EquipmentSet
 {

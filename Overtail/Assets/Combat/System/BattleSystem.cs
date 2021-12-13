@@ -8,6 +8,11 @@ public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST }
 // Credits to Brackeys - https://www.youtube.com/watch?v=_1pz_ohupPs 
 
 
+/// <summary>
+/// Overarching system for Battle Scenes.
+/// Logical main entry point. Sets up the battle, starts it and manages the state (State machine).
+/// Add component to some gameObject
+/// </summary>
 public class BattleSystem : MonoBehaviour
 {
 

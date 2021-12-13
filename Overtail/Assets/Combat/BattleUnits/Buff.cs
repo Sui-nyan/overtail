@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Buffs and other possible modifiers to characters.
+/// Duration in turns.
+/// </summary>
 [System.Serializable]
 public class Buff
 {
