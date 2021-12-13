@@ -9,14 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 movement;
     public Animator animator;
 
-    public PlayerStats playerStatus;
+    //public PlayerStats playerStatus;
 
     public bool IsMoving { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        transform.localPosition = playerStatus.position;
+        //transform.localPosition = playerStatus.position;
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
             IsMoving = true;
             animator.SetBool("isWalking", true);
             rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
-            playerStatus.SetPosition(transform.localPosition);
+            //playerStatus.SetPosition(transform.localPosition);
         } else {
             IsMoving = false;
             animator.SetBool("isWalking", false);

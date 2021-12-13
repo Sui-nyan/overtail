@@ -1754,14 +1754,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46913be14272d841a6d4c05ee6070ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSetup: {fileID: 11400000, guid: e2b024582a8cd9a49ad9f659cffc2ddf, type: 2}
-  playerPrefab_unused: {fileID: 0}
-  enemyPrefab_unused: {fileID: 0}
+  setup: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
   playerHUD: {fileID: 849414260}
   enemyHUD: {fileID: 1449386911}
   playerStation: {fileID: 1929546384}
   enemyStation: {fileID: 1202270077}
-  dialogue: {fileID: 1854852741}
+  DialogueBox_unused: {fileID: 1246203055}
+  textBox: {fileID: 1854852741}
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0

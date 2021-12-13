@@ -41,15 +41,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 5259660652032446243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259e807bc0835204382609ec69476fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d4e34d9674a58c448948f811c0d9e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
-  level: 0
-  exp: 0
-  attack: 0
-  maxHP: 0
-  currentHP: 0
+  baseUnit:
+    sprite: {fileID: 0}
+    name: PLAYERAA
+    baseStats:
+      ATK: 0
+      DEF: 0
+      HP: 10
+      currentHP: 0
+  equipment:
+    head: {fileID: 11400000, guid: 307ced313a5aafc418c10b90e37c2d8a, type: 2}
+    body: {fileID: 11400000, guid: 216c8c67c4d0456409bceae5b8159cf6, type: 2}
+    weapon: {fileID: 11400000, guid: b87fedee9389854489c88df1b1685afd, type: 2}
+  buffs: []
+  level: 8
+  currentStats:
+    ATK: 0
+    DEF: 0
+    HP: 0
+    currentHP: 0
 --- !u!1 &5259660652136119356
 GameObject:
   m_ObjectHideFlags: 0

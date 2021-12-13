@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 338202084267771500}
-  - component: {fileID: 338202084267771501}
+  - component: {fileID: 4401818096889055365}
   m_Layer: 0
   m_Name: EnemyBasePrefab
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &338202084267771501
+--- !u!114 &4401818096889055365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,15 +41,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 338202084267771503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259e807bc0835204382609ec69476fd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d4e34d9674a58c448948f811c0d9e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: EnemyBasePrefab
-  level: 1
-  exp: 0
-  attack: 5
-  maxHP: 20
-  currentHP: 20
+  baseUnit:
+    sprite: {fileID: 0}
+    name: EnemyDefault
+    baseStats:
+      ATK: 5
+      DEF: 5
+      HP: 5
+      currentHP: 5
+  equipment:
+    head: {fileID: 11400000, guid: 307ced313a5aafc418c10b90e37c2d8a, type: 2}
+    body: {fileID: 11400000, guid: 216c8c67c4d0456409bceae5b8159cf6, type: 2}
+    weapon: {fileID: 11400000, guid: b87fedee9389854489c88df1b1685afd, type: 2}
+  buffs: []
+  level: 101
+  currentStats:
+    ATK: 0
+    DEF: 0
+    HP: 0
+    currentHP: 0
 --- !u!1 &338202084379833712
 GameObject:
   m_ObjectHideFlags: 0

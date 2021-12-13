@@ -44,25 +44,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGO: {fileID: 0}
-  setup: {fileID: 11400000, guid: e2b024582a8cd9a49ad9f659cffc2ddf, type: 2}
-  PlayerInfo: {fileID: 11400000, guid: b7ed0026706195442b3f23bf774ccc01, type: 2}
-  DistanceCap: 2
+  setup: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
+  maxWalkingDistance: 10
   minLevel: 1
   maxLevel: 10
   spawnableEnemies:
-  - enemyPrefab: {fileID: 1735059968253583550, guid: 79167337f583e394c9d5f08639b426d1, type: 3}
-    placeholderString: Green Slime
-    overwriteRandomLevel: 0
+  - placeholderString: Green Slime
+    enemyPrefab: {fileID: 1735059968253583550, guid: 79167337f583e394c9d5f08639b426d1, type: 3}
+    levelOverride: 0
     weightedProbability: 20
-  - enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
-    placeholderString: Red Slime
-    overwriteRandomLevel: 10
+  - placeholderString: Red Slime
+    enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+    levelOverride: 0
     weightedProbability: 6
-  - enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
-    placeholderString: Greater Slime
-    overwriteRandomLevel: 20
+  - placeholderString: Greater Slime
+    enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+    levelOverride: 0
     weightedProbability: 3
-  - enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
-    placeholderString: Dragon Boss
-    overwriteRandomLevel: 99
+  - placeholderString: Dragon Boss
+    enemyPrefab: {fileID: 338202084267771503, guid: e043c29120baa294b9b310fde57b8143, type: 3}
+    levelOverride: 0
     weightedProbability: 1
