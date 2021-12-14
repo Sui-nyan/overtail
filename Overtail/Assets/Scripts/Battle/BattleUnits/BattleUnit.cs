@@ -21,15 +21,14 @@ namespace Overtail.Battle
 
         public string Name { get => baseUnit.Name; }
         public int Level { get => level; private set => level = value; }
-        public int ATK { get => currentStats.ATK; private set => currentStats.ATK = value; }
-        public int DEF { get => currentStats.DEF; private set => currentStats.DEF = value; }
-        public int HP { get => currentStats.HP; private set => currentStats.HP = value; }
-        public int CurrentHP { get => currentStats.currentHP; private set => currentStats.currentHP = value; }
+        public int Attack { get => currentStats.Attack; private set => currentStats.Attack = value; }
+        public int Defense { get => currentStats.Defense; private set => currentStats.Defense = value; }
+        public int MaxHealth { get => currentStats.MaxHealth; private set => currentStats.MaxHealth = value; }
+        public int Health { get => currentStats.Health; private set => currentStats.Health = value; }
 
 
-        private void Start()
+        void Start()
         {
-            Setup();
         }
 
         public void Setup()
@@ -47,5 +46,15 @@ namespace Overtail.Battle
         }
 
         void GetAction() { } // BattleSystem > command.execute(actor,target)
+
+        internal void TakeDamage(BattleUnit src)
+        {
+            this.Health = System.Math.Max(this.Health - System.Math.Max(src.Attack - this.Defense, 0), 0);
+        }
+
+        internal void Heal()
+        {
+            this.Health = this.MaxHealth;
+        }
     }
 }

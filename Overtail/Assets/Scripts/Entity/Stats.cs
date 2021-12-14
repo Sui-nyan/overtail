@@ -10,11 +10,16 @@ namespace Overtail.Entity
     [System.Serializable]
     public class Stats
     {
-        public int ATK;
-        public int DEF;
-        public int HP;
-        public int currentHP;
+        public int Attack;
+        public int Defense;
+        public int MaxHealth;
+        public int Health;
+
+        public override string ToString()
+        {
+            return Attack + " ATK, " + Defense + " DEF, " + Health + "/" + MaxHealth + " HP";
+        }
     }
 
-    public enum StatType { ATK, DEF, HP }
+    public enum StatType { Attack, Defense, MaxHealth }
 }

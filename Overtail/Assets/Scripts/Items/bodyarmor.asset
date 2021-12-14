@@ -15,7 +15,7 @@ MonoBehaviour:
   Name: 
   Description: 
   Stats:
-    ATK: 2222
-    DEF: 22
-    HP: 22
-    currentHP: 0
+    Attack: 0
+    Defense: 0
+    MaxHealth: 0
+    Health: 0

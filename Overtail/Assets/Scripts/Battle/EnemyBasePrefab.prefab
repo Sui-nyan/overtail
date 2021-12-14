@@ -48,21 +48,21 @@ MonoBehaviour:
     sprite: {fileID: 0}
     name: EnemyDefault
     baseStats:
-      ATK: 5
-      DEF: 5
-      HP: 5
-      currentHP: 5
+      Attack: 55
+      Defense: 30
+      MaxHealth: 35
+      Health: 35
   equipment:
     head: {fileID: 11400000, guid: 307ced313a5aafc418c10b90e37c2d8a, type: 2}
     body: {fileID: 11400000, guid: 216c8c67c4d0456409bceae5b8159cf6, type: 2}
     weapon: {fileID: 11400000, guid: b87fedee9389854489c88df1b1685afd, type: 2}
   buffs: []
-  level: 101
+  level: 5
   currentStats:
-    ATK: 0
-    DEF: 0
-    HP: 0
-    currentHP: 0
+    Attack: 0
+    Defense: 0
+    MaxHealth: 0
+    Health: 0
 --- !u!1 &338202084379833712
 GameObject:
   m_ObjectHideFlags: 0

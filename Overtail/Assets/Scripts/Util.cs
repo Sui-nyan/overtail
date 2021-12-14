@@ -13,10 +13,14 @@ namespace Overtail
         {
             Stats total = new Stats();
 
-            // Base Scaling
-            total.ATK = baseStats.ATK + level;
-            total.DEF = baseStats.DEF + level;
-            total.HP = baseStats.HP + level * 10;
+            // Base Scaling from Pokemon games :sparkles:
+            int f(int b)
+            {
+                return (int)(b * 2 * level / 100f) + 5;
+            }
+            total.Attack = f(baseStats.Attack);
+            total.Defense = f(baseStats.Defense);
+            total.MaxHealth = f(baseStats.MaxHealth) + 5 + level;
 
             // + Equipment
             foreach (Equipment e in equipment.all)
@@ -30,7 +34,7 @@ namespace Overtail
 
             foreach (StatType t in System.Enum.GetValues(typeof(StatType)))
             {
-                multiplier.Add(t, 1);
+                multiplier.Add(t,0);
                 flat.Add(t, 0);
             }
 
@@ -46,9 +50,9 @@ namespace Overtail
                 flat[buff.Type] += (int)buff.Value;
             }
 
-            total.ATK = (int)(total.ATK * (1 + multiplier[StatType.ATK])) + flat[StatType.ATK];
-            total.DEF = (int)(total.DEF * (1 + multiplier[StatType.DEF])) + flat[StatType.DEF];
-            total.HP = (int)(total.HP * (1 + multiplier[StatType.HP])) + flat[StatType.HP];
+            total.Attack = (int)(total.Attack * (1 + multiplier[StatType.Attack])) + flat[StatType.Attack];
+            total.Defense = (int)(total.Defense * (1 + multiplier[StatType.Defense])) + flat[StatType.Defense];
+            total.MaxHealth = (int)(total.MaxHealth * (1 + multiplier[StatType.MaxHealth])) + flat[StatType.MaxHealth];
 
             return total;
         }
@@ -57,10 +61,10 @@ namespace Overtail
         {
             Stats sum = new Stats();
 
-            sum.ATK = a.ATK + b.ATK;
-            sum.DEF = a.DEF + b.DEF;
-            sum.HP = a.HP + b.HP;
-            sum.currentHP = a.currentHP + b.currentHP;
+            sum.Attack = a.Attack + b.Attack;
+            sum.Defense = a.Defense + b.Defense;
+            sum.MaxHealth = a.MaxHealth + b.MaxHealth;
+            sum.Health = a.Health + b.Health;
 
             return sum;
         }
