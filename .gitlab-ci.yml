@@ -55,4 +55,4 @@ deploy:
     name: deploy
     url: https://overtail.schindlerfelix.de
   script:
-    - cd API && rsync -avhrz --delete --filter=". .rsync_filter.txt" API/ /srv/felix/overtail
+    - cd API && rsync -avhrz --delete --filter=". .rsync_filter.txt" . /srv/felix/overtail
