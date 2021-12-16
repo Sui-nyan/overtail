@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using UnityEngine;
-
 
 namespace Overtail.Battle
 {

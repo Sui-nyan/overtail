@@ -1,7 +1,5 @@
-﻿using Overtail.Items;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using Overtail.Battle;
 
 namespace Overtail.Battle
 {

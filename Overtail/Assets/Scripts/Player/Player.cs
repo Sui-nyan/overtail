@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Overtail;
+
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {

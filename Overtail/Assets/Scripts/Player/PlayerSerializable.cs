@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Overtail.Items;
 using Overtail.Serializable;
 using Overtail.Battle;
 // data class => JSON
@@ -20,10 +18,7 @@ namespace Overtail
         [Header("Overworld")]
         [SerializeField] private Vec3 pos;
 
-        [Header("Inventory")]
-        [SerializeField] private Inventory inventory;
-        [SerializeField] private EquipmentSet equipment;
-
+       
 
         // Accessors
 
@@ -64,8 +59,6 @@ namespace Overtail
         public List<StatusEffect> StatusEffects => statusEffects;
 
         #region Overworld/Inventory
-        public Inventory Inventory => inventory;
-        public EquipmentSet Equipment => equipment;
         public Vector3 Position
         {
             get => new Vector3(pos.x, pos.y, pos.z);
