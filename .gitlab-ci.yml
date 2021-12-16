@@ -40,7 +40,7 @@ test:
   cache:
     paths:
       - API/Backend/Libraries/vendor
-  needs: ["build"]
+  needs: ["install"]
   script:
     - cd API/ && php Backend/Libraries/vendor/bin/phpstan analyse -c .phpstan.neon --memory-limit 500M --no-progress
 
