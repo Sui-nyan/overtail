@@ -1,0 +1,7 @@
+- ***/.git
+- .*
+- *.md
+- Backend/Libraries/vendor/phpstan
+- rsync_filter.txt
++ Frontend/***
++ Backend/***
