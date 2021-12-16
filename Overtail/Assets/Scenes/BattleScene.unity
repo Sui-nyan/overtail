@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 849414256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dacdf965fbf2b141a5c3386af9abb4f, type: 3}
+  m_Script: {fileID: 11500000, guid: cf3acae830ba1be49bd97102d6bd7e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1595836196}
@@ -1657,7 +1657,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.638e-12, y: -135.33}
+  m_AnchoredPosition: {x: 0, y: -157.44}
   m_SizeDelta: {x: 800, y: 131.57}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246203057
@@ -1861,7 +1861,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1449386907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dacdf965fbf2b141a5c3386af9abb4f, type: 3}
+  m_Script: {fileID: 11500000, guid: cf3acae830ba1be49bd97102d6bd7e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 256408005}
@@ -1893,24 +1893,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1491720152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d46913be14272d841a6d4c05ee6070ab, type: 3}
+  m_Script: {fileID: 11500000, guid: 8485af875bd4fd3499cfddf5b9b55ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _current: 
-  _previous: 
-  setup: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
-  playerHUD: {fileID: 849414260}
-  enemyHUD: {fileID: 1449386911}
+  battleSetupData: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
   playerStation: {fileID: 1929546384}
   enemyStation: {fileID: 1202270077}
-  playerUnit: {fileID: 2023637748481672671, guid: 7274430f9b1fdb543b43fa543b1292f9, type: 3}
-  enemyUnit: {fileID: 5098008618470256145, guid: e043c29120baa294b9b310fde57b8143, type: 3}
-  textBox: {fileID: 1854852741}
-  attackButton: {fileID: 1931448229}
-  interactButton: {fileID: 942204494}
-  inventoryButton: {fileID: 921977079}
-  escapeButton: {fileID: 570025803}
-  lastPressedButton: {fileID: 0}
+  _graphicalUI:
+    playerHUD: {fileID: 849414260}
+    enemyHUD: {fileID: 1449386911}
+    textBox: {fileID: 1854852741}
+    attackButton: {fileID: 1931448229}
+    interactButton: {fileID: 942204494}
+    inventoryButton: {fileID: 921977079}
+    escapeButton: {fileID: 570025803}
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0
