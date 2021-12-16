@@ -1,3 +1,6 @@
+/*
+This file is used by the pipeline. DO NOT EDIT
+*/
 using UnityEditor;
 using System.Linq;
 using System;
@@ -229,7 +232,7 @@ static class BuildCommand
 
         if (!File.Exists(KEYSTORE)) {
             Console.WriteLine($":: {KEYSTORE} not found, skipping setup, using Unity's default keystore");
-            return;    
+            return;
         }
 
         PlayerSettings.Android.keystoreName = KEYSTORE;
