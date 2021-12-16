@@ -8,7 +8,6 @@ namespace Overtail.Deprecated
 {
     public class _Equipment : ScriptableObject
     {
-        public Stats stats;
     }
 
 

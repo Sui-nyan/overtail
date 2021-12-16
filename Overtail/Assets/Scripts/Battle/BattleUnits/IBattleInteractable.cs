@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+namespace Overtail.Battle
+{
+    /// <summary>
+    /// Redundant?
+    /// </summary>
+    public interface IBattleInteractable
+    {
+        string Name { get; }
+        int HP { get; }
+        int MaxHP { get; }
+        int Attack { get; }
+        int Defense { get; }
+
+        void TakeDamage(int damage);
+        IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent);
+        IEnumerator InteractedOn(BattleSystem system, IBattleInteractable opponent);
+        void InflictStatus(StatusEffect buff);
+        void TurnUpdate(int turns);
+        void TurnUpdate();
+    }
+}

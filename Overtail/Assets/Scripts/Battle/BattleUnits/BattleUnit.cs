@@ -10,51 +10,103 @@ namespace Overtail.Battle
     /// Main class for characters participating in combat.
     /// Main Interface to the battle system and vice versa.
     /// </summary>
-    public class BattleUnit : MonoBehaviour
+    public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
-        [SerializeField] private EntityTemplate baseUnit;
-        [SerializeField] private EquipmentSet equipment;
-        [SerializeField] private List<Buff> buffs = new List<Buff>();
+        [SerializeField] protected new string name;
 
-        [SerializeField] int level;
-        [SerializeField] private Stats currentStats;
+        [SerializeField] protected int level;
+        [Header("Combat Stats (Unbuffed)")]
+        [SerializeField] protected int hp;
+        [SerializeField] protected int maxHp;
+        [SerializeField] protected int attack;
+        [SerializeField] protected int defense;
+        [SerializeField] protected CombatStats combatStats_duplicate;
 
-        public string Name { get => baseUnit.Name; }
-        public int Level { get => level; private set => level = value; }
-        public int Attack { get => currentStats.Attack; private set => currentStats.Attack = value; }
-        public int Defense { get => currentStats.Defense; private set => currentStats.Defense = value; }
-        public int MaxHealth { get => currentStats.MaxHealth; private set => currentStats.MaxHealth = value; }
-        public int Health { get => currentStats.Health; private set => currentStats.Health = value; }
+        [SerializeField] protected List<StatusEffect> statusEffects = new List<StatusEffect>();
 
+        public List<StatusEffect> StatusEffects => statusEffects;
+        public virtual string Name { get => name; }
+        public virtual int Level { get => level; }
+        public virtual int HP { get => hp; }
+        public virtual int MaxHP { get => GetStat(StatType.MAXHP); }
+        public virtual int Attack { get => GetStat(StatType.ATTACK); }
+        public virtual int Defense { get => GetStat(StatType.DEFENSE); }
 
-        void Start()
+        protected virtual int GetStat(StatType statType)
         {
+            float percent = 0;
+            int flat = 0;
+
+            foreach (StatusEffect status in statusEffects.FindAll(s => s.StatType == statType))
+            {
+                if (status.ModifierType == ModifierType.PERCENTAGE)
+                    percent += status.Value;
+
+                if (status.ModifierType == ModifierType.FLAT)
+                    flat += (int)status.Value;
+            }
+
+            switch (statType)
+            {
+                case StatType.MAXHP:
+                    return (int)(maxHp * (1 + percent) + flat);
+                case StatType.ATTACK:
+                    return (int)(attack * (1 + percent) + flat);
+                case StatType.DEFENSE:
+                    return (int)(defense * (1 + percent) + flat);
+                default:
+                    throw new System.ArgumentException();
+            }
         }
 
-        public void Setup()
+
+        public void TakeDamage(int damage)
         {
-            //gameObject.GetComponent<SpriteRenderer>().sprite = baseUnit.Sprite;
-            RecalculateStats();
+            this.hp = Mathf.Clamp(this.HP - damage, 0, MaxHP);
+        }
+        public void TakeDamage(IBattleInteractable opponent)
+        {
+            TakeDamage(System.Math.Max(opponent.Attack - this.Defense, 0));
         }
 
-        public void RecalculateStats()
+        public virtual IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent)
         {
-            currentStats = Util.CalculateStats(Level,
-                                                baseUnit.BaseStats,
-                                                equipment,
-                                                buffs);
+            yield break;
+        }
+        public virtual IEnumerator InteractedOn(BattleSystem system, IBattleInteractable opponent)
+        {
+            yield break;
+        }
+        public void InflictStatus(StatusEffect buff)
+        {
+            statusEffects.Add(buff);
+            TurnUpdate(0);
         }
 
-        void GetAction() { } // BattleSystem > command.execute(actor,target)
-
-        internal void TakeDamage(BattleUnit src)
+        public void TurnUpdate(int turns)
         {
-            this.Health = System.Math.Max(this.Health - System.Math.Max(src.Attack - this.Defense, 0), 0);
+            foreach (StatusEffect b in statusEffects.FindAll(s => s.FreezeDuration == false))
+            {
+                b.Duration -= turns;
+            }
+
+            statusEffects.RemoveAll(s => s.FreezeDuration == false && s.Duration <= 0);
         }
 
-        internal void Heal()
+        public void TurnUpdate()
         {
-            this.Health = this.MaxHealth;
+            TurnUpdate(1);
         }
+
+    }
+
+    [System.Serializable]
+    public class CombatStats
+    {
+        internal CombatStats() { }
+        public int maxHp;
+        public int hp;
+        public int attack;
+        public int defense;
     }
 }

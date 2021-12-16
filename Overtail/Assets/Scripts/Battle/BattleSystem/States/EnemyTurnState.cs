@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+
 namespace Overtail.Battle
 {
     public class EnemyTurnState : State
@@ -11,27 +12,21 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            _system.textBox.text = "Opponent is choosing an action.";
+            system.textBox.text = "Opponent is choosing an action.";
             yield return new WaitForSeconds(1f);
 
-            _system.textBox.text = _system.enemyUnit.Name + " attacked you.";
-
-            _system.playerUnit.TakeDamage(_system.enemyUnit);
-            _system.UpdateHUD();
-
+            yield return system.StartCoroutine(system.enemyUnit.DoTurn(system, system.playerUnit));
 
             yield return new WaitForSeconds(1f);
 
-
-            if (_system.playerUnit.Health <= 0)
+            if (system.playerUnit.HP <= 0)
             {
-                _system.SetState(new DefeatState(_system));
+                system.SetState(new DefeatState(system));
             }
             else
             {
-                _system.SetState(new PlayerTurnState(_system));
+                system.SetState(new PlayerTurnState(system));
             }
-
         }
     }
 }

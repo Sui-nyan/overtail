@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5259660652032446240}
-  - component: {fileID: -6839073226635434990}
+  - component: {fileID: 2023637748481672671}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6839073226635434990
+--- !u!114 &2023637748481672671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,28 +41,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5259660652032446243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d4e34d9674a58c448948f811c0d9e17, type: 3}
+  m_Script: {fileID: 11500000, guid: 76ddbd1cd64d0914497c28b8fc4e7284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseUnit:
-    sprite: {fileID: 0}
-    name: PLAYER_1
-    baseStats:
-      Attack: 55
-      Defense: 30
-      MaxHealth: 35
-      Health: 35
-  equipment:
-    head: {fileID: 11400000, guid: 307ced313a5aafc418c10b90e37c2d8a, type: 2}
-    body: {fileID: 11400000, guid: 216c8c67c4d0456409bceae5b8159cf6, type: 2}
-    weapon: {fileID: 11400000, guid: b87fedee9389854489c88df1b1685afd, type: 2}
-  buffs: []
-  level: 5
-  currentStats:
-    Attack: 0
-    Defense: 0
-    MaxHealth: 0
-    Health: 0
+  name: Player1
+  level: 3
+  hp: 200
+  maxHp: 100
+  attack: 2
+  defense: 0
+  combatStats_duplicate:
+    maxHp: 0
+    hp: 0
+    attack: 0
+    defense: 0
+  statusEffects: []
 --- !u!1 &5259660652136119356
 GameObject:
   m_ObjectHideFlags: 0

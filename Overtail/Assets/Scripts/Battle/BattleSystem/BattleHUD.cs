@@ -19,8 +19,8 @@ namespace Overtail.Battle
         {
             nameText.text = unit.Name;
             levelText.text = "Lvl " + unit.Level;
-            hpSlider.maxValue = unit.MaxHealth;
-            hpSlider.value = unit.Health;
+            hpSlider.maxValue = unit.MaxHP;
+            hpSlider.value = unit.HP;
         }
 
         public void SetHP(int hp)

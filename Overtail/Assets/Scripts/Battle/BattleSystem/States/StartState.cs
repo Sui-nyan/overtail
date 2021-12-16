@@ -10,19 +10,16 @@ namespace Overtail.Battle
         {
 
             // Instantiating should call respective GameObject.Start()
-            _system.textBox.text = "A wild " + _system.enemyUnit.Name + " appears.";
+            system.textBox.text = "A wild " + system.enemyUnit.Name + " appears.";
 
-            _system.enemyUnit.Setup();
-            _system.playerUnit.Setup();
+            system.enemyUnit.TakeDamage(-system.enemyUnit.MaxHP);
+            system.playerUnit.TakeDamage(-system.playerUnit.MaxHP);
 
-            _system.enemyUnit.Heal();
-            _system.playerUnit.Heal();
-
-            _system.UpdateHUD();
+            system.UpdateHUD();
             yield return new WaitForSeconds(2f);
             // Replace with input
 
-            _system.SetState(new PlayerTurnState(_system));
+            system.SetState(new PlayerTurnState(system));
         }
     }
 }

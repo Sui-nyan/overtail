@@ -1896,13 +1896,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d46913be14272d841a6d4c05ee6070ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _current: 
+  _previous: 
   setup: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
   playerHUD: {fileID: 849414260}
   enemyHUD: {fileID: 1449386911}
   playerStation: {fileID: 1929546384}
   enemyStation: {fileID: 1202270077}
-  playerUnit: {fileID: 0}
-  enemyUnit: {fileID: 0}
+  playerUnit: {fileID: 2023637748481672671, guid: 7274430f9b1fdb543b43fa543b1292f9, type: 3}
+  enemyUnit: {fileID: 5098008618470256145, guid: e043c29120baa294b9b310fde57b8143, type: 3}
   textBox: {fileID: 1854852741}
   attackButton: {fileID: 1931448229}
   interactButton: {fileID: 942204494}

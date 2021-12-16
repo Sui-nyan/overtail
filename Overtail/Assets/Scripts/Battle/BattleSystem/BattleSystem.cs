@@ -10,12 +10,48 @@ namespace Overtail.Battle
 
     public abstract class StateMachine : MonoBehaviour
     {
-        protected State _state;
+        protected State state;
+        protected State previous;
+        [Header("Debug")]
+        [SerializeField] private string _current;
+        [SerializeField] private string _previous;
+
+
         public void SetState(State state)
         {
-            if (_state != null) StartCoroutine(_state.Stop());
-            _state = state;
-            StartCoroutine(_state.Start());
+            if (this.state != null)
+            {
+                _previous = this.state.GetType().ToString();
+                StartCoroutine(this.state.Stop());
+            }
+            
+            this.state = state;
+            _current = state.GetType().ToString();
+
+            StartCoroutine(this.state.Start());
+        }
+
+        public void RestartState()
+        {
+            StartCoroutine(state.Start());
+        }
+
+        public void Lock()
+        {
+            previous = state;
+            _previous = state.GetType().ToString();
+
+            state = new LockState((BattleSystem)this);
+            _current = state.GetType().ToString();
+        }
+
+        public void Unlock()
+        {
+            if (previous != null)
+            {
+                state = previous;
+                _current = state.GetType().ToString();
+            }
         }
     }
 
@@ -113,22 +149,22 @@ namespace Overtail.Battle
         public void OnAttackButton()
         {
             lastPressedButton = attackButton;
-            StartCoroutine(_state.Attack());
+            StartCoroutine(state.Attack());
         }
         public void OnInteractButton()
         {
             lastPressedButton = interactButton;
-            StartCoroutine(_state.Interact());
+            StartCoroutine(state.Interact());
         }
         public void OnInventoryButton()
         {
             lastPressedButton = inventoryButton;
-            StartCoroutine(_state.Inventory());
+            StartCoroutine(state.Inventory());
         }
         public void OnEscapeButton()
         {
             lastPressedButton = escapeButton;
-            StartCoroutine(_state.Escape());
+            StartCoroutine(state.Escape());
         }
     }
 

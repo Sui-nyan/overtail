@@ -16,7 +16,7 @@ namespace Overtail.Entity
         [SerializeField] private Vec3 position;
 
         public EquipmentSet equipment;
-        public List<Buff> buffs = new List<Buff>();
+        public List<StatusEffect> buffs = new List<StatusEffect>();
 
         public Vector3 Position
         {

@@ -8,9 +8,9 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            _system.textBox.text = "You won.";
+            system.textBox.text = "You won.";
             yield return new WaitForSeconds(1f);
-            _system.Exit();
+            system.Exit();
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+
 namespace Overtail.Battle
 {
-    public abstract class State
+    public class State
     {
-        protected readonly BattleSystem _system;
+        protected readonly BattleSystem system;
         public State(BattleSystem system)
         {
-            _system = system;
+            this.system = system;
         }
+
         public virtual IEnumerator Start()
         {
             yield break;

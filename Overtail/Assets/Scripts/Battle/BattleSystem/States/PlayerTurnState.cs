@@ -9,50 +9,54 @@ namespace Overtail.Battle
         public PlayerTurnState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
-            _system.textBox.text = "Choose an action.";
-            _system.ShowButtons();
+            system.textBox.text = "Choose an action.";
+            system.ShowButtons();
             yield break;
         }
         public override IEnumerator Attack()
         {
-            _system.enemyUnit.TakeDamage(_system.playerUnit);
-            _system.UpdateHUD();
-            _system.textBox.text = "You attacked " + _system.enemyUnit.Name + ".";
+            system.Lock();
+            system.enemyUnit.TakeDamage(system.playerUnit);
+            system.UpdateHUD();
+            system.textBox.text = "You attacked " + system.enemyUnit.Name + ".";
 
+            
             yield return new WaitForSeconds(1f);
 
-            if (_system.enemyUnit.Health <= 0)
+            system.Unlock();
+            if (system.enemyUnit.HP <= 0)
             {
-                _system.SetState(new VictoryState(_system));
+                system.SetState(new VictoryState(system));
             }
             else
             {
-                _system.SetState(new EnemyTurnState(_system));
+                system.SetState(new EnemyTurnState(system));
             }
         }
 
         public override IEnumerator Interact()
         {
-            _system.textBox.text = "The enemy doesn't want to interact with you.";
-            yield return new WaitForSeconds(1f);
+            system.Lock();
+            yield return system.StartCoroutine(system.enemyUnit.InteractedOn(system, system.playerUnit));
+            system.Unlock();
         }
 
         public override IEnumerator Inventory()
         {
-            _system.textBox.text = "You forgot your bag at home.";
+            system.textBox.text = "You forgot your bag at home.";
             yield return new WaitForSeconds(1f);
         }
 
         public override IEnumerator Escape()
         {
 
-            _system.textBox.text = "You fled the battle, coward!";
+            system.textBox.text = "You fled the battle, coward!";
             yield return new WaitForSeconds(1f);
-            _system.Exit();
+            system.Exit();
         }
         public override IEnumerator Stop()
         {
-            _system.HideButtons();
+            system.HideButtons();
             yield break;
         }
     }
