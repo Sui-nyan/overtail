@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Collections;
-using Overtail.Entity;
 
 namespace Overtail.Battle
 {
@@ -18,11 +17,7 @@ namespace Overtail.Battle
         [Header("Debug Only")]
         [SerializeField] private GameObject playerPrefab;
         [SerializeField] private GameObject enemyPrefab;
-        [SerializeField] private PersistentPlayerData playerData;
-
         public GameObject PlayerPrefab => playerPrefab;
-        public GameObject EnemyPrefab => enemyPrefab;
-        public PersistentPlayerData PlayerData => playerData;
-        
+        public GameObject EnemyPrefab => enemyPrefab;        
     }
 }

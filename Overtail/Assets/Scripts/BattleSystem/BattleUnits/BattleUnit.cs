@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Overtail.Items;
-using Overtail.Entity;
 
 namespace Overtail.Battle
 {
@@ -21,7 +19,6 @@ namespace Overtail.Battle
         [SerializeField] protected int maxHp;
         [SerializeField] protected int attack;
         [SerializeField] protected int defense;
-        [SerializeField] protected CombatStats combatStats_duplicate;
 
         [SerializeField] protected List<StatusEffect> statusEffects = new List<StatusEffect>();
 
@@ -99,15 +96,5 @@ namespace Overtail.Battle
             TurnUpdate(1);
         }
 
-    }
-
-    [System.Serializable]
-    public class CombatStats
-    {
-        internal CombatStats() { }
-        public int maxHp;
-        public int hp;
-        public int attack;
-        public int defense;
     }
 }

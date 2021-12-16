@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Overtail.Entity;
 
 namespace Overtail.Battle
 {
@@ -33,6 +32,25 @@ namespace Overtail.Battle
         public void SetFreeze(bool b)
         {
             freezeDuration = b;
+        }
+
+        public StatusEffect(string name, StatType statType, ModifierType modifierType, float value, int duration, bool freezeDuration)
+        {
+            this.name = name;
+            this.statType = statType;
+            this.modifierType = modifierType;
+            this.value = value;
+            this.duration = duration;
+            this.freezeDuration = freezeDuration;
+        }
+        public StatusEffect(StatusEffect s)
+        {
+            this.name = s.name;
+            this.statType = s.statType;
+            this.modifierType = s.modifierType;
+            this.value = s.value;
+            this.duration = s.duration;
+            this.freezeDuration = s.freezeDuration;
         }
     }
     public enum StatType { MAXHP, ATTACK, DEFENSE }

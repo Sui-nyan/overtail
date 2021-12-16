@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5259660652032446240}
   - component: {fileID: 120047454792231163}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,47 +44,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e73febc7025d047a0893031686fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 31234
-  level: 1
-  hp: 19
-  maxHp: 20
-  attack: 1
+  name: 
+  level: 0
+  hp: 0
+  maxHp: 0
+  attack: 0
   defense: 0
-  combatStats_duplicate:
-    maxHp: 0
-    hp: 0
-    attack: 0
-    defense: 0
   statusEffects: []
-  data:
+  persistentData: {fileID: 11400000, guid: a2b949a2eec9b5344a4fd5b6e94ca2db, type: 2}
+  p:
+    name: 
     status:
-      level: 0
+      level: 5
       exp: 0
       hp: 0
       maxHp: 0
-      atk: 0
-      def: 0
+      attack: 0
+      defense: 0
+    statusEffects: []
     pos:
       x: 0
       y: 0
       z: 0
     inventory:
-      items:
-      - quantity: 3
-        item:
-          name: Golden Key
-          description: 
-          stackable: 1
-      - quantity: 88
-        item:
-          name: Gold Bar
-          description: 
-          stackable: 1
-      - quantity: 3
-        item:
-          name: Apple
-          description: 
-          stackable: 1
+      items: []
       capacity: 0
       infiniteCapacity: 0
     equipment:

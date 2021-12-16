@@ -40,7 +40,6 @@ namespace Overtail.Battle
         {
             system.GUI.SetText("You forgot your bag at home.");
             yield return new WaitForSeconds(1f);
-            system.Player.OpenInventory();
             system.RestartState();
         }
 
@@ -53,6 +52,7 @@ namespace Overtail.Battle
         public override IEnumerator Stop()
         {
             system.GUI.HideButtons();
+            system.Player.TurnUpdate();
             yield break;
         }
     }

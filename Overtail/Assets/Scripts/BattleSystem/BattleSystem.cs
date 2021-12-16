@@ -56,7 +56,6 @@ namespace Overtail.Battle
             GameObject enemyGO = Instantiate(battleSetupData.EnemyPrefab, enemyStation);
             _enemy = enemyGO.GetComponent<EnemyUnit>();
 
-
             GUI.Setup(this);
             GUI.UpdateHUD();
 
@@ -66,6 +65,7 @@ namespace Overtail.Battle
         void FixedUpdate()
         {
             GUI.ReselectedGUI();
+            GUI.UpdateHUD(); // performance pls?
         }
 
         public void Exit()
@@ -75,7 +75,7 @@ namespace Overtail.Battle
 
         private IEnumerator Unload()
         {
-
+            Player.End();
             SceneManager.LoadScene("SampleScene");
             yield break;
         }

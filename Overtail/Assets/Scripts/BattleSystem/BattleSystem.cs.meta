@@ -3,7 +3,10 @@ guid: 8485af875bd4fd3499cfddf5b9b55ba8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - battleSetupData: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
+  - playerStation: {instanceID: 0}
+  - enemyStation: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

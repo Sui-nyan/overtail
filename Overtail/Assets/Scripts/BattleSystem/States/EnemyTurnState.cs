@@ -5,10 +5,7 @@ namespace Overtail.Battle
 {
     public class EnemyTurnState : State
     {
-        public EnemyTurnState(BattleSystem system) : base(system)
-        {
-
-        }
+        public EnemyTurnState(BattleSystem system) : base(system) { }
 
         public override IEnumerator Start()
         {
