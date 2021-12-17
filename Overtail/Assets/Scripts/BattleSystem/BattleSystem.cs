@@ -49,10 +49,10 @@ namespace Overtail.Battle
 
         void Start()
         {
-            GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
+            UnityEngine.GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
             _player = playerObject.GetComponent<PlayerUnit>();
 
-            GameObject enemyGO = Instantiate(battleSetupData.EnemyPrefab, enemyStation);
+            UnityEngine.GameObject enemyGO = Instantiate(battleSetupData.EnemyPrefab, enemyStation);
             _enemy = enemyGO.GetComponent<EnemyUnit>();
 
             GUI.Setup(this);

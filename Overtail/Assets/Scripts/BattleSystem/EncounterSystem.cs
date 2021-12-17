@@ -11,7 +11,7 @@ namespace Overtail.Something {
     /// </summary>
     public class EncounterSystem : MonoBehaviour
     {
-        public GameObject playerGO;
+        public UnityEngine.GameObject playerGO;
         public BattleSetupData setup;
 
         public float maxWalkingDistance = 10f;
@@ -78,7 +78,7 @@ namespace Overtail.Something {
     public class EnemyEncounter
     {
         public string placeholderString;
-        public GameObject enemyPrefab;
+        public UnityEngine.GameObject enemyPrefab;
         public int overrideLevel;
         public int weightedProbability;
     }

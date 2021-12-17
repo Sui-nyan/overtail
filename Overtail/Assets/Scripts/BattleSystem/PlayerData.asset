@@ -17,9 +17,9 @@ MonoBehaviour:
     status:
       level: 99
       exp: 0
-      hp: 99
-      maxHp: 99
-      attack: 0
+      hp: 48
+      maxHp: 50
+      attack: 1
       defense: 0
     statusEffects:
     - name: GOD MODE
@@ -32,26 +32,3 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    inventory:
-      items: []
-      capacity: 0
-      infiniteCapacity: 0
-    equipment:
-      weapon:
-        name: 
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
-      head:
-        name: 
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
-      body:
-        name: 
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
