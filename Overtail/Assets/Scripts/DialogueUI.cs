@@ -7,7 +7,8 @@ public class DialogueUI : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TMP_Text textLabel;
-    [SerializeField] private DialogueObject test;
+
+    public bool IsOpen { get; private set; }
 
     private TextWriter textWriter;
 
@@ -15,11 +16,12 @@ public class DialogueUI : MonoBehaviour
     {
         textWriter = GetComponent<TextWriter>();
         CloseDialogue();
-        StartDialogue(test);
+
     }
 
     public void StartDialogue(DialogueObject dialogueObject)
     {
+        IsOpen = true;
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));
     }
@@ -39,5 +41,6 @@ public class DialogueUI : MonoBehaviour
     {
         dialogueBox.SetActive(false);
         textLabel.text = string.Empty;
+        IsOpen = false;
     }
 }

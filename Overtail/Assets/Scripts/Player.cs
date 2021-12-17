@@ -2,29 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
+
+    [SerializeField] private DialogueUI dialogueUI;
+
+    public DialogueUI DialogueUI => dialogueUI;
+
+    public IInteractable interactable { get; set; }
+
     public float moveSpeed;
-    public Rigidbody2D rb;
-    public Vector2 movement;
+    private Rigidbody2D rb;
     public Animator animator;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movement.x != 0 || movement.y != 0) {
             if (movement.x < 0)
             {
@@ -40,6 +38,11 @@ public class PlayerMovement : MonoBehaviour
             rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
         } else {
             animator.SetBool("isWalking", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            interactable?.Intectact(this);
         }
     }
 }
