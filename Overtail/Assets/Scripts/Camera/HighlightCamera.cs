@@ -4,122 +4,200 @@ using System.Collections;
 namespace Overtail.Camera
 {
     /// <summary>
-    /// Camera to follow 
+    /// Camera to follow a queued up list of targets.
     /// </summary>
     public class HighlightCamera : CameraFollow
     {
-        [SerializeField] private LinkedList<TargetListing> targetQueue = new LinkedList<TargetListing>();
-
-        // inherited
-        // protected GameObject currentTarget;
-        // protected float maxOffset;
-        // protected float smoothTime;
+        [SerializeField] private LinkedList<TrackingJob> queue = new LinkedList<TrackingJob>();
 
         // negative duration => permanent
+        [SerializeField] protected GameObject currentTarget;
         [SerializeField] protected float currentDuration;
+
         [SerializeField] protected float elapsedTime;
 
-        protected void Start()
+        [Header("Debug")]
+        [SerializeField] private int debugQueueCount = 0;
+        [SerializeField] private float quickPeekTime = .1f;
+
+        protected override void LateUpdate()
         {
-            base.Start();
-            currentDuration = -1;
-        }
-        private void LateUpdate()
-        {
-            // Test code for funsies
+            debugQueueCount = queue.Count;
+
+            if (!_inputCoroutine()) return;
+
+            // Duration is over or no target currently
+            if (currentTarget == null || (currentDuration >= 0 && elapsedTime > currentDuration))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1)) SetTarget(GameObject.FindGameObjectWithTag("Player"));
-                if (Input.GetKeyDown(KeyCode.Alpha2)) SetTarget(GameObject.FindGameObjectWithTag("Dummy1"));
-                if (Input.GetKeyDown(KeyCode.Alpha3)) SetTarget(GameObject.FindGameObjectWithTag("Dummy2"));
-
-                if (Input.GetKeyDown(KeyCode.Alpha4))
+                if (!GoToNext()) // Anything in queue?
                 {
-                    QueueTarget(GameObject.FindGameObjectWithTag("Dummy1"), .1f);
-                    QueueTarget(GameObject.FindGameObjectWithTag("Dummy2"), .1f);
+                    if (DefaultTarget != null) // Fallback value?
+                    {
+                        SmoothFocus(DefaultTarget);
+                    }
                 }
-
-                if (Input.GetKeyDown(KeyCode.Tab)) GoNext();
-
-                if (Input.GetKeyDown(KeyCode.Alpha5))
-                {
-                    JumpQueue(GameObject.FindGameObjectWithTag("Dummy1"), .1f);
-                }
-                if (Input.GetKey(KeyCode.Space))
-                {
-                    Debug.Log(GameObject.FindGameObjectWithTag("Player"));
-                    Follow(GameObject.FindGameObjectWithTag("Player"));
-                    return;
-                }
-            }
-
-            if (currentTarget == null && targetQueue.Count == 0) return;
-
-            if (currentDuration < 0 || elapsedTime < currentDuration)
-            {
-                elapsedTime += Time.deltaTime;
-                Follow(currentTarget,
-                    currentDuration < 0 ? smoothTime : Mathf.Min(smoothTime, 0.6f * currentDuration));
             }
             else
             {
-                Clear();
-                GoNext();
+                if (currentDuration == -1)
+                    SmoothFocus(currentTarget);
+                else
+                    SmoothFocus(currentTarget, Mathf.Clamp(currentDuration, quickPeekTime, DefaultTime));
+                if (currentDuration >= 0) elapsedTime += Time.deltaTime;
             }
         }
 
-        private void Clear()
+
+        /// <summary>
+        /// Go-to method.
+        /// Peeks at some Object for a certain time.
+        /// Overrides current if it's being tracked indefinitely.
+        /// Jumps queue if not.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="duration"></param>
+        public void Peek(GameObject target, float duration)
         {
+            if (currentDuration == -1)
+            {
+                Follow(target, duration);
+            }
+            else
+            {
+                JumpQueue(target, duration);
+            }
+        }
+
+        /// <summary>
+        /// Add a target with duration to queue.
+        /// </summary>
+        /// <param name="newTarget"></param>
+        /// <param name="newDuration"></param>
+        public void Enqueue(GameObject newTarget, float newDuration)
+        {
+            queue.AddLast(new TrackingJob(newTarget, newDuration));
+        }
+
+        /// <summary>
+        /// Get next element (or tupel) from queue
+        /// </summary>
+        /// <returns></returns>
+        public (GameObject, float) Dequeue()
+        {
+            TrackingJob t = queue.First.Value;
+            queue.RemoveFirst();
+
+            return (t.target, t.duration);
+        }
+
+        /// <summary>
+        /// Sets target to next in Queue<para/>
+        /// Returns true if successful (and sets new target)<para/>
+        /// Returns false if queue is empty (target not changed)
+        /// </summary>
+        /// <returns></returns>
+        public bool GoToNext()
+        {
+            if (queue.Count == 0) return false;
+            (GameObject newTarget, float newDuration) = Dequeue();
+
+            // try again if t was empty
+            if (newTarget == null) return GoToNext();
+
+            Follow(newTarget, newDuration);
+            return true;
+        }
+
+        /// <summary>
+        /// Clear Queue and remove currently tracked target
+        /// </summary>
+        public void ClearAll()
+        {
+            queue.Clear();
             currentTarget = null;
             currentDuration = 0;
             elapsedTime = 0;
         }
 
-        public void SetTarget(GameObject newTarget)
+        /// <summary>
+        /// <see cref="Follow"/> but puts the currently tracked target back onto the queue with leftover time
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="duration"></param>
+        private void JumpQueue(GameObject target, float duration)
         {
-            SetTarget(newTarget, -1);
+            TrackingJob current = new TrackingJob(
+                currentTarget,
+                currentDuration < 0 ? -1 : Mathf.Max(currentDuration - elapsedTime, 0));
+
+            Follow(target, duration);
+            queue.AddFirst(current);
         }
-        public void SetTarget(GameObject newTarget, float duration)
+
+        /// <summary>
+        /// Follow a target GameObject for a certain duration. Overrides current target.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="duration"></param>
+        private void Follow(GameObject target, float duration)
         {
-            this.currentTarget = newTarget;
-            this.currentDuration = duration;
+            currentDuration = duration;
+            currentTarget = target;
             elapsedTime = 0;
         }
 
-        public void QueueTarget(GameObject newTarget, float newDuration)
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        /// <param name="target"></param>
+        private new void Follow(GameObject target)
         {
-            targetQueue.AddLast(new TargetListing(newTarget, newDuration));
+            Follow(target, -1);
         }
 
-        public void JumpQueue(GameObject newTarget, float newDuration)
+
+
+        private bool _inputCoroutine()
         {
-            TargetListing oldTarget = new TargetListing
-                (this.currentTarget,
-                this.currentDuration < 0 ? -1 : Mathf.Max(this.currentDuration - elapsedTime, 0));
-            targetQueue.AddFirst(oldTarget);
+            // returns true if calling context should continue;
+            // Test code for funsies
 
-            SetTarget(newTarget, newDuration);
-        }
+            if (Input.GetKeyDown(KeyCode.Tab)) GoToNext();
 
-        private bool GoNext()
-        {
-            if (targetQueue.Count == 0) return false;
+            if (Input.GetKey(KeyCode.Space))
+            {
+                Focus(GameObject.FindGameObjectWithTag("Player"));
+                return false;
+            }
 
-            TargetListing t = targetQueue.First.Value;
-            targetQueue.RemoveFirst();
+            if (Input.GetKeyDown(KeyCode.Alpha1)) Peek(GameObject.FindGameObjectWithTag("Player"), -1);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) Peek(GameObject.FindGameObjectWithTag("Dummy1"), -1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) Peek(GameObject.FindGameObjectWithTag("Dummy2"), -1);
+            if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
+                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
+                GoToNext();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha5))Peek(GameObject.FindGameObjectWithTag("Dummy1"), .2f);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) Peek(GameObject.FindGameObjectWithTag("Dummy2"), .2f);
 
-            if (t.target == null) return GoNext(); // try again if t was empty
-
-            SetTarget(t.target, t.duration);
             return true;
         }
-
     }
-    internal class TargetListing
+    internal class TrackingJob
     {
         public readonly GameObject target;
         public readonly float duration;
 
-        public TargetListing(GameObject target, float duration)
+        public TrackingJob(GameObject target, float duration)
         {
             this.target = target;
             this.duration = duration;

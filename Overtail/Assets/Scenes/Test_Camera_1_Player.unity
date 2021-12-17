@@ -244,9 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd8434aca397aef4393a97f0aacba9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTarget: {fileID: 0}
-  maxOffset: 0
-  smoothTime: 0.25
+  defaultTarget: {fileID: 0}
+  defaultOffset: 0
+  defaultTime: 0.3
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

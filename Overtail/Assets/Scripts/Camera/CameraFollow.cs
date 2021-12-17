@@ -8,81 +8,100 @@ namespace Overtail.Camera
     /// <summary>
     /// Class to smoothly follow a certain target continously.
     /// Can be assigned in Unity Inspector. (Defaults to <see cref="GameObject"/> with "Player" tag)
-    /// <para /><see cref="currentTarget"/> target to be followed
-    /// <para /><see cref="maxOffset"/> maximum distance before camera starts following
-    /// <para /><see cref="smoothTime"/> camera move speed 
+    /// <para /><see cref="DefaultTarget"/> target to be followed
+    /// <para /><see cref="DefaultOffset"/> maximum distance before camera starts following
+    /// <para /><see cref="DefaultTime"/> camera move speed 
     /// </summary>
     public class CameraFollow : Camera
     {
-        private Vector3 velocity = Vector3.zero;            // reference vector for SmoothDamp()
+        // reference vector for SmoothDamp()
+        private Vector3 velocity = Vector3.zero;
 
-        [SerializeField] protected GameObject currentTarget;         // target to follow
-        [SerializeField] protected float maxOffset;           // offset, zero => character will always be centered
-        [SerializeField] protected float smoothTime = 0.25f;   // time it takes camera to reach target position. Zero is instant refocus
+        // target to keep following
+        [SerializeField] private GameObject defaultTarget;
+        // offset to target, zero will center target
+        [SerializeField] private float defaultOffset = 0f;
+        // time it takes camera to reach target position. Zero is instant
+        [SerializeField] private float defaultTime = 0.3f;
 
+        protected GameObject DefaultTarget { get => defaultTarget; set => defaultTarget = value; }
+        protected float DefaultOffset { get => defaultOffset; set => defaultOffset = value; }
+        protected float DefaultTime { get => defaultTime; set => defaultTime = value; }
 
-        protected void Start()
+        /// <summary>
+        /// Instantly centers camera around target.
+        /// </summary>
+        /// <param name="target"></param>
+        public void Focus(GameObject target)
         {
-            if (currentTarget == null)
-            {
-                currentTarget = FindPlayerObject();
-                Debug.Log("No camera target found. Defaulted to <Player>" + currentTarget);
-            }
+            SmoothFocus(target, 0, 0);
         }
 
-        void LateUpdate()
+        /// <summary>
+        /// Set which GameObject to follow
+        /// </summary>
+        /// <param name="target"></param>
+        public virtual void Follow(GameObject target)
         {
-            Follow();
-
+            DefaultTarget = target;
         }
 
-        public void SetTarget(GameObject newTarget)
+
+
+        protected virtual void LateUpdate()
         {
-            currentTarget = newTarget;
+            if (DefaultTarget == null) return;
+
+            SmoothFocus();
         }
 
-        public Vector2 TargetVector()
+        /// <summary>
+        /// Distance from camera object to some <see cref="GameObject"/>
+        /// </summary>
+        /// <returns>Distance to target</returns>
+        protected float Distance(GameObject target)
         {
-            return TargetVector(currentTarget);
-        }
-        public Vector2 TargetVector(GameObject myTarget)
-        {
-            return myTarget.transform.position - transform.position;
-        }
-        public float Distance(GameObject toTarget)
-        {
-            return TargetVector(toTarget).magnitude;
+            Vector2 cameraPosition = gameObject.transform.position;
+            Vector2 targetPosition = target.gameObject.transform.position;
+            return (targetPosition - cameraPosition).magnitude;
         }
 
-        public float Distance()
+        protected float Distance()
         {
-            return TargetVector().magnitude;
-        }
-        public void Follow(GameObject targetObj, float cameraSpeed)
-        {
-            if (Distance() < maxOffset) return;
-            Vector3 _targetPos = targetObj.transform.position;
-            Vector3 _myPos = transform.position;
-
-            Vector3 destination = new Vector3(_targetPos.x, _targetPos.y, _myPos.z);
-            SetCamera(Vector3.SmoothDamp(Position3D, destination, ref velocity, cameraSpeed));
-        }
-        public void Follow(GameObject targetObj)
-        {
-            Follow(targetObj, smoothTime);
+            return Distance(DefaultTarget);
         }
 
-        public void Follow()
+        /// <summary>
+        /// Moves camera towards target (partly).<para/>
+        /// Call in <see cref="LateUpdate"/> to smoothly follow target.
+        /// </summary>
+        /// <param name="target">Target GameObject</param>
+        /// <param name="time">Time to reach target</param>
+        /// <param name="offset">Radius around target where this is ineffective</param>
+        protected void SmoothFocus(GameObject target, float time, float offset)
         {
-            Follow(currentTarget);
+            if (Distance(target) < offset) return;
+
+            Vector3 cameraPosition = gameObject.transform.position;
+            Vector3 targetPosition = target.gameObject.transform.position;
+            Vector3 finalPosition = new Vector3(targetPosition.x, targetPosition.y, cameraPosition.z);
+
+            gameObject.transform.position = Vector3.SmoothDamp(cameraPosition, finalPosition, ref velocity, time);
         }
 
-        public GameObject FindPlayerObject()
+        protected void SmoothFocus(GameObject target, float time)
         {
-            Debug.Log($"CameraFollow> {GameObject.FindGameObjectWithTag("Player")}");
-            return GameObject.FindGameObjectWithTag("Player");
-            // Player p = FindObjectOfType(typeof(Player)) as Player;
-            // return p.gameObject;
+            SmoothFocus(target, time, DefaultOffset);
+        }
+
+        protected void SmoothFocus(GameObject target)
+        {
+            SmoothFocus(target, DefaultTime, DefaultOffset);
+        }
+
+        protected void SmoothFocus()
+        {
+            SmoothFocus(DefaultTarget, DefaultTime, DefaultOffset);
         }
     }
 }
