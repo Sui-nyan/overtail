@@ -13,9 +13,9 @@ namespace Overtail.Battle
     public class BattleSetupData : ScriptableObject
     {
         [Header("Debug Only")]
-        [SerializeField] private UnityEngine.GameObject playerPrefab;
-        [SerializeField] private UnityEngine.GameObject enemyPrefab;
-        public UnityEngine.GameObject PlayerPrefab => playerPrefab;
-        public UnityEngine.GameObject EnemyPrefab => enemyPrefab;        
+        [SerializeField] private GameObject playerPrefab;
+        [SerializeField] private GameObject enemyPrefab;
+        public GameObject PlayerPrefab => playerPrefab;
+        public GameObject EnemyPrefab => enemyPrefab;        
     }
 }

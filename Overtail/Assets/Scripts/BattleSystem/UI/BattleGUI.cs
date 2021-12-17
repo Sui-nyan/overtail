@@ -13,15 +13,15 @@ namespace Overtail.Battle
         [SerializeField] private Text textBox;
 
         [Header("Buttons")]
-        [SerializeField] private UnityEngine.GameObject attackButton;
-        [SerializeField] private UnityEngine.GameObject interactButton;
-        [SerializeField] private UnityEngine.GameObject inventoryButton;
-        [SerializeField] private UnityEngine.GameObject escapeButton;
+        [SerializeField] private GameObject attackButton;
+        [SerializeField] private GameObject interactButton;
+        [SerializeField] private GameObject inventoryButton;
+        [SerializeField] private GameObject escapeButton;
 
         private BattleSystem system;
         private BattleUnit player;
         private BattleUnit enemy;
-        private UnityEngine.GameObject[] Buttons => new UnityEngine.GameObject[] {
+        private GameObject[] Buttons => new GameObject[] {
             attackButton,
             interactButton,
             inventoryButton,
@@ -34,9 +34,9 @@ namespace Overtail.Battle
             this.player = this.system.Player;
             this.enemy = this.system.Enemy;
 
-            foreach (UnityEngine.GameObject b in Buttons)
+            foreach (GameObject b in Buttons)
             {
-                b.GetComponent<Button>().onClick.AddListener(this.HideButtons);
+                b.GetComponent<Button>().onClick.AddListener(HideButtons);
             }
         }
         public void UpdateHUD()
@@ -60,7 +60,7 @@ namespace Overtail.Battle
 
         public void ShowButtons()
         {
-            foreach (UnityEngine.GameObject b in Buttons)
+            foreach (GameObject b in Buttons)
             {
                 if (b == null) throw new System.Exception("Button is null - Buttons might not have been assigned in Unity");
                 b.SetActive(true);
@@ -69,7 +69,7 @@ namespace Overtail.Battle
 
         public void HideButtons()
         {
-            foreach (UnityEngine.GameObject b in Buttons)
+            foreach (GameObject b in Buttons)
             {
                 b.SetActive(false);
             }
