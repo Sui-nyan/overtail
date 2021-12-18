@@ -13,7 +13,7 @@ class Auth
 	 */
 	public static function validateToken(?string $token = null): bool {
 		if ($token === null) {
-			if (($token = IO::getAuthorizationHeader()) == null) {
+			if (($token = IO::getBearerToken()) == null) {
 				return false;
 			}
 		}
@@ -43,7 +43,7 @@ class Auth
 	 * @return string|null
 	 */
 	public static function tokenUuid(): ?string {
-		if (($token = IO::getAuthorizationHeader()) != null) {
+		if (($token = IO::getBearerToken()) != null) {
 			if (($decoded = base64_decode($token)) !== false) {
 				$decToken = explode(".", $decoded);
 				if (($uuid = base64_decode($decToken[0])) !== false)
