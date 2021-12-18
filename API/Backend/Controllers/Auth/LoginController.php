@@ -8,7 +8,7 @@ class LoginController extends Controller
 
 	protected function execute(): void {
 		$email = IO::POST('email');
-		$q = new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation`=1;', [':email' => $email]);
+		$q = new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NULL;', [':email' => $email]);
 
 		if (($user = $q->fetch()) !== null) {
 			if (password_verify(IO::POST('password'), $user['password'])) {		// Check password
@@ -28,7 +28,7 @@ class LoginController extends Controller
 				return;
 			} else $error = 480;				// Custo error code (Wrong password)
 		} else {
-			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation`=0;', [':email' => $email]))->fetch()) != null) {
+			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NOT NULL;', [':email' => $email]))->fetch()) != null) {
 				if (password_verify(IO::POST('password'), $user['password']))
 					$error = 481;				// Custom error code (E-Mail not confirmed)
 			}

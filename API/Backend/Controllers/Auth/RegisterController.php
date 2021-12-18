@@ -12,19 +12,21 @@ class RegisterController extends Controller
 		do {
 			$uuid = Utils::uuid();
 		} while (intval((new Query('SELECT count(`uuid`) count FROM `User` WHERE `uuid`=:uuid;', [':uuid' => $uuid]))->fetch()['count']) > 0);
+		$act = hash('xxh3', $uuid);		// Generate unique activation token (with fastest but insecure hash)
 
 		$success = false;
 		try {
 			$q = new Query(									// Insert user into database
-				'INSERT INTO `User` (`uuid`, `email`, `password`, `activation`) VALUES (:uuid, :email, :pass, 0);',
+				'INSERT INTO `User` (`uuid`, `email`, `password`, `activation`) VALUES (:uuid, :email, :pass, :act);',
 				[
 					':uuid' => $uuid,
 					':email' => $email,
-					':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT)
+					':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT),
+					':act' => $act
 				]
 			);
 
-			$message = 'Welcome to Overtail, please <a href="'.DOMAIN.'/activate/'.urlencode($uuid).'">click here</a> activate your account.';
+			$message = 'Welcome to Overtail, please <a href="'.DOMAIN.'/activate/'.urlencode($act).'">click here</a> activate your account.';
 			$mail = new Mail($email, 'Account activation', $message);
 
 			$success = $q->success() && $mail->send();		// Register is successful when 1. user inserted in database; 2. activation email has been send

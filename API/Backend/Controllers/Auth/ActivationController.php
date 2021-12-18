@@ -2,11 +2,11 @@
 
 class ActivationController extends Controller
 {
-    protected array $paths = ['/activate/:uuid'];
+    protected array $paths = ['/activate/:acToken'];
 
     protected function execute(): void {
-        if (($uuid = $this->getParam('uuid')) != null) {
-            $q = new Query('UPDATE `User` SET `activation`=1 WHERE `uuid`=:uuid;', [':uuid' => $uuid]);
+        if (($token = $this->getParam('acToken')) != null) {
+            $q = new Query('UPDATE `User` SET `activation`=NULL WHERE `activation`=:act;', [':act' => $token]);
 
             if ($q->count() > 0) {
                 $layout = new TextView('Activation successful');
