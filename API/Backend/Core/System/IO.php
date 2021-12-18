@@ -80,7 +80,7 @@ class IO
 	 *
 	 * @return string|null The auth headers
 	 */
-	public static function getAuthorizationHeader(): ?string {
+	private static function getAuthorizationHeader(): ?string {
 		$headers = null;
 		if (isset($_SERVER['Authorization'])) {
 			$headers = trim($_SERVER["Authorization"]);
