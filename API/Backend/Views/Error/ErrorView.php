@@ -52,8 +52,9 @@ class ErrorView extends View
 
 				// Custom error codes
 				// Login
-				480 => 'Wrong password',
+				480 => 'Wrong credentials',
 				481 => 'E-Mail not confirmed',
+				482 => 'User does not exist',
 				// Register
 				486 => 'E-Mail already taken',
 				default => 'Undefined error code'

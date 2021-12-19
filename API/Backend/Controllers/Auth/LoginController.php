@@ -26,12 +26,13 @@ class LoginController extends Controller
 					]
 				))->render();
 				return;
-			} else $error = 480;				// Custo error code (Wrong password)
+			} else $error = 480;				// Custom error code (Wrong credentials)
 		} else {
-			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NOT NULL;', [':email' => $email]))->fetch()) != null) {
+			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NOT NULL;', [':email' => $email]))->fetch()) !== null) {
 				if (password_verify(IO::POST('password'), $user['password']))
 					$error = 481;				// Custom error code (E-Mail not confirmed)
-			}
+				else $error = 480;
+			} else $error = 482;
 		}
 
 		if (!isset($error))						// Either the login was a success or a error should have been set. If not, 500 (here: unknown error)
