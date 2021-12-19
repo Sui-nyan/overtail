@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DialogueUI : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBox;
-    [SerializeField] private TMP_Text textLabel;
 
     public bool IsOpen { get; private set; }
+    public TMP_Text nameText;
+    public TMP_Text dialogueText;
 
     private TextWriter textWriter;
 
@@ -21,6 +23,7 @@ public class DialogueUI : MonoBehaviour
 
     public void StartDialogue(DialogueObject dialogueObject)
     {
+        nameText.text = dialogueObject.NPCName;
         IsOpen = true;
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));
@@ -30,7 +33,7 @@ public class DialogueUI : MonoBehaviour
     {
         foreach (string dialogue in dialogueObject.Dialogue)
         {
-            yield return textWriter.Run(dialogue, textLabel);
+            yield return textWriter.Run(dialogue, dialogueText);
             yield return new WaitUntil(() => Input.anyKeyDown);
         }
 
@@ -40,7 +43,8 @@ public class DialogueUI : MonoBehaviour
     private void CloseDialogue()
     {
         dialogueBox.SetActive(false);
-        textLabel.text = string.Empty;
+        dialogueText.text = string.Empty;
+        nameText.text = string.Empty;
         IsOpen = false;
     }
 }

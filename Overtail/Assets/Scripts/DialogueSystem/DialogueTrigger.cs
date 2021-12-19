@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueActivatior : MonoBehaviour, IInteractable
+public class DialogueTrigger : MonoBehaviour, IInteractable
 {
 
     [SerializeField] DialogueObject dialogueObject;
@@ -11,6 +11,7 @@ public class DialogueActivatior : MonoBehaviour, IInteractable
     {
         if(collision.CompareTag("Player") && collision.TryGetComponent(out Player player))
         {
+            Debug.Log("Player in Range");
             player.interactable = this;
         }
     }
@@ -19,7 +20,8 @@ public class DialogueActivatior : MonoBehaviour, IInteractable
     {
         if (collision.CompareTag("Player") && collision.TryGetComponent(out Player player))
         {
-            if(player.interactable is DialogueActivatior dialogueActivatior && dialogueActivatior == this)
+            Debug.Log("Player out of Range");
+            if(player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
             {
                 player.interactable = null;
             }

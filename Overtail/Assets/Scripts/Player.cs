@@ -5,9 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    [SerializeField] private DialogueUI dialogueUI;
+    [SerializeField] private DialogueManager dialogueUI;
 
-    public DialogueUI DialogueUI => dialogueUI;
+    public DialogueManager DialogueUI => dialogueUI;
 
     public IInteractable interactable { get; set; }
 
