@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Dialogue/DialogueObject")]
 
 [System.Serializable]
-public class DialogueObject : ScriptableObject
+public class DialogueObject : ScriptableObject //Objects to store Dialogues
 {
     [SerializeField] [TextArea] private string[] dialogue;
     [SerializeField] Response[] responses;
@@ -14,5 +14,7 @@ public class DialogueObject : ScriptableObject
 
     public string NPCName;
 
-    private Response[] Responses => responses;
+    public Response[] Responses => responses;
+
+    public bool HasResponses => Responses != null && Responses.Length > 0;
 }
