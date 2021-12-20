@@ -30,6 +30,6 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
 
     public void Intectact(Player player)
     {
-        player.DialogueUI.StartDialogue(dialogueObject);
+        player.DialogueManager.StartDialogue(dialogueObject);
     }
 }
