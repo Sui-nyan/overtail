@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
             PlayerMovement();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
         {
             interactable?.Intectact(this);
         }
