@@ -9,7 +9,7 @@ class InventoryController extends Controller
     protected function execute(): void {
         // Show user inventory
         if (IO::method() == 'GET') {
-            $q = new Query('SELECT * FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]);
+            $q = new Query('SELECT `item`, `amount`, `slot` FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]);
             $items = [];
             if (($data = $q->fetchAll()) != null) {     // Not null and not empty
                 foreach ($data as $item) {
