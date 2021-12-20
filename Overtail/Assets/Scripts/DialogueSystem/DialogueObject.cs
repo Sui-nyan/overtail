@@ -7,8 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueObject : ScriptableObject //Objects to store Dialogues
 {
-    [SerializeField] [TextArea] private string[] dialogue;
-    [SerializeField] Response[] responses;
+    [SerializeField] [TextArea] private string[] dialogue; //Input dialogue here
+    [SerializeField] Response[] responses; //Responses can be added in this field 
 
     public string[] Dialogue => dialogue;
 
@@ -16,5 +16,5 @@ public class DialogueObject : ScriptableObject //Objects to store Dialogues
 
     public Response[] Responses => responses;
 
-    public bool HasResponses => Responses != null && Responses.Length > 0;
+    public bool HasResponses => Responses != null && Responses.Length > 0; //Returns true, if the Dialogue has any responses
 }

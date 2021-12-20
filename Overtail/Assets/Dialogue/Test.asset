@@ -21,4 +21,6 @@ MonoBehaviour:
     dialogueObject: {fileID: 11400000, guid: f5aa664e89ff24e49a50c638ed780db7, type: 2}
   - responseText: no
     dialogueObject: {fileID: 11400000, guid: 5201c0c4e39f5644dba553705cda528c, type: 2}
+  - responseText: no
+    dialogueObject: {fileID: 11400000, guid: 5201c0c4e39f5644dba553705cda528c, type: 2}
   NPCName: Joe Mama

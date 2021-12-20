@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBox;
-    [SerializeField] private DialogueObject test;
 
     public bool IsOpen { get; private set; }
     public TMP_Text nameText;
@@ -22,8 +21,6 @@ public class DialogueManager : MonoBehaviour
         responseHandler = GetComponent<ResponseHandler>();
 
         CloseDialogue();
-        StartDialogue(test);
-
     }
 
     public void StartDialogue(DialogueObject dialogueObject)
@@ -34,6 +31,9 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(StepThroughDialogue(dialogueObject));
     }
 
+    /*
+     * Iterates through each line of the dialogue new line will appear as soon as the player clicks any key
+     */
     private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
     {
 

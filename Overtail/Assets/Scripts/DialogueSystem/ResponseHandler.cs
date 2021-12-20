@@ -11,19 +11,21 @@ public class ResponseHandler : MonoBehaviour
 
     private DialogueManager dialogueManager;
 
-    private List<GameObject> tempResponseButtons = new List<GameObject>();
+    private List<GameObject> tempResponseButtons = new List<GameObject>(); //temporary list of all the buttons created
 
     private void Start()
     {
         dialogueManager = GetComponent<DialogueManager>();
     }
-
+    /*
+     * shows responses and makes all the options clickable, the height will be adjusted by the amount of options that are possible
+     */
     public void showResponses(Response[] responses)
     {
         float responseBoxHeight = 0;
          foreach(Response response in responses)
         {
-            GameObject responseButton = Instantiate(responseButtonTemp.gameObject, responseContainer);
+            GameObject responseButton = Instantiate(responseButtonTemp.gameObject, responseContainer); 
             responseButton.gameObject.SetActive(true);
             responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
             responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickeedResponse(response));
@@ -38,6 +40,9 @@ public class ResponseHandler : MonoBehaviour
 
     }
 
+    /*
+     * Clears out all the options as soon as one is picked
+     */
     private void OnPickeedResponse(Response response)
     {
         responseBox.gameObject.SetActive(false);

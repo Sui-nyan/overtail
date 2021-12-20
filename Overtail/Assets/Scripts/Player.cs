@@ -20,10 +20,24 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    void Update()
+    {
+        if (!DialogueManager.IsOpen)
+        {
+            PlayerMovement();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            interactable?.Intectact(this);
+        }
+    }
+
+    public void PlayerMovement()
     {
         Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (movement.x != 0 || movement.y != 0) {
+        if (movement.x != 0 || movement.y != 0)
+        {
             if (movement.x < 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
@@ -36,13 +50,10 @@ public class Player : MonoBehaviour
 
             animator.SetBool("isWalking", true);
             rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
-        } else {
-            animator.SetBool("isWalking", false);
         }
-
-        if (Input.GetKeyDown(KeyCode.E))
+        else
         {
-            interactable?.Intectact(this);
+            animator.SetBool("isWalking", false);
         }
     }
 }
