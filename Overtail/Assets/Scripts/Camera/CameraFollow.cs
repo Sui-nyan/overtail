@@ -73,6 +73,7 @@ namespace Overtail.Camera
             return Distance(DefaultTarget);
         }
 
+
         /// <summary>
         /// Moves camera towards target (partly).<para/>
         /// Call in <see cref="LateUpdate"/> to smoothly follow target.
@@ -80,8 +81,12 @@ namespace Overtail.Camera
         /// <param name="target">Target GameObject</param>
         /// <param name="time">Time to reach target</param>
         /// <param name="offset">Radius around target where this is ineffective</param>
-        protected void SmoothFocus(GameObject target, float time, float offset)
+        protected void SmoothFocus(GameObject target = null, float time = -1, float offset = -1)
         {
+            if (target == null) target = DefaultTarget;
+            if (time < 0) time = DefaultTime;
+            if (offset < 0) offset = DefaultOffset;
+
             if (Distance(target) < offset) return;
 
             Vector3 cameraPosition = gameObject.transform.position;
@@ -89,21 +94,6 @@ namespace Overtail.Camera
             Vector3 finalPosition = new Vector3(targetPosition.x, targetPosition.y, cameraPosition.z);
 
             gameObject.transform.position = Vector3.SmoothDamp(cameraPosition, finalPosition, ref velocity, time);
-        }
-
-        protected void SmoothFocus(GameObject target, float time)
-        {
-            SmoothFocus(target, time, DefaultOffset);
-        }
-
-        protected void SmoothFocus(GameObject target)
-        {
-            SmoothFocus(target, DefaultTime, DefaultOffset);
-        }
-
-        protected void SmoothFocus()
-        {
-            SmoothFocus(DefaultTarget, DefaultTime, DefaultOffset);
         }
     }
 }
