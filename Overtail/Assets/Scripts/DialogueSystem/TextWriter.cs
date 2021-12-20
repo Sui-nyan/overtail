@@ -5,7 +5,7 @@ using TMPro;
 
 public class TextWriter : MonoBehaviour
 {
-    [SerializeField] private float writingSpeed = 0.1f;
+    [SerializeField] private float writingSpeed = 0.01f;
 
     public Coroutine Run(string textToType, TMP_Text textLabel)
     {

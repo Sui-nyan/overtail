@@ -54,8 +54,8 @@ public class DialogueManager : MonoBehaviour
         {
             responseHandler.showResponses(dialogueObject.Responses);
         }
-
-        CloseDialogue();
+        else
+            CloseDialogue();
     }
 
     private void CloseDialogue()

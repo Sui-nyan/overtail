@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26788e67d1549214a9ed706feded3648, type: 3}
   m_Name: YES
   m_EditorClassIdentifier: 
-  dialogue: []
+  dialogue:
+  - Then let's go!
+  responses: []
+  NPCName: 
