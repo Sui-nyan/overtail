@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Overtail;
 
+
 namespace Overtail.Camera
 {
     /// <summary>
@@ -12,6 +13,7 @@ namespace Overtail.Camera
     /// <para /><see cref="DefaultOffset"/> maximum distance before camera starts following
     /// <para /><see cref="DefaultTime"/> camera move speed 
     /// </summary>
+    [DisallowMultipleComponent]
     public class CameraFollow : Camera
     {
         // reference vector for SmoothDamp()
