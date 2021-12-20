@@ -7,26 +7,25 @@ class InventoryController extends Controller
     protected bool $userRequired = true;
 
     protected function execute(): void {
-        // Insert data into the inventory db
-        if (($invData = IO::POST('invData')) !== null) {
-            $invData = json_decode($invData);
-            foreach ($invData as $item) {
-                $q = new Query('SELECT * FROM `Inventory` ');
-                if ($q->count() > 0) {
-                    // TODO: Update amount, ...
-                }
-
-                else {
-                    // TODO: Insert item
+        // Show user inventory
+        if (IO::method() == 'GET') {
+            $q = new Query('SELECT `item`, `amount`, `slot` FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]);
+            $items = [];
+            if (($data = $q->fetchAll()) != null) {     // Not null and not empty
+                foreach ($data as $item) {
+                    $items[] = [
+                        'id' => $item['item'],
+                        'amount' => intval($item['amount']),
+                        'slot' => intval($item['slot']),
+                    ];
                 }
             }
-            // TODO: Implement
+            (new APIView($items))->render();
         }
 
-        // Show user inventory
-        else {
-            $q = new Query('SELECT * FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]);
-            (new APIView($q->fetchAll()))->render();
+        // Insert data into the inventory db
+        elseif (IO::method() == 'POST') {
+            // TODO: Get and insert items
         }
     }
 }

@@ -7,6 +7,7 @@ class RegisterController extends Controller
 	protected array $reqVar = ['email', 'password'];
 
 	protected function execute(): void {
+		// TODO: Check if this is an valid email
 		$email = IO::POST('email');
 
 		do {
