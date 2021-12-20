@@ -103,7 +103,7 @@ class Query
 	 * Reads all data from database
 	 *
 	 * @see https://bugs.php.net/bug.php?edit=2&id=44341
-	 * @return array<int|string,string>|null Null on error, array with values (as string!) otherwise (PDO::FETCH_ASSOC)
+	 * @return array<array<int|string,string>>|null Null on error, array with values (as string!) otherwise (PDO::FETCH_ASSOC)
 	 */
 	public function fetchAll(): ?array {
 		if (!$this->run)
