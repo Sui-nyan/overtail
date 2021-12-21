@@ -6,7 +6,7 @@ namespace Overtail.Camera
     /// <summary>
     /// Camera to follow a queued up list of targets.
     /// </summary>
-    public class HighlightCamera : CameraFollow
+    public class HighlightCamera : BasicCamera
     {
         [SerializeField] private LinkedList<TrackingJob> queue = new LinkedList<TrackingJob>();
 
@@ -20,21 +20,19 @@ namespace Overtail.Camera
         [SerializeField] private int debugQueueCount = 0;
         [SerializeField] private float quickPeekTime = .1f;
 
+        public int QueueCount => queue.Count;
+
         protected override void LateUpdate()
         {
             debugQueueCount = queue.Count;
 
-            if (!_inputCoroutine()) return;
-
-            // Duration is over or no target currently
+            // if Duration is over or no target currently
             if (currentTarget == null || (currentDuration >= 0 && elapsedTime > currentDuration))
             {
                 if (!GoToNext()) // Anything in queue?
                 {
-                    if (DefaultTarget != null) // Fallback value?
-                    {
-                        SmoothFocus(DefaultTarget);
-                    }
+                    // Fallback value
+                    base.LateUpdate();
                 }
             }
             else
@@ -44,27 +42,6 @@ namespace Overtail.Camera
                 else
                     SmoothFocus(currentTarget, Mathf.Clamp(currentDuration, quickPeekTime, DefaultTime));
                 if (currentDuration >= 0) elapsedTime += Time.deltaTime;
-            }
-        }
-
-
-        /// <summary>
-        /// Go-to method.
-        /// Peeks at some Object for a certain time.
-        /// Overrides current if it's being tracked indefinitely.
-        /// Jumps queue if not.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <param name="duration"></param>
-        public void Peek(GameObject target, float duration)
-        {
-            if (currentDuration == -1)
-            {
-                Follow(target, duration);
-            }
-            else
-            {
-                JumpQueue(target, duration);
             }
         }
 
@@ -82,7 +59,7 @@ namespace Overtail.Camera
         /// Get next element (or tupel) from queue
         /// </summary>
         /// <returns></returns>
-        public (GameObject, float) Dequeue()
+        private (GameObject, float) Dequeue()
         {
             TrackingJob t = queue.First.Value;
             queue.RemoveFirst();
@@ -98,13 +75,13 @@ namespace Overtail.Camera
         /// <returns></returns>
         public bool GoToNext()
         {
-            if (queue.Count == 0) return false;
+            if (queue.Count == 0) ClearAll();
             (GameObject newTarget, float newDuration) = Dequeue();
 
             // try again if t was empty
             if (newTarget == null) return GoToNext();
 
-            Follow(newTarget, newDuration);
+            SetTarget(newTarget, newDuration);
             return true;
         }
 
@@ -120,17 +97,17 @@ namespace Overtail.Camera
         }
 
         /// <summary>
-        /// <see cref="Follow"/> but puts the currently tracked target back onto the queue with leftover time
+        /// <see cref="SetTarget"/> but puts the currently tracked target back onto the queue with leftover time
         /// </summary>
         /// <param name="target"></param>
         /// <param name="duration"></param>
-        private void JumpQueue(GameObject target, float duration)
+        public void JumpQueue(GameObject target, float duration)
         {
             TrackingJob current = new TrackingJob(
                 currentTarget,
                 currentDuration < 0 ? -1 : Mathf.Max(currentDuration - elapsedTime, 0));
 
-            Follow(target, duration);
+            SetTarget(target, duration);
             queue.AddFirst(current);
         }
 
@@ -139,57 +116,11 @@ namespace Overtail.Camera
         /// </summary>
         /// <param name="target"></param>
         /// <param name="duration"></param>
-        private void Follow(GameObject target, float duration)
+        public void SetTarget(GameObject target, float duration = -1)
         {
             currentDuration = duration;
             currentTarget = target;
             elapsedTime = 0;
-        }
-
-        /// <summary>
-        /// <inheritdoc/>
-        /// </summary>
-        /// <param name="target"></param>
-        private new void Follow(GameObject target)
-        {
-            Follow(target, -1);
-        }
-
-
-
-        private bool _inputCoroutine()
-        {
-            // returns true if calling context should continue;
-            // Test code for funsies
-
-            if (Input.GetKeyDown(KeyCode.Tab)) GoToNext();
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                Focus(GameObject.FindGameObjectWithTag("Player"));
-                return false;
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1)) Peek(GameObject.FindGameObjectWithTag("Player"), -1);
-            if (Input.GetKeyDown(KeyCode.Alpha2)) Peek(GameObject.FindGameObjectWithTag("Dummy1"), -1);
-            if (Input.GetKeyDown(KeyCode.Alpha3)) Peek(GameObject.FindGameObjectWithTag("Dummy2"), -1);
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Player"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy1"), 1f);
-                Enqueue(GameObject.FindGameObjectWithTag("Dummy2"), 1f);
-                GoToNext();
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))Peek(GameObject.FindGameObjectWithTag("Dummy1"), .2f);
-            if (Input.GetKeyDown(KeyCode.Alpha5)) Peek(GameObject.FindGameObjectWithTag("Dummy2"), .2f);
-
-            return true;
         }
     }
     internal class TrackingJob

@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using Overtail;
 
-
+/// <summary>
+/// Please just use <see cref="Overtail.Camera.PlayerCamera"/>
+/// </summary>
 namespace Overtail.Camera
 {
     /// <summary>
     /// Class to smoothly follow a certain target continously.
     /// Can be assigned in Unity Inspector. (Defaults to <see cref="GameObject"/> with "Player" tag)
+    /// Please use <see cref="Overtail.Camera.PlayerCamera"/>
     /// <para /><see cref="DefaultTarget"/> target to be followed
     /// <para /><see cref="DefaultOffset"/> maximum distance before camera starts following
     /// <para /><see cref="DefaultTime"/> camera move speed 
     /// </summary>
     [DisallowMultipleComponent]
-    public class CameraFollow : Camera
+    public abstract class BasicCamera : MonoBehaviour
     {
         // reference vector for SmoothDamp()
         private Vector3 velocity = Vector3.zero;
@@ -29,26 +32,6 @@ namespace Overtail.Camera
         protected GameObject DefaultTarget { get => defaultTarget; set => defaultTarget = value; }
         protected float DefaultOffset { get => defaultOffset; set => defaultOffset = value; }
         protected float DefaultTime { get => defaultTime; set => defaultTime = value; }
-
-        /// <summary>
-        /// Instantly centers camera around target.
-        /// </summary>
-        /// <param name="target"></param>
-        public void Focus(GameObject target)
-        {
-            SmoothFocus(target, 0, 0);
-        }
-
-        /// <summary>
-        /// Set which GameObject to follow
-        /// </summary>
-        /// <param name="target"></param>
-        public virtual void Follow(GameObject target)
-        {
-            DefaultTarget = target;
-        }
-
-
 
         protected virtual void LateUpdate()
         {
@@ -68,11 +51,23 @@ namespace Overtail.Camera
             return (targetPosition - cameraPosition).magnitude;
         }
 
-        protected float Distance()
+        /// <summary>
+        /// Instantly centers camera around target.
+        /// </summary>
+        /// <param name="target"></param>
+        public void SnapTo(GameObject target)
         {
-            return Distance(DefaultTarget);
+            SmoothFocus(target, 0, 0);
         }
 
+        /// <summary>
+        /// Set which GameObject to follow
+        /// </summary>
+        /// <param name="target"></param>
+        public virtual void SetTarget(GameObject target)
+        {
+            DefaultTarget = target;
+        }
 
         /// <summary>
         /// Moves camera towards target (partly).<para/>

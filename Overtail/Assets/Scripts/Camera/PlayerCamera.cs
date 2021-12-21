@@ -2,7 +2,12 @@
 
 namespace Overtail.Camera
 {
-    public class PlayerCamera : CameraFollow
+    /// <summary>
+    /// Default camera to follow player. Just attach this to main camera and either
+    /// a) Assign player GameObject to target field or...
+    /// b) Add "Player"-Tag to player GameObject
+    /// </summary>
+    public class PlayerCamera : BasicCamera
     {
         [Header("Cooldown")]
         [SerializeField] private float refocusCooldown = 5;
@@ -10,15 +15,19 @@ namespace Overtail.Camera
 
         private void Start()
         {
-            FollowPlayer();
+            FindPlayerTarget();
         }
 
         protected override void LateUpdate()
         {
-            RefollowPlayer();
+            ResetPlayerTarget();
             base.LateUpdate();
         }
-        public void FollowPlayer()
+        
+        /// <summary>
+        /// Finds as assigns GameObject with "Player" tag as tracking target.
+        /// </summary>
+        public void FindPlayerTarget()
         {
             DefaultTarget = GameObject.FindGameObjectWithTag("Player");
             if (DefaultTarget == null)
@@ -27,18 +36,22 @@ namespace Overtail.Camera
                 Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
         }
 
-        private void RefollowPlayer()
+        /// <summary>
+        /// Use in <see cref="LateUpdate"/>.
+        /// Calls <see cref="FindPlayerTarget"/> with a cooldown time.
+        /// </summary>
+        private void ResetPlayerTarget()
         {
+            if (DefaultTarget.tag == "Player") return;
+
             if (currentCooldown > 0)
             {
                 currentCooldown = Mathf.Max(currentCooldown - Time.deltaTime, 0);
                 return;
             }
 
-            if (DefaultTarget.tag == "Player") return;
-
             Debug.Log("[Camera] No default target found.");
-            FollowPlayer();
+            FindPlayerTarget();
             currentCooldown = refocusCooldown;
         }
     }
