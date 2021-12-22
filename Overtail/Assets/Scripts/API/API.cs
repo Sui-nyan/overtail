@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+
 namespace Overtail.API
 {
     [Serializable]
@@ -55,7 +60,7 @@ namespace Overtail.API
 
         public static async Task<string> POST(string endpoint, Dictionary<string,string> data, bool auth = true)
         {
-            FormUrlEncodedContent content = new(data);
+            FormUrlEncodedContent content = new FormUrlEncodedContent(data);
             if (auth && Token != null)
                 content.Headers.Add("Authorization", "Bearer " + Token);
             HttpResponseMessage res = await _client.PostAsync(_base + endpoint, content);
@@ -65,10 +70,10 @@ namespace Overtail.API
 
         public static async Task<string> PUT(string endpoint, Dictionary<string, string> data, bool auth = true)
         {
-            FormUrlEncodedContent content = new(data);
+            FormUrlEncodedContent content = new FormUrlEncodedContent(data);
             if (auth && Token != null)
                 content.Headers.Add("Authorization", "Bearer " + Token);
-            HttpResponseMessage res = await _client.PatchAsync(_base + endpoint, content);
+            HttpResponseMessage res = await _client.PutAsync(_base + endpoint, content);
             // res.EnsureSuccessStatusCode();
             return await res.Content.ReadAsStringAsync();
         }
