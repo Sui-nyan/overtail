@@ -12,7 +12,6 @@ class SafeInvController extends Controller
 
         // TODO: Delete! Items that are in the DB but not in the $invData
         foreach ($invData as $item) {
-
             $q = new Query('SELECT COUNT(`uuid`) count FROM Inventory WHERE `uuid`=:uuid AND `slot`=:slot;', [':uuid' => $uuid, ':slot' => $item['slot']]);
             if ($q->fetch()['count'] == 1) {
                 $itemData = [
