@@ -21,7 +21,6 @@ class LoginController extends Controller
 				}
 				(new APIView(
 					[
-						'uuid' => $user['uuid'],
 						'token' => Auth::generateToken($user['uuid'], $user['password'])
 					]
 				))->render();
