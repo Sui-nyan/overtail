@@ -7,7 +7,7 @@ class SafeInvController extends Controller
     protected array $reqVar = ['invData'];
 
     protected function execute(): void {
-        $invData = IO::POST('invData');
+        $invData = json_decode(IO::POST('invData'));
         $uuid = Auth::tokenUuid();
 
         // TODO: Delete! Items that are in the DB but not in the $invData
@@ -15,6 +15,7 @@ class SafeInvController extends Controller
             $q = new Query('SELECT COUNT(`uuid`) count FROM Inventory WHERE `uuid`=:uuid AND `slot`=:slot;', [':uuid' => $uuid, ':slot' => $item['slot']]);
             if ($q->fetch()['count'] == 1) {
                 $itemData = [
+                    ':uuid' => $uuid,
                     ':item' => $item['item'],
                     ':slot' => $item['slot'],
                     ':amount' => $item['amount']
