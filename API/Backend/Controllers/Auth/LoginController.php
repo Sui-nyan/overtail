@@ -11,13 +11,11 @@ class LoginController extends Controller
 		$q = new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NULL;', [':email' => $email]);
 
 		if (($user = $q->fetch()) !== null) {
-			if (password_verify(IO::POST('password'), $user['password'])) {		// Check password
-				// Check if newer hashing algorithm is available, if so rehash and update password in `User` table
-				if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
+			if (password_verify(IO::POST('password'), $user['password'])) {			// Check password
+				if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {	// Check if newer hashing algorithm is available, if so rehash and update password in `User` table
 					$q = new Query('UPDATE `User` SET `password`=:pass WHERE `uuid`=:uuid;', [':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT), ':uuid' => $user['uuid']]);
-					if ($q->success()) {
+					if ($q->success())
 						$user['password'] = (new Query('SELECT `password` FROM `User` WHERE `uuid`=:uuid', [':uuid' => $user['uuid']]))->fetch()['password'];
-					}
 				}
 				(new APIView(
 					[
