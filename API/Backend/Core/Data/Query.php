@@ -28,7 +28,7 @@ class Query
 	private bool $success;
 
 	/**
-	 * @var bool Run or not
+	 * @var bool Wheather query was executed (run) or not
 	 */
 	private bool $run = false;
 
