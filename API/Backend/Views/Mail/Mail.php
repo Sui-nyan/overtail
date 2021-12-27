@@ -1,7 +1,6 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 class Mail
@@ -13,12 +12,10 @@ class Mail
 	){}
 
 	public function send(): bool {
-		// Create an instance; passing `true` enables exceptions
-		$mail = new PHPMailer(true);
+		$mail = new PHPMailer(true);									// Create an instance; passing `true` enables exceptions
 
 		try {
 			// Server settings
-			// $mail->SMTPDebug = SMTP::DEBUG_SERVER;					// Enable verbose debug output
 			$mail->isSMTP();											// Send using SMTP
 			$mail->Host       = 'smtp.strato.de';						// Set the SMTP server to send through
 			$mail->SMTPAuth   = true;									// Enable SMTP authentication
@@ -28,11 +25,11 @@ class Mail
 			$mail->Port       = 465;									// TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
 			// Recipients
-			$mail->setFrom('overtail@schindlerfelix.de', 'Overtail');
+			$mail->setFrom('overtail@schindlerfelix.de', 'Overtail');	// Set from name
 			$mail->addAddress($this->to);								// Add a recipient
 
-			$mailTemplate = file_get_contents(__DIR__ . '/mail.html');
-			$body = str_replace('% TITLE %', TITLE . " &middot; {$this->title}", $mailTemplate);	// Insert title
+			$mailTemplate = file_get_contents(__DIR__ . '/mail.html');	// Load HTML template
+			$body = str_replace('% TITLE %', TITLE." &middot; {$this->title}", $mailTemplate);	// Insert title
 			$body = str_replace('% BODY %', $this->message, $body);		// Insert message
 
 			// Content
