@@ -74,10 +74,14 @@ class Query
 			$this->execute();
 		if ($this->success) {
 			$id = $this->con->lastInsertId($name);
-			if (is_numeric($id))
-				return intval($id);
-			return $id;
-		} else return 0;
+			if ($id !== false) {
+				if (is_numeric($id))
+					return intval($id);
+				else
+					return $id;
+			}
+		}
+		return 0;
 	}
 
 	/**
