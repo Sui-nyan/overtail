@@ -12,43 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44bd41696c44078469f146a906f6cfc8, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerData:
+  playerSerializable:
+    name: 
     status:
       level: 0
       exp: 0
       hp: 0
       maxHp: 0
-      atk: 0
-      def: 0
+      attack: 0
+      defense: 0
+    statusEffects: []
     pos:
-      x: 0
-      y: 0
+      x: 0.65857863
+      y: 0.3414212
       z: 0
-    inventory:
-      items:
-      - quantity: 0
-        item:
-          name: 
-          description: 
-          stackable: 1
-      capacity: 0
-      infiniteCapacity: 0
-    equipment:
-      weapon:
-        name: 
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
-      head:
-        name: Helmet
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
-      body:
-        name: 
-        description: 
-        stackable: 0
-        attack: 0
-        defense: 0
