@@ -85,7 +85,7 @@ class Query
 	}
 
 	/**
-	 * Reads data from database
+	 * Reads data (row by row) from database
 	 * Access returned value via $return["ColumnName"] or via model class
 	 *
 	 * @param Model|null $model Model class to be fetched into
@@ -104,7 +104,7 @@ class Query
 	}
 
 	/**
-	 * Reads all data from database
+	 * Reads data (all rows) from database
 	 *
 	 * @see https://bugs.php.net/bug.php?edit=2&id=44341
 	 * @return array<array<int|string,string>>|null Null on error, array with values (as string!) otherwise (PDO::FETCH_ASSOC)
