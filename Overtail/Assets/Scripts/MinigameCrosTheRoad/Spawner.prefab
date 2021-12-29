@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,5 +96,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   template: {fileID: 3676333293383764629, guid: 1b109019a80ea7243a48064e06ab6fa1, type: 3}
-  velocity: 0.1
-  facing: {x: 1, y: 0}
+  carSpeed: 0
+  Facing: 1
+  elapsedTime: 0
+  minSpawnDelay: 1
+  maxSpawnDelay: 3
+  minCarSpeed: 3
+  maxCarSpeed: 5
