@@ -11,6 +11,7 @@ public class mainSerializationTest : MonoBehaviour
     public DialogueObject SaveThisToFile;
     public DialogueObject LoadFromFile;
 
+    /*
     private void Awake()
     {
         // Cannot (Should not) save to resource folder during runtime btw
@@ -52,5 +53,5 @@ public class mainSerializationTest : MonoBehaviour
         JsonUtility.FromJsonOverwrite(jsonTextFile.ToString(), LoadFromFile);
 
         Debug.Log($"Loaded JSON: {jsonTextFile}");
-    }
+    } */
 }
