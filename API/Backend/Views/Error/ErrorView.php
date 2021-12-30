@@ -52,19 +52,20 @@ class ErrorView extends View
 
 				// Custom error codes
 				// Login
-				480 => 'Wrong password',
+				480 => 'Wrong credentials',
 				481 => 'E-Mail not confirmed',
+				482 => 'User does not exist',
 				// Register
 				486 => 'E-Mail already taken',
 				default => 'Undefined error code'
 			};
 		}
 
-		http_response_code($this->code);
+		http_response_code($this->code);									// Set the correct HTML response code
 		if ($this->isAPI) {
-			(new APIView([$this->code => $this->message]))->render();
+			(new APIView([$this->code => $this->message]))->render();		// Render error as JSON
 		} else {
-			echo "<h1>" . $this->code . " - " . $this->message . "</h1>";
+			echo "<h1>" . $this->code . " - " . $this->message . "</h1>";	// Render error as HTML
 			$this->renderChildren();
 		}
 	}

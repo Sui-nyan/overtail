@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - NPC
+  - Dummy2
+  - Dummy1
   layers:
   - Default
   - TransparentFX

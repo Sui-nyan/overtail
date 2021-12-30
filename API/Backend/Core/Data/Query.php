@@ -28,7 +28,7 @@ class Query
 	private bool $success;
 
 	/**
-	 * @var bool Run or not
+	 * @var bool Wheather query was executed (run) or not
 	 */
 	private bool $run = false;
 
@@ -74,14 +74,18 @@ class Query
 			$this->execute();
 		if ($this->success) {
 			$id = $this->con->lastInsertId($name);
-			if (is_numeric($id))
-				return intval($id);
-			return $id;
-		} else return 0;
+			if ($id !== false) {
+				if (is_numeric($id))
+					return intval($id);
+				else
+					return $id;
+			}
+		}
+		return 0;
 	}
 
 	/**
-	 * Reads data from database
+	 * Reads data (row by row) from database
 	 * Access returned value via $return["ColumnName"] or via model class
 	 *
 	 * @param Model|null $model Model class to be fetched into
@@ -100,10 +104,10 @@ class Query
 	}
 
 	/**
-	 * Reads all data from database
+	 * Reads data (all rows) from database
 	 *
 	 * @see https://bugs.php.net/bug.php?edit=2&id=44341
-	 * @return array<int|string,string>|null Null on error, array with values (as string!) otherwise (PDO::FETCH_ASSOC)
+	 * @return array<array<int|string,string>>|null Null on error, array with values (as string!) otherwise (PDO::FETCH_ASSOC)
 	 */
 	public function fetchAll(): ?array {
 		if (!$this->run)
