@@ -15,10 +15,12 @@ namespace Overtail
             gameObject.transform.position = persistantData.playerSerializable.Position;
             movement = gameObject.GetComponent<PlayerMovement>();
         }
+
+        /*
         void LateUpdate()
         {
             if (movement.IsMoving)
                 persistantData.playerSerializable.Position = gameObject.transform.position;
-        }
+        }*/
     }
 }

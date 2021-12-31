@@ -6,53 +6,65 @@ public class BoundedNPC : MonoBehaviour, IInteractable
 {
     [SerializeField] Sprite portrait;
 
-    private Rigidbody2D rb;
-    private new Transform transform;
+    private Rigidbody2D NPCBody;
+    private Transform transform;
     public Collider2D boundary;
 
     public float moveSpeed;
     bool isWalking;
     bool playerInRange;
 
-    private Vector2 minWalkBound;
-    private Vector2 maxWalkBound;
-
     private int directions;
-    private int directionVector;
+    private Vector3 directionVector;
 
     private float waitCounter;
     public float waitTime;
     private float walkCounter;
     public float walkTime;
 
-    
+    bool isWithinBonds;
 
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        NPCBody = GetComponent<Rigidbody2D>();
         transform = GetComponent<Transform>();
         
         waitCounter = waitTime;
         walkCounter = walkTime;
-        moveDirections();
+        changeDirection();
 
-        minWalkBound = boundary.bounds.min;
-        maxWalkBound = boundary.bounds.max;
 
     }
 
     void Update()
+
     {
-        if (!playerInRange)
-        {
-            movement();
-        }
-        
+        movement();
+        Debug.Log(isWithinBonds);
     }
 
     public void movement()
     {
+        Vector3 temp = transform.position + directionVector * moveSpeed * Time.deltaTime;
+        if (boundary.bounds.Contains(temp))
+        {
+            isWithinBonds = true;
+            NPCBody.MovePosition(temp);
+        }
+        else
+        {
+            isWithinBonds = false;
+            changeDirection();
+        }
+        
+    }
+
+    public void changeDirection() //NPC will randomly change their movement direction
+    {
+        directions = Random.Range(0, 4);
+        isWalking = true;
+
         if (isWalking)
         {
             walkCounter -= Time.deltaTime;
@@ -60,37 +72,18 @@ public class BoundedNPC : MonoBehaviour, IInteractable
             switch (directions)
             {
                 case 0:
-                    rb.velocity = new Vector2(-moveSpeed, 0);
-                    if (transform.position.x > minWalkBound.x)
-                    {
-                        isWalking = false;
-                        waitCounter = waitTime;
-                    }
-                    break; //left
+                    directionVector = Vector3.left;
+                    break; //Walk left
                 case 1:
-                    rb.velocity = new Vector2(moveSpeed, 0);
-                    if (transform.position.x > maxWalkBound.x)
-                    {
-                        isWalking = false;
-                        waitCounter = waitTime;
-                    }
-                    break; //right
+                    directionVector = Vector3.right;
+                    break; //Walk right
                 case 2:
-                    rb.velocity = new Vector2(0, moveSpeed);
-                   if (transform.position.y > maxWalkBound.y)
-                    {
-                        isWalking = false;
-                        waitCounter = waitTime;
-                    }
-                    break; //up
+                    directionVector = Vector3.up;
+                    break; //Walk up
                 case 3:
-                    rb.velocity = new Vector2(0, -moveSpeed);
-                    if (transform.position.y > minWalkBound.x)
-                    {
-                        isWalking = false;
-                        waitCounter = waitTime;
-                    }
-                    break; //down
+                    directionVector = Vector3.down;
+                    break; //Walk down
+                default: break;
             }
 
             if (walkCounter < 0)
@@ -104,32 +97,32 @@ public class BoundedNPC : MonoBehaviour, IInteractable
         {
             waitCounter -= Time.deltaTime;
 
-            if(waitCounter < 0)
+            if (waitCounter < 0)
             {
-                moveDirections();
+                changeDirection();
             }
         }
-        
-    }
-
-    public void moveDirections()
-    {
-        directions = Random.Range(0, 4);
-        isWalking = true;
     }
 
     public void stopMovement()
     {
-        rb.velocity = Vector2.zero;
+        NPCBody.velocity = Vector2.zero;
         isWalking = false;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        playerInRange = true;
+        Vector3 temp = directionVector;
+        changeDirection();
+        int loop = 0;
+        while (temp == directionVector && loop < 10)
+        {
+            loop++;
+            changeDirection();
+        }
     }
 
-    public void Intectact(Player player)
+    public void Intectact(PlayerMovement player)
     {
         
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private DialogueManager dialogueManager;
@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public DialogueManager DialogueManager => dialogueManager;
 
     public IInteractable interactable { get; set; }
+    public bool IsMoving { get; private set; }
 
     public float moveSpeed;
     private Rigidbody2D rb;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     {
         if (!DialogueManager.IsOpen)
         {
-            PlayerMovement();
+            Movement();
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
@@ -33,7 +34,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void PlayerMovement()
+    public void Movement()
     {
         Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (movement.x != 0 || movement.y != 0)
