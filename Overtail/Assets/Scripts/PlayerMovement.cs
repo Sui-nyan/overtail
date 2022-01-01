@@ -23,15 +23,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!DialogueManager.IsOpen)
+        Movement();
+        /*if (!DialogueManager.IsOpen)
         {
             Movement();
-        }
+        }*/
 
-        if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
+        /*if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
         {
             interactable?.Intectact(this);
-        }
+        }*/
     }
 
     public void Movement()
