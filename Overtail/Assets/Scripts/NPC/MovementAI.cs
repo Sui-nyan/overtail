@@ -25,6 +25,7 @@ public class MovementAI : MonoBehaviour
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
+        seeker.StartPath(rb.position, target.position, OnPathComplete);
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 

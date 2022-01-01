@@ -117,15 +117,11 @@ public class BoundNPCMovement : MonoBehaviour, IInteractable
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Vector3 temp = directionVector;
-        changeDirection();
-        int loop = 0;
-        while (temp == directionVector && loop < 10)
+        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
         {
-            loop++;
-            changeDirection();
+            isWalking = false;
         }
     }
 

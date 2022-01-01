@@ -4,8 +4,5 @@ using UnityEngine;
 
 public interface INPC
 {
-    void movement();
-
-    public Sprite Sprite { get; set; }
 
 }
