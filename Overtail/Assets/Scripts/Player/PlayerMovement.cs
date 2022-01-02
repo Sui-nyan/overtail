@@ -29,12 +29,15 @@ public class PlayerMovement : MonoBehaviour
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
 
-        if (!DialogueManager.IsOpen && change != Vector3.zero)
+        if (!DialogueManager.IsOpen)
         {
             MoveCharacter();
             animator.SetFloat("moveX", change.x);
             animator.SetFloat("moveY", change.y);
         }
+        
+
+        Debug.Log("moveX: " + animator.GetFloat("moveX") + " moveY: " + animator.GetFloat("moveY"));
 
         if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
         {
@@ -44,6 +47,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveCharacter()
     {
-        rb.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
+        if(change != Vector3.zero)
+        {
+            rb.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
+            animator.SetBool("isWalking", true);
+        } else
+        {
+            animator.SetBool("isWalking", false);
+        }
+        
     }
 }
