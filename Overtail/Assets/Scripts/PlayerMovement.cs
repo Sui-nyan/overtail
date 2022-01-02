@@ -14,19 +14,26 @@ public class PlayerMovement : MonoBehaviour
 
     public float moveSpeed;
     private Rigidbody2D rb;
+    private Vector3 change;
     public Animator animator;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
-        
-        if (!DialogueManager.IsOpen)
+        change = Vector3.zero;
+        change.x = Input.GetAxisRaw("Horizontal");
+        change.y = Input.GetAxisRaw("Vertical");
+
+        if (!DialogueManager.IsOpen && change != Vector3.zero)
         {
-            Movement();
+            MoveCharacter();
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
@@ -35,27 +42,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Movement()
+    public void MoveCharacter()
     {
-        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        if (movement.x != 0 || movement.y != 0)
-        {
-            if (movement.x < 0)
-            {
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-
-            if (movement.x > 0)
-            {
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-
-            animator.SetBool("isWalking", true);
-            rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            animator.SetBool("isWalking", false);
-        }
+        rb.MovePosition(transform.position + change * moveSpeed * Time.deltaTime);
     }
 }
