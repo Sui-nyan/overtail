@@ -1,8 +1,8 @@
 <?php
 
-class PlayerSafeController extends Controller
+class PosSaveController extends Controller
 {
-    protected array $paths = ['/player/save'];
+    protected array $paths = ['/pos/save', '/position/save'];
     protected array $methods = ['POST'];
     protected array $reqVar = ['x', 'y'];
     protected bool $userRequired = true;
