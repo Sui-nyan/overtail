@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace Overtail.Battle
     /// </summary>
     public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
+        public event Action<string> ObjectSpeaking;
+        public event Action<BattleUnit> ChangeDetected;
+
         [SerializeField] protected new string name;
 
         [SerializeField] protected int level;
@@ -96,5 +100,17 @@ namespace Overtail.Battle
             TurnUpdate(1);
         }
 
+        private void SpeakLn(string str)
+        {
+            ObjectSpeaking?.Invoke(str);
+        }
+
+        private void SpeakLn(List<string> strList)
+        {
+            foreach (string str in strList)
+            {
+                SpeakLn(str);
+            }
+        }
     }
 }

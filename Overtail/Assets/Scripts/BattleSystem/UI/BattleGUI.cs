@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -18,9 +20,12 @@ namespace Overtail.Battle
         [SerializeField] private GameObject inventoryButton;
         [SerializeField] private GameObject escapeButton;
 
-        private BattleSystem system;
-        private BattleUnit player;
-        private BattleUnit enemy;
+        private BattleSystem _system;
+        private BattleUnit _player;
+        private BattleUnit _enemy;
+
+        private Queue<string> _messageQueue;
+        private bool _isBusy;
         private GameObject[] Buttons => new GameObject[] {
             attackButton,
             interactButton,
@@ -30,19 +35,58 @@ namespace Overtail.Battle
 
         public void Setup(BattleSystem system)
         {
-            this.system = system;
-            this.player = this.system.Player;
-            this.enemy = this.system.Enemy;
+            _player.ObjectSpeaking += QueueMessage;
+            _enemy.ObjectSpeaking += QueueMessage;
+
+            _player.Updated += UpdateHUD;
+            _enemy.Updated += UpdateHUD;
+
+            this._system = system;
+            this._player = this._system.Player;
+            this._enemy = this._system.Enemy;
 
             foreach (GameObject b in Buttons)
             {
                 b.GetComponent<Button>().onClick.AddListener(HideButtons);
             }
         }
+
+        private void UpdateHUD(BattleUnit obj)
+        {
+            // If lost HP
+            //  Do slow HP drop animation
+            throw new System.NotImplementedException();
+        }
+
+        private void QueueMessage(string msg)
+        {
+            // Queue message
+            _messageQueue.Enqueue(msg);
+            _system.StartCoroutine(ProcessQueue());
+        }
+
+        private IEnumerator ProcessQueue()
+        {
+            if (_isBusy) yield break;
+
+            _isBusy = true;
+
+            while (_messageQueue.Count > 0)
+            {
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            }
+
+            _isBusy = false;
+        }
+
+        
+
+
+
         public void UpdateHUD()
         {
-            playerHUD.SetHUD(player);
-            enemyHUD.SetHUD(enemy);
+            playerHUD.SetHUD(_player);
+            enemyHUD.SetHUD(_enemy);
         }
 
         public void SetText(string text)
