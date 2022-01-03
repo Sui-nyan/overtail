@@ -89,7 +89,7 @@ namespace Overtail.Battle
             // Open interaction >
             // a) Flirt
             // b) Bully
-            GUI.FlirtOrBully(()=> StartCoroutine(_state.Flirt()),() => StartCoroutine(_state.Bully()));
+            GUI.InteractionSubMenu(()=> StartCoroutine(_state.Flirt()),() => StartCoroutine(_state.Bully()));
         }
         public void OnInventoryButton()
         {

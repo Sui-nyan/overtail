@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
@@ -32,7 +33,6 @@ namespace Overtail.Battle
         private KeyCode _confirmKey = KeyCode.Space;
         private bool _isBusy = false;
         public bool IsBusy => _isBusy;
-
         private GameObject[] Buttons => new GameObject[]
         {
             attackButton,
@@ -43,9 +43,10 @@ namespace Overtail.Battle
 
         public void Setup(BattleSystem system)
         {
-            this._system = system;
-            this._player = this._system.Player;
-            this._enemy = this._system.Enemy;
+            _system = system;
+
+            _player = _system.Player;
+            _enemy = _system.Enemy;
 
             foreach (GameObject b in Buttons)
             {
@@ -82,8 +83,8 @@ namespace Overtail.Battle
             while (_messageQueue.Count > 0)
             {
                 var text = _messageQueue.Dequeue();
-                yield return SlowlyDisplayText(text);
-                yield return _system.StartCoroutine(WaitOrConfirm());
+                yield return TypeWriteText(text);
+                //yield return _system.StartCoroutine(WaitOrConfirm());
                 yield return new WaitForEndOfFrame();
             }
 
@@ -91,13 +92,7 @@ namespace Overtail.Battle
         }
 
 
-        private IEnumerator SlowlyDisplayText(string text)
-        {
-            // TODO Implementation
-            Debug.Log($"{text}");
-            SetText(text);
-            yield break;
-        }
+
 
 
         public void UpdateHud()
@@ -137,7 +132,7 @@ namespace Overtail.Battle
             }
         }
 
-        public IEnumerator WaitOrConfirm(float maxWait = 4f, float minimumWait = 0.5f)
+        public IEnumerator WaitOrConfirm(float maxWait = 4f, float minimumWait = 0.1f)
         {
             yield return new WaitForSeconds(minimumWait);
 
@@ -151,9 +146,33 @@ namespace Overtail.Battle
 
             yield return new WaitForEndOfFrame();
         }
+        private Coroutine TypeWriteText(string text, float delay = 0.09f)
+        {
+            Debug.Log($"{text}");
+
+            IEnumerator F()
+            {
+                // TODO Fix sudden overflow
+                textBox.text = string.Empty;
+                foreach (var c in text)
+                {
+                    if (Input.GetKeyDown(_confirmKey))
+                    {
+                        textBox.text = text;
+                        break;
+                    }
+                    textBox.text += c;
+                    yield return new WaitForSeconds(delay);
+                }
+
+                yield return new WaitForSeconds(0f);
+            }
+
+            return _system.StartCoroutine(F());
+        }
 
 
-        public void FlirtOrBully(Func<Coroutine> flirtFunc, Func<Coroutine> bullyFunc)
+        public void InteractionSubMenu(Func<Coroutine> flirtFunc, Func<Coroutine> bullyFunc)
         {
             GameObject[] buttons = new GameObject[2];
             GameObject CreateButton(string label, Func<Coroutine> func, Vector2 pos)
