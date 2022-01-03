@@ -15,7 +15,6 @@ namespace Overtail.Battle
 
         void TakeDamage(int damage);
         IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent);
-        IEnumerator InteractedOn(BattleSystem system, IBattleInteractable opponent);
         void InflictStatus(StatusEffect buff);
         void TurnUpdate(int turns);
         void TurnUpdate();

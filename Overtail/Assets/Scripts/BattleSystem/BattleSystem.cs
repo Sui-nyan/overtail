@@ -13,7 +13,7 @@ namespace Overtail.Battle
         {
             if (this._state != null)
             {
-                StartCoroutine(this._state.Stop());
+                StartCoroutine(this._state.CleanUp());
             }
 
             this._state = state;
@@ -47,6 +47,8 @@ namespace Overtail.Battle
         public PlayerUnit Player => _player;
         public EnemyUnit Enemy => _enemy;
 
+        public bool IsIdle => !GUI.IsBusy;
+
         void Start()
         {
             GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
@@ -56,14 +58,14 @@ namespace Overtail.Battle
             _enemy = enemyGO.GetComponent<EnemyUnit>();
 
             GUI.Setup(this);
-            GUI.UpdateHUD();
+            GUI.UpdateHud();
 
             SetState(new StartState(this));
         }
 
         void FixedUpdate()
         {
-            GUI.ReselectedGUI();
+            GUI.ReselectGui();
         }
 
         public void Exit()
@@ -84,11 +86,16 @@ namespace Overtail.Battle
         }
         public void OnInteractButton()
         {
-            StartCoroutine(_state.Interact());
+            // Open interaction >
+            // a) Flirt
+            // b) Bully
+            GUI.FlirtOrBully(()=> StartCoroutine(_state.Flirt()),() => StartCoroutine(_state.Bully()));
         }
         public void OnInventoryButton()
         {
-            StartCoroutine(_state.Inventory());
+            // Open Inventory
+            // Choose item
+            StartCoroutine(_state.UseItem(null));
         }
         public void OnEscapeButton()
         {

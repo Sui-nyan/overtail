@@ -11,16 +11,26 @@ namespace Overtail.Battle
             system.GUI.SetText($"{this.Name} attacks {opponent.Name}.");
             yield return new WaitForSeconds(.5f);
             opponent.TakeDamage(this.Attack);
-            system.GUI.UpdateHUD();
+            system.GUI.UpdateHud();
             yield return "Hello";
         }
 
-        public override IEnumerator InteractedOn(BattleSystem system, IBattleInteractable opponent)
+        public IEnumerator GetBullied(BattleSystem system, PlayerUnit opponent)
         {
-            system.GUI.SetText($"{opponent.Name} is trying to talk to {this.Name}");
+            system.GUI.QueueMessage($"{opponent.Name} is trying to talk down on {this.Name}");
             yield return new WaitForSeconds(1f);
-            system.GUI.SetText($"{this.Name} doesn't want to talk to you...");
+            system.GUI.QueueMessage($"{this.Name} is ignoring you...");
+            yield return new WaitUntil(() => system.IsIdle);
+
+            system.RestartState();
+        }
+
+        public IEnumerator GetFlirted(BattleSystem system, PlayerUnit opponent)
+        {
+            system.GUI.QueueMessage($"{opponent.Name} is trying to talk to {this.Name}");
             yield return new WaitForSeconds(1f);
+            system.GUI.QueueMessage($"{this.Name} doesn't want to talk to you...");
+            yield return new WaitUntil(() => system.IsIdle);
 
             system.RestartState();
         }
@@ -29,6 +39,8 @@ namespace Overtail.Battle
         {
             yield break;
         }
+
+
     }
 
     public class SlimeBattleUnit : EnemyUnit

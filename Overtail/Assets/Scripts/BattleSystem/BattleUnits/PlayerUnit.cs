@@ -53,12 +53,32 @@ namespace Overtail.Battle
 
         public IEnumerator Magic()
         {
-            SpeakLine("Hello");
-            SpeakLine("Im sad");
-            SpeakLine("Please dont hurt me");
+            SpeakLine("Can you hear me?");
+            SpeakLine("Im talking to you");
+            SpeakLine("Across the water");
+            SpeakLine("Across the deap, blue, ocean");
+            SpeakLine("Under the open sky");
+            SpeakLine("Oh my, baby im tryin.");
 
             yield break;
         }
+
+        public IEnumerator Attack(BattleSystem system, BattleUnit opponent)
+        {
+            yield break;
+        }
+
+        public IEnumerator Flirt(BattleSystem system, BattleUnit opponent)
+        {
+            yield break;
+        }
+
+        public IEnumerator Bully(BattleSystem system, BattleUnit opponent)
+        {
+            yield break;
+        }
+
+
     }
 
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Overtail.Pending;
 
 namespace Overtail.Battle
 {
@@ -20,12 +21,17 @@ namespace Overtail.Battle
             yield break;
         }
 
-        public virtual IEnumerator Interact()
+        public virtual IEnumerator Flirt()
         {
             yield break;
         }
 
-        public virtual IEnumerator Inventory()
+        public virtual IEnumerator Bully()
+        {
+            yield break;
+        }
+
+        public virtual IEnumerator UseItem(ItemStack itemStack)
         {
             yield break;
         }
@@ -35,7 +41,7 @@ namespace Overtail.Battle
             yield break;
         }
 
-        public virtual IEnumerator Stop()
+        public virtual IEnumerator CleanUp()
         {
             yield break;
         }

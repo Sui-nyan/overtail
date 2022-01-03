@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Overtail.Pending;
 using UnityEngine;
 
 namespace Overtail.Battle
@@ -15,11 +16,35 @@ namespace Overtail.Battle
         public override IEnumerator Attack()
         {
             _system.Enemy.TakeDamage(_system.Player);
-            _system.GUI.UpdateHUD();
+            _system.GUI.UpdateHud(); // TODO remove
 
-            _system.GUI.SetText($"{_system.Player.Name} attacks {_system.Enemy.Name}.");
-            yield return new WaitForSeconds(1f);
+            _system.GUI.QueueMessage($"{_system.Player.Name} attacked {_system.Enemy.Name}.");  
+            yield return new WaitUntil(() => _system.IsIdle);
+        }
 
+        public override IEnumerator Flirt()
+        {
+            yield return _system.StartCoroutine(_system.Enemy.GetFlirted(_system, _system.Player));
+        }
+
+        public override IEnumerator Bully()
+        {
+            yield return _system.StartCoroutine(_system.Enemy.GetBullied(_system, _system.Player));
+        }
+
+        public override IEnumerator UseItem(ItemStack itemStack)
+        {
+            yield return _system.StartCoroutine(_system.Player.Magic());
+            InventoryManager.Instance?.UseItem(itemStack);
+            _system.GUI.QueueMessage($"{_system.Player.Name} used {itemStack?.Item?.Name}.");
+
+            yield return new WaitUntil(() => _system.IsIdle);
+            Debug.Log("Whoops");
+            EndState();
+        }
+
+        private void EndState()
+        {
             if (_system.Enemy.HP <= 0)
             {
                 _system.SetState(new VictoryState(_system));
@@ -30,27 +55,18 @@ namespace Overtail.Battle
             }
         }
 
-        public override IEnumerator Interact()
-        {
-            yield return _system.StartCoroutine(_system.Enemy.InteractedOn(_system, _system.Player));
-        }
-
-        public override IEnumerator Inventory()
-        {
-            yield return _system.StartCoroutine(_system.Player.Magic());
-            yield break;
-        }
-
         public override IEnumerator Escape()
         {
-            _system.GUI.SetText("You fled the battle, coward!");
-            yield return new WaitForSeconds(1f);
+            _system.GUI.QueueMessage("You fled the battle, coward!");
+
+            yield return new WaitUntil(() => _system.IsIdle);
             _system.Exit();
         }
-        public override IEnumerator Stop()
+        public override IEnumerator CleanUp()
         {
             _system.GUI.HideButtons();
             _system.Player.TurnUpdate();
+
             yield break;
         }
     }

@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -9,13 +12,13 @@ namespace Overtail.Battle
     [System.Serializable]
     public class BattleGUI
     {
-        [Header("UI Elements")]
-        [SerializeField] private BattleHUD playerHUD;
+        [Header("UI Elements")] [SerializeField]
+        private BattleHUD playerHUD;
+
         [SerializeField] private BattleHUD enemyHUD;
         [SerializeField] private Text textBox;
 
-        [Header("Buttons")]
-        [SerializeField] private GameObject attackButton;
+        [Header("Buttons")] [SerializeField] private GameObject attackButton;
         [SerializeField] private GameObject interactButton;
         [SerializeField] private GameObject inventoryButton;
         [SerializeField] private GameObject escapeButton;
@@ -24,10 +27,14 @@ namespace Overtail.Battle
         private BattleUnit _player;
         private BattleUnit _enemy;
 
+        // TODO make this an action/GUIUpdate queue
         private Queue<string> _messageQueue = new Queue<string>();
         private KeyCode _confirmKey = KeyCode.Space;
         private bool _isBusy = false;
-        private GameObject[] Buttons => new GameObject[] {
+        public bool IsBusy => _isBusy;
+
+        private GameObject[] Buttons => new GameObject[]
+        {
             attackButton,
             interactButton,
             inventoryButton,
@@ -48,46 +55,52 @@ namespace Overtail.Battle
             _player.ObjectSpeaking += QueueMessage;
             _enemy.ObjectSpeaking += QueueMessage;
 
-            _player.Updated += UpdateHUD;
-            _enemy.Updated += UpdateHUD;
+            _player.Updated += UpdateHud;
+            _enemy.Updated += UpdateHud;
         }
 
-        private void UpdateHUD(BattleUnit obj)
+        private void UpdateHud(BattleUnit obj)
         {
-            // If lost HP
-            //  Do slow HP drop animation
-            throw new System.NotImplementedException();
+            // TODO Check for what changed
+
+            // E.g. slowly drop HP
         }
 
-        private void QueueMessage(string msg)
+        public void QueueMessage(string msg)
         {
             // Queue message
             _messageQueue.Enqueue(msg);
+
+            if (_isBusy) return;
+
+            _isBusy = true;
             _system.StartCoroutine(ProcessQueue());
         }
 
         private IEnumerator ProcessQueue()
         {
-            if (_isBusy) yield break;
-            _isBusy = true;
-
             while (_messageQueue.Count > 0)
             {
-                string s = _messageQueue.Dequeue();
-                Debug.Log($"{s} ({_messageQueue.Count} left)");
-                Debug.Log($"Next: [{(_messageQueue.Count > 0 ? _messageQueue.Peek() : "Empty")}]");
-                yield return new WaitUntil(() => Input.GetKeyDown(_confirmKey));
-                //yield return new WaitForSeconds(0.3f);
+                var text = _messageQueue.Dequeue();
+                yield return SlowlyDisplayText(text);
+                yield return _system.StartCoroutine(WaitOrConfirm());
+                yield return new WaitForEndOfFrame();
             }
 
             _isBusy = false;
         }
 
-        
+
+        private IEnumerator SlowlyDisplayText(string text)
+        {
+            // TODO Implementation
+            Debug.Log($"{text}");
+            SetText(text);
+            yield break;
+        }
 
 
-
-        public void UpdateHUD()
+        public void UpdateHud()
         {
             playerHUD.SetHUD(_player);
             enemyHUD.SetHUD(_enemy);
@@ -98,7 +111,7 @@ namespace Overtail.Battle
             textBox.text = text;
         }
 
-        public void ReselectedGUI()
+        public void ReselectGui()
         {
             if (EventSystem.current.currentSelectedGameObject == null)
             {
@@ -110,7 +123,8 @@ namespace Overtail.Battle
         {
             foreach (GameObject b in Buttons)
             {
-                if (b == null) throw new System.Exception("Button is null - Buttons might not have been assigned in Unity");
+                if (b == null)
+                    throw new System.Exception("Button is null - Buttons might not have been assigned in Unity");
                 b.SetActive(true);
             }
         }
@@ -121,6 +135,53 @@ namespace Overtail.Battle
             {
                 b.SetActive(false);
             }
+        }
+
+        public IEnumerator WaitOrConfirm(float maxWait = 4f, float minimumWait = 0.5f)
+        {
+            yield return new WaitForSeconds(minimumWait);
+
+            maxWait -= minimumWait;
+
+            yield return new WaitUntil(() =>
+            {
+                maxWait -= Time.deltaTime;
+                return maxWait < 0 || Input.GetKey(_confirmKey);
+            });
+
+            yield return new WaitForEndOfFrame();
+        }
+
+
+        public void FlirtOrBully(Func<Coroutine> flirtFunc, Func<Coroutine> bullyFunc)
+        {
+            GameObject[] buttons = new GameObject[2];
+            GameObject CreateButton(string label, Func<Coroutine> func, Vector2 pos)
+            {
+                var root = GameObject.Find("DialogueBox");
+                var prefab = Resources.Load<GameObject>("_Button");
+                var buttonGameObject = GameObject.Instantiate(prefab, root.transform);
+                var button = buttonGameObject.GetComponent<Button>();
+
+                buttonGameObject.GetComponentInChildren<Text>().text = label;
+
+                button.onClick.AddListener(() =>
+                {
+                    foreach (var b in buttons)
+                    {
+                        GameObject.Destroy(b);
+                    }
+                    func();
+                });
+                
+                buttonGameObject.name = label;
+                buttonGameObject.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+
+                return buttonGameObject;
+            }
+
+            buttons[0] = CreateButton("Flirt", flirtFunc, new Vector2(160, 40));
+            buttons[1] = CreateButton("Bully", bullyFunc, new Vector2(160, 0));
         }
     }
 }

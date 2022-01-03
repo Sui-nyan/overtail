@@ -75,7 +75,7 @@ namespace Overtail.Battle
         {
             yield break;
         }
-        public virtual IEnumerator InteractedOn(BattleSystem system, IBattleInteractable opponent)
+        public virtual IEnumerator GetBullied(BattleSystem system, IBattleInteractable opponent)
         {
             yield break;
         }
