@@ -34,12 +34,12 @@ namespace Overtail.Battle
 
         public override IEnumerator UseItem(ItemStack itemStack)
         {
+            _system.GUI.QueueMessage("You found some corny lyrics");
             yield return _system.StartCoroutine(_system.Player.Magic());
             InventoryManager.Instance?.UseItem(itemStack);
-            _system.GUI.QueueMessage($"{_system.Player.Name} used {itemStack?.Item?.Name}.");
+            //_system.GUI.QueueMessage($"{_system.Player.Name} used {itemStack?.Item?.Name}.");
 
             yield return new WaitUntil(() => _system.IsIdle);
-            Debug.Log("Whoops");
             EndState();
         }
 
