@@ -9,20 +9,20 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            system.GUI.SetText("Opponent is choosing an action.");
+            _system.GUI.SetText("Opponent is choosing an action.");
             yield return new WaitForSeconds(1f);
 
-            yield return system.StartCoroutine(system.Enemy.DoTurn(system, system.Player));
+            yield return _system.StartCoroutine(_system.Enemy.DoTurn(_system, _system.Player));
 
             yield return new WaitForSeconds(1f);
 
-            if (system.Player.HP <= 0)
+            if (_system.Player.HP <= 0)
             {
-                system.SetState(new DefeatState(system));
+                _system.SetState(new DefeatState(_system));
             }
             else
             {
-                system.SetState(new PlayerTurnState(system));
+                _system.SetState(new PlayerTurnState(_system));
             }
         }
     }

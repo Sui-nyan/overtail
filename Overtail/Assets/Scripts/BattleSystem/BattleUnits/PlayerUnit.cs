@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 namespace Overtail.Battle
 {
     public class PlayerUnit : BattleUnit
@@ -50,6 +51,14 @@ namespace Overtail.Battle
             return base.GetStat(statType);
         }
 
+        public IEnumerator Magic()
+        {
+            SpeakLine("Hello");
+            SpeakLine("Im sad");
+            SpeakLine("Please dont hurt me");
+
+            yield break;
+        }
     }
 
 

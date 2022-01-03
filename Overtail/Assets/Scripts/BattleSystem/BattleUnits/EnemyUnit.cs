@@ -5,6 +5,7 @@ namespace Overtail.Battle
 {
     public class EnemyUnit : BattleUnit
     {
+        private int _affection;
         public override IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent)
         {
             system.GUI.SetText($"{this.Name} attacks {opponent.Name}.");
@@ -22,6 +23,11 @@ namespace Overtail.Battle
             yield return new WaitForSeconds(1f);
 
             system.RestartState();
+        }
+
+        public IEnumerator OnDefeat()
+        {
+            yield break;
         }
     }
 

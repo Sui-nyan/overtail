@@ -12,7 +12,7 @@ namespace Overtail.Battle
     public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
         public event Action<string> ObjectSpeaking;
-        public event Action<BattleUnit> ChangeDetected;
+        public event Action<BattleUnit> Updated;
 
         [SerializeField] protected new string name;
 
@@ -27,12 +27,12 @@ namespace Overtail.Battle
         [SerializeField] protected List<StatusEffect> statusEffects = new List<StatusEffect>();
 
         public List<StatusEffect> StatusEffects => statusEffects;
-        public virtual string Name { get => name; }
-        public virtual int Level { get => level; }
-        public virtual int HP { get => hp; }
-        public virtual int MaxHP { get => GetStat(StatType.MAXHP); }
-        public virtual int Attack { get => GetStat(StatType.ATTACK); }
-        public virtual int Defense { get => GetStat(StatType.DEFENSE); }
+        public virtual string Name => name;
+        public virtual int Level => level;
+        public virtual int HP => hp;
+        public virtual int MaxHP => GetStat(StatType.MAXHP);
+        public virtual int Attack => GetStat(StatType.ATTACK);
+        public virtual int Defense => GetStat(StatType.DEFENSE);
 
         protected virtual int GetStat(StatType statType)
         {
@@ -100,16 +100,16 @@ namespace Overtail.Battle
             TurnUpdate(1);
         }
 
-        private void SpeakLn(string str)
+        protected void SpeakLine(string str)
         {
             ObjectSpeaking?.Invoke(str);
         }
 
-        private void SpeakLn(List<string> strList)
+        protected void SpeakLine(List<string> strList)
         {
             foreach (string str in strList)
             {
-                SpeakLn(str);
+                SpeakLine(str);
             }
         }
     }

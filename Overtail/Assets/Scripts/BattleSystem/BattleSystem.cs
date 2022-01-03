@@ -7,22 +7,22 @@ namespace Overtail.Battle
 
     public abstract class StateMachine : MonoBehaviour
     {
-        protected State state;
+        protected State _state;
 
         public void SetState(State state)
         {
-            if (this.state != null)
+            if (this._state != null)
             {
-                StartCoroutine(this.state.Stop());
+                StartCoroutine(this._state.Stop());
             }
 
-            this.state = state;
-            StartCoroutine(this.state.Start());
+            this._state = state;
+            StartCoroutine(this._state.Start());
         }
 
         public void RestartState()
         {
-            StartCoroutine(state.Start());
+            StartCoroutine(_state.Start());
         }
     }
 
@@ -39,8 +39,8 @@ namespace Overtail.Battle
         [SerializeField] private Transform playerStation;
         [SerializeField] private Transform enemyStation;
 
-        private PlayerUnit _player;
-        private EnemyUnit _enemy;
+        [SerializeField] private PlayerUnit _player;
+        [SerializeField] private EnemyUnit _enemy;
 
         [SerializeField] private BattleGUI _graphicalUI;
         public BattleGUI GUI => _graphicalUI;
@@ -64,7 +64,6 @@ namespace Overtail.Battle
         void FixedUpdate()
         {
             GUI.ReselectedGUI();
-            GUI.UpdateHUD(); // performance pls?
         }
 
         public void Exit()
@@ -81,19 +80,19 @@ namespace Overtail.Battle
 
         public void OnAttackButton()
         {
-            StartCoroutine(state.Attack());
+            StartCoroutine(_state.Attack());
         }
         public void OnInteractButton()
         {
-            StartCoroutine(state.Interact());
+            StartCoroutine(_state.Interact());
         }
         public void OnInventoryButton()
         {
-            StartCoroutine(state.Inventory());
+            StartCoroutine(_state.Inventory());
         }
         public void OnEscapeButton()
         {
-            StartCoroutine(state.Escape());
+            StartCoroutine(_state.Escape());
         }
     }
 }

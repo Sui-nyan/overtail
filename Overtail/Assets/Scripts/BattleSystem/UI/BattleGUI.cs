@@ -24,8 +24,9 @@ namespace Overtail.Battle
         private BattleUnit _player;
         private BattleUnit _enemy;
 
-        private Queue<string> _messageQueue;
-        private bool _isBusy;
+        private Queue<string> _messageQueue = new Queue<string>();
+        private KeyCode _confirmKey = KeyCode.Space;
+        private bool _isBusy = false;
         private GameObject[] Buttons => new GameObject[] {
             attackButton,
             interactButton,
@@ -35,12 +36,6 @@ namespace Overtail.Battle
 
         public void Setup(BattleSystem system)
         {
-            _player.ObjectSpeaking += QueueMessage;
-            _enemy.ObjectSpeaking += QueueMessage;
-
-            _player.Updated += UpdateHUD;
-            _enemy.Updated += UpdateHUD;
-
             this._system = system;
             this._player = this._system.Player;
             this._enemy = this._system.Enemy;
@@ -49,6 +44,12 @@ namespace Overtail.Battle
             {
                 b.GetComponent<Button>().onClick.AddListener(HideButtons);
             }
+
+            _player.ObjectSpeaking += QueueMessage;
+            _enemy.ObjectSpeaking += QueueMessage;
+
+            _player.Updated += UpdateHUD;
+            _enemy.Updated += UpdateHUD;
         }
 
         private void UpdateHUD(BattleUnit obj)
@@ -68,12 +69,15 @@ namespace Overtail.Battle
         private IEnumerator ProcessQueue()
         {
             if (_isBusy) yield break;
-
             _isBusy = true;
 
             while (_messageQueue.Count > 0)
             {
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+                string s = _messageQueue.Dequeue();
+                Debug.Log($"{s} ({_messageQueue.Count} left)");
+                Debug.Log($"Next: [{(_messageQueue.Count > 0 ? _messageQueue.Peek() : "Empty")}]");
+                yield return new WaitUntil(() => Input.GetKeyDown(_confirmKey));
+                //yield return new WaitForSeconds(0.3f);
             }
 
             _isBusy = false;

@@ -8,50 +8,49 @@ namespace Overtail.Battle
         public PlayerTurnState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
-            system.GUI.SetText("Choose an action.");
-            system.GUI.ShowButtons();
+            _system.GUI.SetText("Choose an action.");
+            _system.GUI.ShowButtons();
             yield break;
         }
         public override IEnumerator Attack()
         {
-            system.Enemy.TakeDamage(system.Player);
-            system.GUI.UpdateHUD();
+            _system.Enemy.TakeDamage(_system.Player);
+            _system.GUI.UpdateHUD();
 
-            system.GUI.SetText($"{system.Player.Name} attacks {system.Enemy.Name}.");
+            _system.GUI.SetText($"{_system.Player.Name} attacks {_system.Enemy.Name}.");
             yield return new WaitForSeconds(1f);
 
-            if (system.Enemy.HP <= 0)
+            if (_system.Enemy.HP <= 0)
             {
-                system.SetState(new VictoryState(system));
+                _system.SetState(new VictoryState(_system));
             }
             else
             {
-                system.SetState(new EnemyTurnState(system));
+                _system.SetState(new EnemyTurnState(_system));
             }
         }
 
         public override IEnumerator Interact()
         {
-            yield return system.StartCoroutine(system.Enemy.InteractedOn(system, system.Player));
+            yield return _system.StartCoroutine(_system.Enemy.InteractedOn(_system, _system.Player));
         }
 
         public override IEnumerator Inventory()
         {
-            system.GUI.SetText("You forgot your bag at home.");
-            yield return new WaitForSeconds(1f);
-            system.RestartState();
+            yield return _system.StartCoroutine(_system.Player.Magic());
+            yield break;
         }
 
         public override IEnumerator Escape()
         {
-            system.GUI.SetText("You fled the battle, coward!");
+            _system.GUI.SetText("You fled the battle, coward!");
             yield return new WaitForSeconds(1f);
-            system.Exit();
+            _system.Exit();
         }
         public override IEnumerator Stop()
         {
-            system.GUI.HideButtons();
-            system.Player.TurnUpdate();
+            _system.GUI.HideButtons();
+            _system.Player.TurnUpdate();
             yield break;
         }
     }

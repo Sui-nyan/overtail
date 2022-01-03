@@ -4,10 +4,10 @@ namespace Overtail.Battle
 {
     public abstract class State
     {
-        protected readonly BattleSystem system;
+        protected readonly BattleSystem _system;
         public State(BattleSystem system)
         {
-            this.system = system;
+            this._system = system;
         }
 
         public virtual IEnumerator Start()
