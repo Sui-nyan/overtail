@@ -9,10 +9,9 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            _system.GUI.SetText("You deaded");
-            yield return new WaitForSeconds(0.2f);
-            _system.GUI.SetText("You have been defeated.");
-            yield return new WaitForSeconds(1f);
+            _system.GUI.QueueMessage("You deaded");
+            _system.GUI.QueueMessage("You have been defeated.");
+            yield return new WaitUntil(() => _system.IsIdle);
 
             _system.Exit();
         }

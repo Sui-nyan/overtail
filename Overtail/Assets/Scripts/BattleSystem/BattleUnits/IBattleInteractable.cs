@@ -8,13 +8,12 @@ namespace Overtail.Battle
     public interface IBattleInteractable
     {
         string Name { get; }
-        int HP { get; }
+        int HP { get; set; }
         int MaxHP { get; }
         int Attack { get; }
         int Defense { get; }
 
-        void TakeDamage(int damage);
-        IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent);
+        IEnumerator DoTurn(BattleSystem system);
         void InflictStatus(StatusEffect buff);
         void TurnUpdate(int turns);
         void TurnUpdate();

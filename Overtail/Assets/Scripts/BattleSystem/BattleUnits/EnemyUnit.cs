@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Overtail.Battle
@@ -6,37 +7,45 @@ namespace Overtail.Battle
     public class EnemyUnit : BattleUnit
     {
         private int _affection;
-        public override IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent)
+
+        public override IEnumerator DoTurn(BattleSystem system)
         {
-            system.GUI.SetText($"{this.Name} attacks {opponent.Name}.");
-            yield return new WaitForSeconds(.5f);
-            opponent.TakeDamage(this.Attack);
+            system.GUI.QueueMessage($"{this.Name} attacks {system.Player.Name}.");
+            system.Player.HP -= Math.Max(0, this.Attack - system.Player.Defense);
             system.GUI.UpdateHud();
-            yield return "Hello";
+            yield return new WaitUntil(() => system.IsIdle);
         }
 
-        public IEnumerator GetBullied(BattleSystem system, PlayerUnit opponent)
+        internal IEnumerator GetAttacked(BattleSystem system)
         {
-            system.GUI.QueueMessage($"{opponent.Name} is trying to talk down on {this.Name}");
-            yield return new WaitForSeconds(1f);
-            system.GUI.QueueMessage($"{this.Name} is ignoring you...");
-            yield return new WaitUntil(() => system.IsIdle);
+            var dmg = Math.Max(this.Defense - system.Player.Attack, 0 );
+            this.HP -= dmg;
 
-            system.RestartState();
+            if(HP/MaxHP < 0.5)
+            {
+                system.GUI.QueueMessage($"{Name}: \"Oh the pain. MERCY\"");
+            } else if (HP/MaxHP < 0.1)
+            {
+                system.GUI.QueueMessage($"{Name} is becomming desperate");
+            }
+
+            yield break;
         }
 
         public IEnumerator GetFlirted(BattleSystem system, PlayerUnit opponent)
         {
-            system.GUI.QueueMessage($"{opponent.Name} is trying to talk to {this.Name}");
-            yield return new WaitForSeconds(1f);
-            system.GUI.QueueMessage($"{this.Name} doesn't want to talk to you...");
+            system.GUI.QueueMessage($"{Name} doesn't want to talk to you...");
             yield return new WaitUntil(() => system.IsIdle);
-
-            system.RestartState();
         }
 
-        public IEnumerator OnDefeat()
+        public IEnumerator GetBullied(BattleSystem system, PlayerUnit opponent)
         {
+            system.GUI.QueueMessage($"{Name} ignored {system.Player.Name}...");
+            yield return new WaitUntil(() => system.IsIdle);
+        }
+        public IEnumerator OnDefeat(BattleSystem system)
+        {
+            system.GUI.QueueMessage($"{Name}: (x-x)");
             yield break;
         }
 

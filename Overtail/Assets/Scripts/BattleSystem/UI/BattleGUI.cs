@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Overtail.Battle
 {
@@ -84,15 +81,12 @@ namespace Overtail.Battle
             {
                 var text = _messageQueue.Dequeue();
                 yield return TypeWriteText(text);
-                //yield return _system.StartCoroutine(WaitOrConfirm());
+                yield return AwaitTimeOrConfirm(minWait : 0.5f);
                 yield return new WaitForEndOfFrame();
             }
 
             _isBusy = false;
         }
-
-
-
 
 
         public void UpdateHud()
@@ -132,44 +126,54 @@ namespace Overtail.Battle
             }
         }
 
-        public IEnumerator WaitOrConfirm(float maxWait = 4f, float minimumWait = 0.1f)
+        public Coroutine AwaitTimeOrConfirm(float maxWait = 4f, float minWait = 0.2f)
         {
-            yield return new WaitForSeconds(minimumWait);
-
-            maxWait -= minimumWait;
-
-            yield return new WaitUntil(() =>
+            IEnumerator _WaitOrConfirm(float maxTime = 4f, float minTime = 0.2f)
             {
-                maxWait -= Time.deltaTime;
-                return maxWait < 0 || Input.GetKey(_confirmKey);
-            });
-
-            yield return new WaitForEndOfFrame();
+                maxTime -= minTime;
+                yield return new WaitForSeconds(minTime);
+                yield return new WaitUntil(() =>
+                {
+                    maxTime -= Time.deltaTime;
+                    return maxTime < 0 || Input.GetKey(_confirmKey);
+                });
+                yield return new WaitForEndOfFrame();
+            }
+            return _system.StartCoroutine(_WaitOrConfirm(maxWait, minWait));
         }
+
         private Coroutine TypeWriteText(string text, float delay = 0.09f)
         {
             Debug.Log($"{text}");
 
-            IEnumerator F()
+            IEnumerator Typing()
             {
-                // TODO Fix sudden overflow
                 textBox.text = string.Empty;
-                foreach (var c in text)
+                var timeElapsed = 0f;
+                int i = 0;
+                while(i < text.Length)
                 {
                     if (Input.GetKeyDown(_confirmKey))
                     {
                         textBox.text = text;
                         break;
                     }
-                    textBox.text += c;
-                    yield return new WaitForSeconds(delay);
-                }
 
+                    if (timeElapsed > delay)
+                    {
+                        timeElapsed = 0;
+                        textBox.text = text.Substring(0, i);
+                        i++;
+                    }
+
+                    timeElapsed += Time.deltaTime; // time since last frame
+                    yield return null; // Skip to next frame
+                }
                 yield return new WaitForSeconds(0f);
             }
-
-            return _system.StartCoroutine(F());
+            return _system.StartCoroutine(Typing());
         }
+
 
 
         public void InteractionSubMenu(Func<Coroutine> flirtFunc, Func<Coroutine> bullyFunc)

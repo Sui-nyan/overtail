@@ -8,8 +8,11 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            _system.GUI.SetText($"{_system.Enemy} has been defeated. You win.");
-            yield return new WaitForSeconds(1f);
+            yield return _system.StartCoroutine(_system.Enemy.OnDefeat(_system));
+            yield return new WaitUntil(() => _system.IsIdle);
+
+            _system.GUI.QueueMessage($"{_system.Enemy} has been defeated. You win.");
+            yield return new WaitUntil(() => _system.IsIdle);
 
             _system.Exit();
         }

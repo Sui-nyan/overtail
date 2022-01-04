@@ -9,11 +9,11 @@ namespace Overtail.Battle
 
         public override IEnumerator Start()
         {
-            _system.GUI.SetText("Opponent is choosing an action.");
-            yield return _system.StartCoroutine(_system.GUI.WaitOrConfirm());
+            _system.GUI.QueueMessage("Opponent is choosing an action.");
+            yield return new WaitUntil(() => _system.IsIdle);
 
-            yield return _system.StartCoroutine(_system.Enemy.DoTurn(_system, _system.Player));
-            yield return _system.StartCoroutine(_system.GUI.WaitOrConfirm());
+            yield return _system.StartCoroutine(_system.Enemy.DoTurn(_system));
+            yield return new WaitUntil(() => _system.IsIdle);
 
             if (_system.Player.HP <= 0)
             {

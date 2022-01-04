@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Overtail.Pending;
+using System;
+using System.Collections;
 using UnityEngine;
 namespace Overtail.Battle
 {
@@ -32,6 +34,38 @@ namespace Overtail.Battle
             statusEffects.Clear();
             p.StatusEffects.ForEach(s => statusEffects.Add(new StatusEffect(s)));
         }
+
+        internal IEnumerator PreAttack(BattleSystem system)
+        {
+            yield break;
+        }
+
+        internal IEnumerator PreFlirt(BattleSystem system)
+        {
+            // Placeholder
+            system.GUI.QueueMessage("You found some corny lyrics");
+            system.GUI.QueueMessage("Can you hear me?");
+            system.GUI.QueueMessage("Im talking to you");
+            system.GUI.QueueMessage("Across the water");
+            system.GUI.QueueMessage("Across the deap, blue, ocean");
+            system.GUI.QueueMessage("Under the open sky");
+            system.GUI.QueueMessage("Oh my, baby im tryin.");
+
+            yield return new WaitUntil(() => system.IsIdle);
+        }
+
+        internal IEnumerator PreItem(BattleSystem system, ItemStack itemStack)
+        { 
+            yield break;
+        }
+
+        internal IEnumerator PreBully(BattleSystem system)
+        {
+            system.GUI.QueueMessage($"{Name} is trying to sh*t-talk {system.Enemy.Name}");
+            yield return new WaitUntil(() => system.IsIdle);
+            yield return new WaitForSeconds(1f);
+        }
+
         private void Save()
         {
             p.Exp = 0;// EXP++
@@ -46,38 +80,12 @@ namespace Overtail.Battle
             statusEffects.ForEach(s => p.StatusEffects.Add(new StatusEffect(s)));
         }
 
+
+
         protected override int GetStat(StatType statType)
         {
             return base.GetStat(statType);
         }
-
-        public IEnumerator Magic()
-        {
-            SpeakLine("Can you hear me?");
-            SpeakLine("Im talking to you");
-            SpeakLine("Across the water");
-            SpeakLine("Across the deap, blue, ocean");
-            SpeakLine("Under the open sky");
-            SpeakLine("Oh my, baby im tryin.");
-
-            yield break;
-        }
-
-        public IEnumerator Attack(BattleSystem system, BattleUnit opponent)
-        {
-            yield break;
-        }
-
-        public IEnumerator Flirt(BattleSystem system, BattleUnit opponent)
-        {
-            yield break;
-        }
-
-        public IEnumerator Bully(BattleSystem system, BattleUnit opponent)
-        {
-            yield break;
-        }
-
 
     }
 

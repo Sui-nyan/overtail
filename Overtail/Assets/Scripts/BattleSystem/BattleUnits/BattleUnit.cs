@@ -29,7 +29,11 @@ namespace Overtail.Battle
         public List<StatusEffect> StatusEffects => statusEffects;
         public virtual string Name => name;
         public virtual int Level => level;
-        public virtual int HP => hp;
+        public virtual int HP
+        {
+            get => hp;
+            set => this.hp = Mathf.Clamp(this.HP - value, 0, MaxHP);
+        }
         public virtual int MaxHP => GetStat(StatType.MAXHP);
         public virtual int Attack => GetStat(StatType.ATTACK);
         public virtual int Defense => GetStat(StatType.DEFENSE);
@@ -61,24 +65,11 @@ namespace Overtail.Battle
             }
         }
 
-
-        public void TakeDamage(int damage)
-        {
-            this.hp = Mathf.Clamp(this.HP - damage, 0, MaxHP);
-        }
-        public void TakeDamage(IBattleInteractable opponent)
-        {
-            TakeDamage(System.Math.Max(opponent.Attack - this.Defense, 0));
-        }
-
-        public virtual IEnumerator DoTurn(BattleSystem system, IBattleInteractable opponent)
+        public virtual IEnumerator DoTurn(BattleSystem system)
         {
             yield break;
         }
-        public virtual IEnumerator GetBullied(BattleSystem system, IBattleInteractable opponent)
-        {
-            yield break;
-        }
+
         public void InflictStatus(StatusEffect buff)
         {
             statusEffects.Add(buff);
@@ -98,19 +89,6 @@ namespace Overtail.Battle
         public void TurnUpdate()
         {
             TurnUpdate(1);
-        }
-
-        protected void SpeakLine(string str)
-        {
-            ObjectSpeaking?.Invoke(str);
-        }
-
-        protected void SpeakLine(List<string> strList)
-        {
-            foreach (string str in strList)
-            {
-                SpeakLine(str);
-            }
         }
     }
 }

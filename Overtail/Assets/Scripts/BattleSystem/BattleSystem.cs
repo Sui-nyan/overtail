@@ -5,27 +5,6 @@ using UnityEngine.SceneManagement;
 namespace Overtail.Battle
 {
 
-    public abstract class StateMachine : MonoBehaviour
-    {
-        protected State _state;
-
-        public void SetState(State state)
-        {
-            if (this._state != null)
-            {
-                StartCoroutine(this._state.CleanUp());
-            }
-
-            this._state = state;
-            StartCoroutine(this._state.Start());
-        }
-
-        public void RestartState()
-        {
-            StartCoroutine(_state.Start());
-        }
-    }
-
     /// <summary>
     /// Overarching system for Battle Scenes.
     /// Logical main entry point. Sets up the battle, starts it and manages the state (State machine).
@@ -66,6 +45,9 @@ namespace Overtail.Battle
         void FixedUpdate()
         {
             GUI.ReselectGui();
+
+            if (Input.GetKeyDown(KeyCode.Space)) Debug.Log($"[SPACE] GUI is {(GUI.IsBusy ? "busy" : "idle")}");
+
         }
 
         public void Exit()
