@@ -51,6 +51,8 @@ namespace Overtail.Battle
             _interactButton.GetComponent<Button>().onClick.AddListener(system.OnInteractButton);
             _inventoryButton.GetComponent<Button>().onClick.AddListener(system.OnInventoryButton);
             _escapeButton.GetComponent<Button>().onClick.AddListener(system.OnEscapeButton);
+
+            HideButtons();
         }
 
         public void QueueMessage(string msg)
@@ -214,7 +216,9 @@ namespace Overtail.Battle
                 var buttonGameObject = GameObject.Instantiate(prefab, root.transform);
                 var button = buttonGameObject.GetComponent<Button>();
 
-                buttonGameObject.GetComponentInChildren<Text>().text = label;
+                var t = buttonGameObject.GetComponentInChildren<Text>();
+                t.text = label;
+                t.fontSize = 64;
 
                 button.onClick.AddListener(() =>
                 {
@@ -227,12 +231,14 @@ namespace Overtail.Battle
 
                 buttonGameObject.name = label;
                 buttonGameObject.transform.localPosition = new Vector3(pos.x, pos.y, 0);
+                ((RectTransform) buttonGameObject.transform).sizeDelta = new Vector2(200, 100);
+
 
                 return buttonGameObject;
             }
 
-            buttons[0] = CreateButton("Flirt", flirtFunc, new Vector2(160, 40));
-            buttons[1] = CreateButton("Bully", bullyFunc, new Vector2(160, 0));
+            buttons[0] = CreateButton("Flirt", flirtFunc, new Vector2(200, 0));
+            buttons[1] = CreateButton("Bully", bullyFunc, new Vector2(600, 0));
         }
 
         #endregion
