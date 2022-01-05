@@ -26,9 +26,9 @@ namespace Overtail.Battle
         public PlayerUnit Player => _player;
         public EnemyUnit Enemy => _enemy;
 
-        public bool IsIdle => !GUI.IsBusy;
+        public bool IsIdle => GUI.IsIdle;
 
-        void Start()
+        void Awake()
         {
             GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
             _player = playerObject.GetComponent<PlayerUnit>();
@@ -39,14 +39,6 @@ namespace Overtail.Battle
             GUI.Setup(this);
 
             SetState(new StartState(this));
-        }
-
-        void FixedUpdate()
-        {
-            GUI.ReselectGui();
-
-            if (Input.GetKeyDown(KeyCode.Space)) Debug.Log($"[SPACE] GUI is {(GUI.IsBusy ? "busy" : "idle")}");
-
         }
 
         public void Exit()

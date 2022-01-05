@@ -9,7 +9,6 @@ namespace Overtail.Battle
     {
         bool finalForm = false;
         List<string> reactions = new List<string>();
-        int index = 0;
 
         internal override IEnumerator OnGreeting(BattleSystem system)
         {
@@ -56,68 +55,54 @@ namespace Overtail.Battle
         private IEnumerator GoSuperSaiyan(BattleSystem system)
         {
             finalForm = true;
-            system.GUI.QueueMessage("#!?");
-            yield return new WaitUntil(() => system.IsIdle);
-            yield return new WaitForSeconds(1f);
+            system.GUI.QueueMessage("#!?", 1f);
+            system.GUI.QueueCoroutine(Transform);
 
+            yield return system.GUI.AwaitIdle();
 
-
-            yield return system.StartCoroutine(Transform(system));
             // TODO Change sprite
 
             maxHp = 999;
-            yield return null;
             HP = MaxHP;
             attack = 999;
             level = 99;
             name = name.Replace("Small", "Small(?)").Replace("small", "small(?)");
 
             system.GUI.QueueMessage("THAT'S IT, YOU LITTLE SH*T");
-
-            system.GUI.UpdateHud();
+            //system.GUI.SetHUDs();
         }
 
-        private IEnumerator Transform(BattleSystem system)
+        private IEnumerator Transform(MonoBehaviour obj)
         {
-            IEnumerator SizeUp(float target, float smoothTime)
+            IEnumerator GROW(float scalar, float time)
             {
-                Vector3 scale = this.gameObject.transform.localScale;
-                float timeElapsed = 0f;
-
-                while (scale.x != target)
-                {
-                    timeElapsed += Time.deltaTime;
-                    scale.y = Mathf.SmoothStep(1, target*1.5f, timeElapsed / smoothTime);
-                    scale.x = Mathf.SmoothStep(1, target, timeElapsed / smoothTime);
-                    this.gameObject.transform.localScale = scale;
-
-                    var pos = transform.localPosition;
-                    pos.y += scale.y/ 2;
-                    transform.localPosition = pos;
-                    yield return null;
-                }
-            }
-
-            IEnumerator Shake(float time)
-            {
-                Vector3 v = this.gameObject.transform.localPosition;
+                Vector3 originalPos = transform.localPosition;
+                Vector3 originalScale = transform.localScale;
                 float timeElapsed = 0;
 
                 while(timeElapsed < time)
                 {
                     timeElapsed += Time.deltaTime;
                     yield return null;
-                    Func<float> rnd = () => (float)(UnityEngine.Random.value * 0.1 - 0.2) * (UnityEngine.Random.value > 0.5 ? 1 : -1);
-                    transform.localPosition = v + new Vector3(rnd(), rnd(), rnd());
+                    
+                    var newScale = originalScale;
+                    newScale.x = Mathf.SmoothStep(originalScale.x, originalScale.x * scalar * 1.5f, timeElapsed / time);
+                    newScale.y = Mathf.SmoothStep(originalScale.y, originalScale.y * scalar, timeElapsed / time);
+
+                    transform.localScale = newScale;
+
+                    Func<float> rnd = () => (float)(UnityEngine.Random.value - 1); // shaky
+                    var newPos = originalPos + new Vector3(.1f * rnd(), .1f * rnd(), .1f * rnd());
+                    newPos.y = newScale.y / 2;
+
+                    transform.localPosition = newPos;
                 }
 
-                v.y = transform.localScale.y / 2;
-                transform.localPosition = v;
+                originalPos.y = transform.localScale.y / 2;
+                transform.localPosition = originalPos;
             }
 
-            StartCoroutine(SizeUp(2, 2f));
-            StartCoroutine(Shake(2f));
-            yield return new WaitForSeconds(2);
+            return GROW(4, 2);
         }
     }
 }

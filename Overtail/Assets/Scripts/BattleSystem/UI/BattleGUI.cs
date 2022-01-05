@@ -8,11 +8,11 @@ using UnityEngine.UI;
 namespace Overtail.Battle
 {
     [System.Serializable]
-    public class BattleGUI
+    public partial class BattleGUI : MonoBehaviour
     {
         [Header("UI Elements")]
-        
-        [SerializeField]        private BattleHUD playerHUD;
+
+        [SerializeField] private BattleHUD playerHUD;
         [SerializeField] private BattleHUD enemyHUD;
         [SerializeField] private Text textBox;
 
@@ -25,22 +25,15 @@ namespace Overtail.Battle
         private BattleUnit _player;
         private BattleUnit _enemy;
 
-        // TODO make this an action/GUIUpdate queue
-        private Queue<string> _messageQueue = new Queue<string>();
+        private Queue<GuiCoroutine> _guiEventQueue = new Queue<GuiCoroutine>();
 
-        public float TextWaitTimeMin = 0.5f;
-        public float TextWaitTimeMax = 4f;
+        public float GuiDelayMin { get; set; } = 0.5f;
+        public float GuiDelayMax { get; set; } = 4f;
 
-        private KeyCode _confirmKey = KeyCode.Space;
-        private bool _isBusy = false;
-        public bool IsBusy => _isBusy;
-        private GameObject[] Buttons => new GameObject[]
-        {
-            attackButton,
-            interactButton,
-            inventoryButton,
-            escapeButton
-        };
+        public float TypeWriteDelay = 0.05f;
+        private bool GetConfirmationDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        public bool IsIdle { get; private set; } = true;
+        private GameObject[] Buttons => new GameObject[] { attackButton, interactButton, inventoryButton, escapeButton };
 
         public void Setup(BattleSystem system)
         {
@@ -49,11 +42,11 @@ namespace Overtail.Battle
             _player = _system.Player;
             _enemy = _system.Enemy;
 
-            _player.StatusUpdate += UpdateHud;
-            _enemy.StatusUpdate += UpdateHud;
+            _player.StatusUpdate += UpdateHUD;
+            _enemy.StatusUpdate += UpdateHUD;
 
-            playerHUD.SetHUD(_player);
-            enemyHUD.SetHUD(_enemy);
+            playerHUD.UpdateHUD(_player);
+            enemyHUD.UpdateHUD(_enemy);
 
             foreach (GameObject b in Buttons)
             {
@@ -61,65 +54,137 @@ namespace Overtail.Battle
             }
         }
 
-        public void UpdateHud(BattleUnit obj)
-        {
-            void _UpdateHud(BattleUnit unit, BattleHUD hud)
-            {
-                if(hud.hpSlider.value != unit.HP) _system.StartCoroutine(hud.SmoothSliderUpdate(unit));
-            }
-
-            var type = obj.GetType();
-
-            if (type == typeof(PlayerUnit))
-                _UpdateHud(obj, playerHUD);
-            else if (type.IsSubclassOf(typeof(EnemyUnit)))
-                _UpdateHud(obj, enemyHUD);
-            else
-                throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");
-        }
 
         public void QueueMessage(string msg)
         {
-            // Queue message
-            _messageQueue.Enqueue(msg);
-
-            if (_isBusy) return;
-
-            _isBusy = true;
-            _system.StartCoroutine(ProcessQueue());
+            QueueMessage(msg, GuiDelayMin);
         }
-
-        private IEnumerator ProcessQueue()
+        public void QueueCoroutine(Func<MonoBehaviour, IEnumerator> coroutineHandle)
         {
-            while (_messageQueue.Count > 0)
-            {
-                var text = _messageQueue.Dequeue();
-                yield return TypeWriteText(text);
-                yield return AwaitTimeOrConfirm();
-                yield return new WaitForEndOfFrame();
-            }
-
-            _isBusy = false;
+            QueueCoroutine(coroutineHandle, GuiDelayMin);
         }
 
-
-        public void UpdateHud()
-        {
-            playerHUD.SetHUD(_player);
-            enemyHUD.SetHUD(_enemy);
-        }
-
-        public void SetText(string text)
-        {
-            textBox.text = text;
-        }
-
-        public void ReselectGui()
+        private void Update()
         {
             if (EventSystem.current.currentSelectedGameObject == null)
             {
                 EventSystem.current.SetSelectedGameObject(attackButton);
             }
+        }
+
+        #region Coroutine Queue
+        public void QueueMessage(string msg, float postEventDelay) // Wrap message as Coroutine
+        {
+            QueueMessage(msg, postEventDelay, TypeWriteDelay);
+        }
+
+        public void QueueMessage(string msg, float postEventDelay, float typeWriteDelay) // Wrap message as Coroutine
+        {
+            IEnumerator TextWrapper(MonoBehaviour obj) { return TypeWrite(msg, typeWriteDelay); }
+            QueueCoroutine(TextWrapper, postEventDelay);
+        }
+
+        
+        public void QueueCoroutine(Func<MonoBehaviour, IEnumerator> coroutine, float postEventDelay)
+        {
+            var s = new GuiCoroutine();
+            s.CoroutineHandle = coroutine;
+            s.PostEventDelay = postEventDelay;
+            _guiEventQueue.Enqueue(s);
+
+            if (IsIdle)
+            {
+                IsIdle = false;
+                StartCoroutine(ProcessQueue());
+            }
+        }
+
+        private IEnumerator ProcessQueue()
+        {
+            while (_guiEventQueue.Count > 0)
+            {
+                var next = _guiEventQueue.Dequeue() as GuiCoroutine;
+                Debug.Log($"NextEvent:[{next.PostEventDelay:.00}s][{next.CoroutineHandle.Method.Name}]");
+                yield return StartCoroutine(next.CoroutineHandle(this));
+                yield return AwaitTimeOrConfirm(minDuration: next.PostEventDelay, GuiDelayMax);
+                yield return new WaitForEndOfFrame();
+            }
+
+            IsIdle = true;
+        }
+
+        public Coroutine AwaitIdle()
+        {
+            IEnumerator Wait() { yield return new WaitUntil(() => IsIdle); }
+            return StartCoroutine(Wait());
+        }
+
+        public Coroutine AwaitTimeOrConfirm()
+        {
+            return AwaitTimeOrConfirm(GuiDelayMin, GuiDelayMax);
+        }
+        public Coroutine AwaitTimeOrConfirm(float minDuration, float maxDuration)
+        {
+            IEnumerator WaitOrConfirm(float min, float max)
+            {
+                max -= min;
+                yield return new WaitForSeconds(min);
+                yield return new WaitUntil(() =>
+                {
+                    max -= Time.deltaTime;
+                    return max < 0 || GetConfirmationDown;
+                });
+                yield return new WaitForEndOfFrame();
+            }
+
+            maxDuration = Math.Max(minDuration, maxDuration);
+            return StartCoroutine(WaitOrConfirm(minDuration, maxDuration));
+        }
+
+        private IEnumerator TypeWrite(string text, float typingDelay)
+        {
+            textBox.text = string.Empty;
+            var timeElapsed = 0f;
+            int i = 0;
+            while (i < text.Length)
+            {
+                if (GetConfirmationDown)
+                {
+                    textBox.text = text;
+                    break;
+                }
+
+                if (timeElapsed > typingDelay)
+                {
+                    timeElapsed = 0;
+                    i++;
+                    textBox.text = text.Substring(0, i);
+                }
+
+                timeElapsed += Time.deltaTime; // time since last frame
+                yield return null; // Skip to next frame
+            }
+            yield return new WaitForSeconds(0f);
+        }
+
+        #endregion
+
+        #region GUI Interface
+        public void SetHUDs()
+        {
+            playerHUD.UpdateHUD(_player);
+            enemyHUD.UpdateHUD(_enemy);
+        }
+        public void UpdateHUD(BattleUnit obj)
+        {
+            var type = obj.GetType();
+
+            if (type == typeof(PlayerUnit))
+                playerHUD.UpdateHUD(obj);//_UpdateHud(obj, playerHUD);
+            else if (type.IsSubclassOf(typeof(EnemyUnit)))
+                enemyHUD.UpdateHUD(obj);//_UpdateHud(obj, enemyHUD);
+            else
+                throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");
         }
 
         public void ShowButtons()
@@ -141,64 +206,10 @@ namespace Overtail.Battle
             AwaitTimeOrConfirm();
         }
 
-        public Coroutine AwaitTimeOrConfirm()
-        {
-            return AwaitTimeOrConfirm(TextWaitTimeMax, TextWaitTimeMin);
-        }
-        public Coroutine AwaitTimeOrConfirm(float maxWaitTime, float minWaitTime)
-        {
-            IEnumerator _WaitOrConfirm(float maxTime, float minTime)
-            {
-                maxTime -= minTime;
-                yield return new WaitForSeconds(minTime);
-                yield return new WaitUntil(() =>
-                {
-                    maxTime -= Time.deltaTime;
-                    return maxTime < 0 || Input.GetKey(_confirmKey);
-                });
-                yield return new WaitForEndOfFrame();
-            }
-            return _system.StartCoroutine(_WaitOrConfirm(maxWaitTime, minWaitTime));
-        }
-
-        private Coroutine TypeWriteText(string text, float delay = 0.09f)
-        {
-            Debug.Log($"{text}");
-
-            IEnumerator Typing()
-            {
-                textBox.text = string.Empty;
-                var timeElapsed = 0f;
-                int i = 0;
-                while(i < text.Length)
-                {
-                    if (Input.GetKeyDown(_confirmKey))
-                    {
-                        textBox.text = text;
-                        break;
-                    }
-
-                    if (timeElapsed > delay)
-                    {
-                        timeElapsed = 0;
-                        textBox.text = text.Substring(0, i);
-                        i++;
-                    }
-
-                    timeElapsed += Time.deltaTime; // time since last frame
-                    yield return null; // Skip to next frame
-                }
-                yield return new WaitForSeconds(0f);
-            }
-            return _system.StartCoroutine(Typing());
-        }
-
-
-
-        public void InteractionSubMenu(Func<Coroutine> flirtFunc, Func<Coroutine> bullyFunc)
+        public void InteractionSubMenu(Func<UnityEngine.Coroutine> flirtFunc, Func<UnityEngine.Coroutine> bullyFunc)
         {
             GameObject[] buttons = new GameObject[2];
-            GameObject CreateButton(string label, Func<Coroutine> func, Vector2 pos)
+            GameObject CreateButton(string label, Func<UnityEngine.Coroutine> func, Vector2 pos)
             {
                 var root = GameObject.Find("DialogueBox");
                 var prefab = Resources.Load<GameObject>("_Button");
@@ -215,7 +226,7 @@ namespace Overtail.Battle
                     }
                     func();
                 });
-                
+
                 buttonGameObject.name = label;
                 buttonGameObject.transform.localPosition = new Vector3(pos.x, pos.y, 0);
 
@@ -225,5 +236,7 @@ namespace Overtail.Battle
             buttons[0] = CreateButton("Flirt", flirtFunc, new Vector2(160, 40));
             buttons[1] = CreateButton("Bully", bullyFunc, new Vector2(160, 0));
         }
+
+        #endregion
     }
 }
