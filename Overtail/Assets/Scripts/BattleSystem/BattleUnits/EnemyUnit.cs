@@ -11,20 +11,22 @@ namespace Overtail.Battle
         public override IEnumerator DoTurn(BattleSystem system)
         {
             system.GUI.QueueMessage($"{this.Name} attacks {system.Player.Name}.");
+
             system.Player.HP -= Math.Max(0, this.Attack - system.Player.Defense);
-            system.GUI.UpdateHud();
+
             yield return new WaitUntil(() => system.IsIdle);
         }
 
         internal IEnumerator GetAttacked(BattleSystem system)
         {
-            var dmg = Math.Max(this.Defense - system.Player.Attack, 0 );
+            var dmg = Math.Max(system.Player.Attack - this.Defense, 0 );
+            Debug.Log("Taking " + dmg + " Damage");
             this.HP -= dmg;
 
-            if(HP/MaxHP < 0.5)
+            if(HP/MaxHP < 0.1)
             {
                 system.GUI.QueueMessage($"{Name}: \"Oh the pain. MERCY\"");
-            } else if (HP/MaxHP < 0.1)
+            } else if (HP/MaxHP < 0.5)
             {
                 system.GUI.QueueMessage($"{Name} is becomming desperate");
             }

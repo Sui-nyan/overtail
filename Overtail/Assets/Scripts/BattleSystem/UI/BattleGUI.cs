@@ -10,9 +10,9 @@ namespace Overtail.Battle
     [System.Serializable]
     public class BattleGUI
     {
-        [Header("UI Elements")] [SerializeField]
-        private BattleHUD playerHUD;
-
+        [Header("UI Elements")]
+        
+        [SerializeField]        private BattleHUD playerHUD;
         [SerializeField] private BattleHUD enemyHUD;
         [SerializeField] private Text textBox;
 
@@ -27,6 +27,10 @@ namespace Overtail.Battle
 
         // TODO make this an action/GUIUpdate queue
         private Queue<string> _messageQueue = new Queue<string>();
+
+        public float TextWaitTimeMin = 0.5f;
+        public float TextWaitTimeMax = 4f;
+
         private KeyCode _confirmKey = KeyCode.Space;
         private bool _isBusy = false;
         public bool IsBusy => _isBusy;
@@ -45,23 +49,33 @@ namespace Overtail.Battle
             _player = _system.Player;
             _enemy = _system.Enemy;
 
+            _player.StatusUpdate += UpdateHud;
+            _enemy.StatusUpdate += UpdateHud;
+
+            playerHUD.SetHUD(_player);
+            enemyHUD.SetHUD(_enemy);
+
             foreach (GameObject b in Buttons)
             {
                 b.GetComponent<Button>().onClick.AddListener(HideButtons);
             }
-
-            _player.ObjectSpeaking += QueueMessage;
-            _enemy.ObjectSpeaking += QueueMessage;
-
-            _player.Updated += UpdateHud;
-            _enemy.Updated += UpdateHud;
         }
 
-        private void UpdateHud(BattleUnit obj)
+        public void UpdateHud(BattleUnit obj)
         {
-            // TODO Check for what changed
+            void _UpdateHud(BattleUnit unit, BattleHUD hud)
+            {
+                if(hud.hpSlider.value != unit.HP) _system.StartCoroutine(hud.SmoothSliderUpdate(unit));
+            }
 
-            // E.g. slowly drop HP
+            var type = obj.GetType();
+
+            if (type == typeof(PlayerUnit))
+                _UpdateHud(obj, playerHUD);
+            else if (type == typeof(EnemyUnit))
+                _UpdateHud(obj, enemyHUD);
+            else
+                throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");
         }
 
         public void QueueMessage(string msg)
@@ -81,7 +95,7 @@ namespace Overtail.Battle
             {
                 var text = _messageQueue.Dequeue();
                 yield return TypeWriteText(text);
-                yield return AwaitTimeOrConfirm(minWait : 0.5f);
+                yield return AwaitTimeOrConfirm();
                 yield return new WaitForEndOfFrame();
             }
 
@@ -124,11 +138,16 @@ namespace Overtail.Battle
             {
                 b.SetActive(false);
             }
+            AwaitTimeOrConfirm();
         }
 
-        public Coroutine AwaitTimeOrConfirm(float maxWait = 4f, float minWait = 0.2f)
+        public Coroutine AwaitTimeOrConfirm()
         {
-            IEnumerator _WaitOrConfirm(float maxTime = 4f, float minTime = 0.2f)
+            return AwaitTimeOrConfirm(TextWaitTimeMax, TextWaitTimeMin);
+        }
+        public Coroutine AwaitTimeOrConfirm(float maxWaitTime, float minWaitTime)
+        {
+            IEnumerator _WaitOrConfirm(float maxTime, float minTime)
             {
                 maxTime -= minTime;
                 yield return new WaitForSeconds(minTime);
@@ -139,7 +158,7 @@ namespace Overtail.Battle
                 });
                 yield return new WaitForEndOfFrame();
             }
-            return _system.StartCoroutine(_WaitOrConfirm(maxWait, minWait));
+            return _system.StartCoroutine(_WaitOrConfirm(maxWaitTime, minWaitTime));
         }
 
         private Coroutine TypeWriteText(string text, float delay = 0.09f)

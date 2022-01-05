@@ -8,7 +8,6 @@ namespace Overtail.Battle
         public StartState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
-            _system.GUI.UpdateHud();
             _system.GUI.QueueMessage($"A wild {_system.Enemy.Name} appears.");
 
             yield return new WaitUntil(() => _system.IsIdle);

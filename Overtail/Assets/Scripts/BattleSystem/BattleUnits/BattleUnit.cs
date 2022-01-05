@@ -11,8 +11,7 @@ namespace Overtail.Battle
     /// </summary>
     public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
-        public event Action<string> ObjectSpeaking;
-        public event Action<BattleUnit> Updated;
+        public event Action<BattleUnit> StatusUpdate;
 
         [SerializeField] protected new string name;
 
@@ -32,7 +31,11 @@ namespace Overtail.Battle
         public virtual int HP
         {
             get => hp;
-            set => this.hp = Mathf.Clamp(this.HP - value, 0, MaxHP);
+            set
+            {
+                hp = Mathf.Clamp(value, 0, MaxHP);
+                StatusUpdate.Invoke(this);
+            }
         }
         public virtual int MaxHP => GetStat(StatType.MAXHP);
         public virtual int Attack => GetStat(StatType.ATTACK);
@@ -69,6 +72,17 @@ namespace Overtail.Battle
         {
             yield break;
         }
+
+        public virtual IEnumerator OnDefeat(BattleSystem system)
+        {
+            yield break;
+        }
+
+        public virtual IEnumerator OnVictory(BattleSystem system)
+        {
+            yield break;
+        }
+
 
         public void InflictStatus(StatusEffect buff)
         {

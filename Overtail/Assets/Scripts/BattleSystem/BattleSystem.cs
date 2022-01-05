@@ -37,7 +37,6 @@ namespace Overtail.Battle
             _enemy = enemyGO.GetComponent<EnemyUnit>();
 
             GUI.Setup(this);
-            GUI.UpdateHud();
 
             SetState(new StartState(this));
         }

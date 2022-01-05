@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Kidney Bean
   level: 1
-  hp: 5
-  maxHp: 2
+  hp: 20
+  maxHp: 20
   attack: 1
   defense: 0
   statusEffects:

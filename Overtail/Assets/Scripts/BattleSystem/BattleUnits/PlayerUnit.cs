@@ -10,7 +10,7 @@ namespace Overtail.Battle
         [Header("Debug")]
         [SerializeField] private PlayerSerializable p;
 
-        private void Start()
+        private void Awake()
         {
             Load();
         }
@@ -51,7 +51,7 @@ namespace Overtail.Battle
             system.GUI.QueueMessage("Under the open sky");
             system.GUI.QueueMessage("Oh my, baby im tryin.");
 
-            yield return new WaitUntil(() => system.IsIdle);
+            yield break;
         }
 
         internal IEnumerator PreItem(BattleSystem system, ItemStack itemStack)
@@ -80,7 +80,14 @@ namespace Overtail.Battle
             statusEffects.ForEach(s => p.StatusEffects.Add(new StatusEffect(s)));
         }
 
+        public override IEnumerator OnVictory(BattleSystem system)
+        {
+            p.Exp += 0; // system.Enemy.EXPValue
 
+            // CheckForLevelUp();
+
+            yield break;
+        }
 
         protected override int GetStat(StatType statType)
         {
