@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9178f6826070ca74d8dfc725aaf88707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Small Green Slime
+  _name: Small Green Slime
   level: 3
   hp: 8
   maxHp: 8

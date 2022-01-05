@@ -25,11 +25,13 @@ namespace Overtail.Battle
             p = persistentData.playerSerializable;
 
             name = p.Name;
+            _name = p.Name;
             level = p.Level;
-            hp = p.HP;
             maxHp = p.MaxHP;
             attack = p.Attack;
             defense = p.Defense;
+
+            HP = p.HP;
 
             statusEffects.Clear();
             p.StatusEffects.ForEach(s => statusEffects.Add(new StatusEffect(s)));

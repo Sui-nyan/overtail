@@ -17,9 +17,9 @@ MonoBehaviour:
     status:
       level: 99
       exp: 0
-      hp: 30
+      hp: 33
       maxHp: 30
-      attack: 4
+      attack: 99
       defense: 0
     statusEffects:
     - name: GOD MODE

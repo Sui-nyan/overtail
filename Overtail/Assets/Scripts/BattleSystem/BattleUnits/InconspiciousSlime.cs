@@ -56,18 +56,19 @@ namespace Overtail.Battle
         {
             finalForm = true;
             system.GUI.QueueMessage("#!?", 1f);
-            system.GUI.QueueCoroutine(Transform);
 
             yield return system.GUI.AwaitIdle();
-
-            // TODO Change sprite
 
             maxHp = 999;
             HP = MaxHP;
             attack = 999;
             level = 99;
-            name = name.Replace("Small", "Small(?)").Replace("small", "small(?)");
+            _name = _name.Replace("Small", "Small(?)").Replace("small", "small(?)");
 
+            system.GUI.QueueCoroutine(Transform);
+            
+            // TODO Change sprite
+            
             system.GUI.QueueMessage("THAT'S IT, YOU LITTLE SH*T");
             //system.GUI.SetHUDs();
         }

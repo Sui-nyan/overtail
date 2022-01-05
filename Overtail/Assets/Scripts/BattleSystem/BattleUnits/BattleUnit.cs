@@ -14,12 +14,13 @@ namespace Overtail.Battle
     {
         public event Action<BattleUnit> StatusUpdate;
 
-        [SerializeField] protected new string name;
+        [SerializeField] protected string _name;
 
         [SerializeField] protected int level;
 
-        [Header("Combat Stats (Unbuffed)")]
-        [SerializeField] protected int hp;
+        [Header("Combat Stats (Unbuffed)")] [SerializeField]
+        protected int hp;
+
         [SerializeField] protected int maxHp;
         [SerializeField] protected int attack;
         [SerializeField] protected int defense;
@@ -27,8 +28,19 @@ namespace Overtail.Battle
         [SerializeField] protected List<StatusEffect> statusEffects = new List<StatusEffect>();
 
         public List<StatusEffect> StatusEffects => statusEffects;
-        public virtual string Name => name;
+
+        public virtual string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                name = value;
+            }
+        }
+
         public virtual int Level => level;
+
         public virtual int HP
         {
             get => hp;
@@ -38,6 +50,7 @@ namespace Overtail.Battle
                 StatusUpdate.Invoke(this);
             }
         }
+
         public virtual int MaxHP => GetStat(StatType.MAXHP);
         public virtual int Attack => GetStat(StatType.ATTACK);
         public virtual int Defense => GetStat(StatType.DEFENSE);
@@ -53,17 +66,17 @@ namespace Overtail.Battle
                     percent += status.Value;
 
                 if (status.ModifierType == ModifierType.FLAT)
-                    flat += (int)status.Value;
+                    flat += (int) status.Value;
             }
 
             switch (statType)
             {
                 case StatType.MAXHP:
-                    return (int)(maxHp * (1 + percent) + flat);
+                    return (int) (maxHp * (1 + percent) + flat);
                 case StatType.ATTACK:
-                    return (int)(attack * (1 + percent) + flat);
+                    return (int) (attack * (1 + percent) + flat);
                 case StatType.DEFENSE:
-                    return (int)(defense * (1 + percent) + flat);
+                    return (int) (defense * (1 + percent) + flat);
                 default:
                     throw new System.ArgumentException();
             }

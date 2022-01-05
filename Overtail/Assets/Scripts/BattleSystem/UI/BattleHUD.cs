@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Data;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
@@ -12,10 +13,10 @@ namespace Overtail.Battle
     /// </summary>
     public class BattleHUD : MonoBehaviour
     {
-        public Text nameText;
-        public Text levelText;
+        public TextMeshProUGUI nameText;
+        public TextMeshProUGUI levelText;
         public Slider hpSlider;
-        public Text hpText;
+        public TextMeshProUGUI hpText;
 
         private string _name;
         private int _level = 0;

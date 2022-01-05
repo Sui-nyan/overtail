@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,71 +13,67 @@ namespace Overtail.Battle
     public partial class BattleGUI : MonoBehaviour
     {
         [Header("UI Elements")]
+        [SerializeField] [NotNull] private BattleHUD _playerHud;
+        [SerializeField] [NotNull] private BattleHUD _enemyHud;
+        [SerializeField] [NotNull] private TextMeshProUGUI _tmpText;
 
-        [SerializeField] private BattleHUD playerHUD;
-        [SerializeField] private BattleHUD enemyHUD;
-        [SerializeField] private Text textBox;
+        [Header("Config")]
+        [SerializeField] private float _typeWriteDelay = 0.05f;
+        [SerializeField] private float _guiDelayMin = 0.5f;
+        [SerializeField] private float _guiDelayMax = 4f;
 
-        [Header("Buttons")] [SerializeField] private GameObject attackButton;
-        [SerializeField] private GameObject interactButton;
-        [SerializeField] private GameObject inventoryButton;
-        [SerializeField] private GameObject escapeButton;
-
-        private BattleSystem _system;
-        private BattleUnit _player;
-        private BattleUnit _enemy;
-
+        [Header("Buttons")]
+        [SerializeField] [NotNull] private GameObject _attackButton;
+        [SerializeField] [NotNull] private GameObject _interactButton;
+        [SerializeField] [NotNull] private GameObject _inventoryButton;
+        [SerializeField] [NotNull] private GameObject _escapeButton;
+        
         private Queue<GuiCoroutine> _guiEventQueue = new Queue<GuiCoroutine>();
-
-        public float GuiDelayMin { get; set; } = 0.5f;
-        public float GuiDelayMax { get; set; } = 4f;
-
-        public float TypeWriteDelay = 0.05f;
-        private bool GetConfirmationDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        
         public bool IsIdle { get; private set; } = true;
-        private GameObject[] Buttons => new GameObject[] { attackButton, interactButton, inventoryButton, escapeButton };
+        public bool GetConfirmKeyDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+        private GameObject[] AllButtons => new GameObject[] { _attackButton, _interactButton, _inventoryButton, _escapeButton };
 
         public void Setup(BattleSystem system)
         {
-            _system = system;
+            system.Player.StatusUpdate += UpdateHUD;
+            system.Enemy.StatusUpdate += UpdateHUD;
 
-            _player = _system.Player;
-            _enemy = _system.Enemy;
+            _playerHud.UpdateHUD(system.Player);
+            _enemyHud.UpdateHUD(system.Enemy);
 
-            _player.StatusUpdate += UpdateHUD;
-            _enemy.StatusUpdate += UpdateHUD;
-
-            playerHUD.UpdateHUD(_player);
-            enemyHUD.UpdateHUD(_enemy);
-
-            foreach (GameObject b in Buttons)
+            foreach (GameObject b in AllButtons)
             {
                 b.GetComponent<Button>().onClick.AddListener(HideButtons);
             }
-        }
 
+            _attackButton.GetComponent<Button>().onClick.AddListener(system.OnAttackButton);
+            _interactButton.GetComponent<Button>().onClick.AddListener(system.OnInteractButton);
+            _inventoryButton.GetComponent<Button>().onClick.AddListener(system.OnInventoryButton);
+            _escapeButton.GetComponent<Button>().onClick.AddListener(system.OnEscapeButton);
+        }
 
         public void QueueMessage(string msg)
         {
-            QueueMessage(msg, GuiDelayMin);
+            QueueMessage(msg, _guiDelayMin);
         }
         public void QueueCoroutine(Func<MonoBehaviour, IEnumerator> coroutineHandle)
         {
-            QueueCoroutine(coroutineHandle, GuiDelayMin);
+            QueueCoroutine(coroutineHandle, _guiDelayMin);
         }
 
         private void Update()
         {
             if (EventSystem.current.currentSelectedGameObject == null)
             {
-                EventSystem.current.SetSelectedGameObject(attackButton);
+                EventSystem.current.SetSelectedGameObject(_attackButton);
             }
         }
 
         #region Coroutine Queue
         public void QueueMessage(string msg, float postEventDelay) // Wrap message as Coroutine
         {
-            QueueMessage(msg, postEventDelay, TypeWriteDelay);
+            QueueMessage(msg, postEventDelay, _typeWriteDelay);
         }
 
         public void QueueMessage(string msg, float postEventDelay, float typeWriteDelay) // Wrap message as Coroutine
@@ -106,7 +104,7 @@ namespace Overtail.Battle
                 var next = _guiEventQueue.Dequeue() as GuiCoroutine;
                 Debug.Log($"NextEvent:[{next.PostEventDelay:.00}s][{next.CoroutineHandle.Method.Name}]");
                 yield return StartCoroutine(next.CoroutineHandle(this));
-                yield return AwaitTimeOrConfirm(minDuration: next.PostEventDelay, GuiDelayMax);
+                yield return AwaitTimeOrConfirm(minDuration: next.PostEventDelay, _guiDelayMax);
                 yield return new WaitForEndOfFrame();
             }
 
@@ -121,7 +119,7 @@ namespace Overtail.Battle
 
         public Coroutine AwaitTimeOrConfirm()
         {
-            return AwaitTimeOrConfirm(GuiDelayMin, GuiDelayMax);
+            return AwaitTimeOrConfirm(_guiDelayMin, _guiDelayMax);
         }
         public Coroutine AwaitTimeOrConfirm(float minDuration, float maxDuration)
         {
@@ -132,7 +130,7 @@ namespace Overtail.Battle
                 yield return new WaitUntil(() =>
                 {
                     max -= Time.deltaTime;
-                    return max < 0 || GetConfirmationDown;
+                    return max < 0 || GetConfirmKeyDown;
                 });
                 yield return new WaitForEndOfFrame();
             }
@@ -143,14 +141,16 @@ namespace Overtail.Battle
 
         private IEnumerator TypeWrite(string text, float typingDelay)
         {
-            textBox.text = string.Empty;
+            _tmpText.text = string.Empty;
+
             var timeElapsed = 0f;
             int i = 0;
+
             while (i < text.Length)
             {
-                if (GetConfirmationDown)
+                if (GetConfirmKeyDown)
                 {
-                    textBox.text = text;
+                    _tmpText.text = text;
                     break;
                 }
 
@@ -158,7 +158,8 @@ namespace Overtail.Battle
                 {
                     timeElapsed = 0;
                     i++;
-                    textBox.text = text.Substring(0, i);
+                    _tmpText.text = text.Substring(0, i);
+                    _tmpText.text += "<color=#00000000>" + text.Substring(i) + "</color>";
                 }
 
                 timeElapsed += Time.deltaTime; // time since last frame
@@ -170,26 +171,22 @@ namespace Overtail.Battle
         #endregion
 
         #region GUI Interface
-        public void SetHUDs()
-        {
-            playerHUD.UpdateHUD(_player);
-            enemyHUD.UpdateHUD(_enemy);
-        }
+
         public void UpdateHUD(BattleUnit obj)
         {
             var type = obj.GetType();
 
             if (type == typeof(PlayerUnit))
-                playerHUD.UpdateHUD(obj);//_UpdateHud(obj, playerHUD);
+                _playerHud.UpdateHUD(obj);//_UpdateHud(obj, playerHUD);
             else if (type.IsSubclassOf(typeof(EnemyUnit)))
-                enemyHUD.UpdateHUD(obj);//_UpdateHud(obj, enemyHUD);
+                _enemyHud.UpdateHUD(obj);//_UpdateHud(obj, enemyHUD);
             else
                 throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");
         }
 
         public void ShowButtons()
         {
-            foreach (GameObject b in Buttons)
+            foreach (GameObject b in AllButtons)
             {
                 if (b == null)
                     throw new System.Exception("Button is null - Buttons might not have been assigned in Unity");
@@ -199,7 +196,7 @@ namespace Overtail.Battle
 
         public void HideButtons()
         {
-            foreach (GameObject b in Buttons)
+            foreach (GameObject b in AllButtons)
             {
                 b.SetActive(false);
             }
@@ -208,6 +205,7 @@ namespace Overtail.Battle
 
         public void InteractionSubMenu(Func<UnityEngine.Coroutine> flirtFunc, Func<UnityEngine.Coroutine> bullyFunc)
         {
+            // TODO Proper layout and code structure
             GameObject[] buttons = new GameObject[2];
             GameObject CreateButton(string label, Func<UnityEngine.Coroutine> func, Vector2 pos)
             {
