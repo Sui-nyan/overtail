@@ -72,7 +72,7 @@ namespace Overtail.Battle
 
             if (type == typeof(PlayerUnit))
                 _UpdateHud(obj, playerHUD);
-            else if (type == typeof(EnemyUnit))
+            else if (type.IsSubclassOf(typeof(EnemyUnit)))
                 _UpdateHud(obj, enemyHUD);
             else
                 throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");

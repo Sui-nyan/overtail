@@ -850,7 +850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &666439194
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1213,6 +1213,7 @@ MonoBehaviour:
   levelText: {fileID: 746923293}
   hpSlider: {fileID: 1014554469}
   hpText: {fileID: 605745487}
+  HpSliderSmoothTime: 1.5
 --- !u!1 &921977079 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6881528024921525259, guid: bd203b864c02d3f41bc3cb3b82480feb, type: 3}
@@ -2029,6 +2030,7 @@ MonoBehaviour:
   levelText: {fileID: 1925625647}
   hpSlider: {fileID: 669926695}
   hpText: {fileID: 666439195}
+  HpSliderSmoothTime: 1.5
 --- !u!1 &1491720152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2061,6 +2063,8 @@ MonoBehaviour:
   battleSetupData: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
   playerStation: {fileID: 1929546384}
   enemyStation: {fileID: 1202270077}
+  _player: {fileID: 0}
+  _enemy: {fileID: 0}
   _graphicalUI:
     playerHUD: {fileID: 849414260}
     enemyHUD: {fileID: 1449386911}
@@ -2069,6 +2073,8 @@ MonoBehaviour:
     interactButton: {fileID: 942204494}
     inventoryButton: {fileID: 921977079}
     escapeButton: {fileID: 570025803}
+    TextWaitTimeMin: 0.5
+    TextWaitTimeMax: 4
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0

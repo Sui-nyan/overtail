@@ -9,6 +9,7 @@ namespace Overtail.Battle
     /// Main class for characters participating in combat.
     /// Main Interface to the battle system and vice versa.
     /// </summary>
+    [DisallowMultipleComponent]
     public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
         public event Action<BattleUnit> StatusUpdate;

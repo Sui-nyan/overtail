@@ -20,7 +20,6 @@ namespace Overtail.Battle
 
         public void SetHUD(BattleUnit unit)
         {
-            Debug.Log(nameText.text);
             nameText.text = unit.Name;
             levelText.text = "Lvl " + unit.Level;
             hpSlider.maxValue = unit.MaxHP;

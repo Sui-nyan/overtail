@@ -8,6 +8,10 @@ namespace Overtail.Battle
     {
         private int _affection;
 
+        internal virtual IEnumerator OnGreeting(BattleSystem system)
+        {
+            yield break;
+        }
         public override IEnumerator DoTurn(BattleSystem system)
         {
             system.GUI.QueueMessage($"{this.Name} attacks {system.Player.Name}.");
@@ -17,45 +21,43 @@ namespace Overtail.Battle
             yield return new WaitUntil(() => system.IsIdle);
         }
 
-        internal IEnumerator GetAttacked(BattleSystem system)
+        internal virtual IEnumerator GetAttacked(BattleSystem system)
         {
-            var dmg = Math.Max(system.Player.Attack - this.Defense, 0 );
-            Debug.Log("Taking " + dmg + " Damage");
-            this.HP -= dmg;
+            var hpBefore = HP;
+            bool hpThreshold(float threshold) => hpBefore / MaxHP > threshold && HP / MaxHP < threshold;
 
-            if(HP/MaxHP < 0.1)
+            var dmg = Math.Max(system.Player.Attack - this.Defense, 0 );
+            this.HP -= dmg;
+            Debug.Log($"{Name} took {dmg} Damage");
+
+            if (hpThreshold(0.1f))
             {
-                system.GUI.QueueMessage($"{Name}: \"Oh the pain. MERCY\"");
-            } else if (HP/MaxHP < 0.5)
+                system.GUI.QueueMessage($"{Name} is pleading for mercy.");
+            } else if (hpThreshold(0.5f))
             {
-                system.GUI.QueueMessage($"{Name} is becomming desperate");
+                system.GUI.QueueMessage($"{Name} looks tired.");
             }
 
             yield break;
         }
 
-        public IEnumerator GetFlirted(BattleSystem system, PlayerUnit opponent)
+        internal virtual IEnumerator GetFlirted(BattleSystem system)
         {
-            system.GUI.QueueMessage($"{Name} doesn't want to talk to you...");
+            system.GUI.QueueMessage($"{Name} is not interested in {system.Player.Name}");
             yield return new WaitUntil(() => system.IsIdle);
         }
 
-        public IEnumerator GetBullied(BattleSystem system, PlayerUnit opponent)
+        internal virtual IEnumerator GetBullied(BattleSystem system)
         {
             system.GUI.QueueMessage($"{Name} ignored {system.Player.Name}...");
             yield return new WaitUntil(() => system.IsIdle);
         }
-        public IEnumerator OnDefeat(BattleSystem system)
+        public override IEnumerator OnDefeat(BattleSystem system)
         {
-            system.GUI.QueueMessage($"{Name}: (x-x)");
+            system.GUI.QueueMessage($"{Name}: (x x)");
             yield break;
         }
 
-
-    }
-
-    public class SlimeBattleUnit : EnemyUnit
-    {
 
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 338202084267771500}
-  - component: {fileID: 5098008618470256145}
+  - component: {fileID: 1329078868944988225}
   m_Layer: 0
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338202084267771503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 338202084379833713}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5098008618470256145
+--- !u!114 &1329078868944988225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,22 +41,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 338202084267771503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4e9cfd66fa176c40b87c1465d678472, type: 3}
+  m_Script: {fileID: 11500000, guid: 9178f6826070ca74d8dfc725aaf88707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Kidney Bean
-  level: 1
-  hp: 20
-  maxHp: 20
-  attack: 1
+  name: Small Green Slime
+  level: 3
+  hp: 8
+  maxHp: 8
+  attack: 0
   defense: 0
-  statusEffects:
-  - name: 
-    statType: 0
-    modifierType: 0
-    value: 0
-    duration: 0
-    freezeDuration: 0
+  statusEffects: []
 --- !u!1 &338202084379833712
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,13 +75,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338202084379833712}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 338202084267771500}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!212 &338202084379833718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,7 +123,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
-  m_Color: {r: 0.6226415, g: 0.11454255, b: 0.11454255, a: 1}
+  m_Color: {r: 0.60521924, g: 0.8301887, b: 0.27020293, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

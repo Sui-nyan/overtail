@@ -9,6 +9,7 @@ namespace Overtail.Battle
         public PlayerTurnState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
+            Debug.Log("PlayerTurn:Start");
             _system.GUI.QueueMessage("Choose an action.");
             yield return new WaitUntil(() => _system.IsIdle);
             _system.GUI.ShowButtons();
@@ -27,7 +28,7 @@ namespace Overtail.Battle
         public override IEnumerator Flirt()
         {
             yield return _system.StartCoroutine(_system.Player.PreFlirt(_system));
-            yield return _system.StartCoroutine(_system.Enemy.GetFlirted(_system, _system.Player));
+            yield return _system.StartCoroutine(_system.Enemy.GetFlirted(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
@@ -35,7 +36,7 @@ namespace Overtail.Battle
         public override IEnumerator Bully()
         {
             yield return _system.StartCoroutine(_system.Player.PreBully(_system));
-            yield return _system.StartCoroutine(_system.Enemy.GetBullied(_system, _system.Player));
+            yield return _system.StartCoroutine(_system.Enemy.GetBullied(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }

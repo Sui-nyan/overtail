@@ -10,6 +10,7 @@ namespace Overtail.Battle
         {
             _system.GUI.QueueMessage($"A wild {_system.Enemy.Name} appears.");
 
+            _system.StartCoroutine(_system.Enemy.OnGreeting(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             _system.SetState(new PlayerTurnState(_system));
         }
