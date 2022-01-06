@@ -4,17 +4,21 @@ using Overtail;
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
-    PlayerMovement movement;
-    [SerializeField] private PersistentPlayerData persistantData;
+    private PlayerMovement _movement;
+    [SerializeField] private PlayerData _playerData;
 
-    private void Start()
+    private void Awake()
     {
-        gameObject.transform.position = persistantData.playerSerializable.Position;
-        movement = gameObject.GetComponent<PlayerMovement>();
+        var t = transform.position;
+        t.x = _playerData.Position.x;
+        t.y = _playerData.Position.y;
+        transform.position = t;
+
+        _movement = GetComponent<PlayerMovement>();
     }
     void FixedUpdate()
     {
-        if (movement.IsMoving)
-            persistantData.playerSerializable.Position= gameObject.transform.position;
+        if (_movement.IsMoving)
+            _playerData.playerSerializable.Position= gameObject.transform.position;
     }
 }

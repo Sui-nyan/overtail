@@ -54,7 +54,8 @@ namespace Overtail.Battle
 
         private IEnumerator Unload()
         {
-            Player.BeforeExit();
+            // TODO
+            Player.Save(null);
             SceneManager.LoadScene("SampleScene");
             yield break;
         }

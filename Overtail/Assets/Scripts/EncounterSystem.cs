@@ -30,12 +30,12 @@ namespace Overtail.Something {
             //setup.playerStats = playerMovement.playerStatus; // get here or manually prepare beforehand
         }
 
-        void Update()
+        void FixedUpdate()
         {
             if (playerMovement.IsMoving)
             {
-                cumulativeTime += Time.deltaTime;
-                walkedDistance += playerMovement.moveSpeed * Time.deltaTime;
+                cumulativeTime += Time.fixedDeltaTime;
+                walkedDistance += playerMovement.moveSpeed * Time.fixedDeltaTime;
                 if (cumulativeTime > 1)
                 {
                     cumulativeTime = 0;

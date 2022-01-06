@@ -834,7 +834,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1490.1646, y: -170.275}
+  m_AnchoredPosition: {x: 1490.1646, y: -170.27498}
   m_SizeDelta: {x: 859.6709, y: 340.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997769079
@@ -938,7 +938,7 @@ MonoBehaviour:
   _enemyHud: {fileID: 733240737}
   _tmpText: {fileID: 2073232864}
   _typeWriteDelay: 0.05
-  _guiDelayMin: 0.1
+  _guiDelayMin: 0.5
   _guiDelayMax: 4
   _attackButton: {fileID: 176889625}
   _interactButton: {fileID: 261996154}
@@ -1596,7 +1596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5954053813239508390, guid: 2873dd5172060ed43a987ebdd69ef567, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -56.044983
+      value: -56.045013
       objectReference: {fileID: 0}
     - target: {fileID: 8565745584592045913, guid: 2873dd5172060ed43a987ebdd69ef567, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1612,7 +1612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8565745584592045913, guid: 2873dd5172060ed43a987ebdd69ef567, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -46
+      value: -45.99997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2873dd5172060ed43a987ebdd69ef567, type: 3}
@@ -2008,7 +2008,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 530.1645, y: -170.275}
+  m_AnchoredPosition: {x: 530.1645, y: -170.27498}
   m_SizeDelta: {x: 1060.329, y: 340.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2073232864

@@ -11,7 +11,7 @@ namespace Overtail.Battle
             yield return _system.StartCoroutine(_system.Enemy.OnDefeat(_system));
             yield return new WaitUntil(() => _system.IsIdle);
 
-            _system.GUI.QueueMessage($"{_system.Enemy} has been defeated. You win.");
+            yield return _system.GUI.StartDialogue($"{_system.Enemy} has been defeated. You win.");
             yield return new WaitUntil(() => _system.IsIdle);
 
             _system.Exit();

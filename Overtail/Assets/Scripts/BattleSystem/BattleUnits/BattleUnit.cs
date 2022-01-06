@@ -247,7 +247,8 @@ namespace Overtail.Battle
         {
             yield break;
         }
-        public virtual IEnumerator GetAttacked(BattleSystem system)
+
+        public virtual IEnumerator OnGetAttacked(BattleSystem system)
         {
             yield break;
         }
@@ -256,7 +257,7 @@ namespace Overtail.Battle
         {
             yield break;
         }
-        public virtual IEnumerator GetFlirted(BattleSystem system)
+        public virtual IEnumerator OnGetFlirted(BattleSystem system)
         {
             yield break;
         }
@@ -265,7 +266,7 @@ namespace Overtail.Battle
         {
             yield break;
         }
-        public virtual IEnumerator GetBullied(BattleSystem system)
+        public virtual IEnumerator OnGetBullied(BattleSystem system)
         {
             yield break;
         }

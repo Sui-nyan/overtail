@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
@@ -11,58 +10,33 @@ namespace Overtail.Battle
 {
     public partial class BattleGUI : MonoBehaviour
     {
-        public Coroutine StartWriteText(string text)
-        {
-            return StartWriteText(text, _typeWriteDelay);
-        }
-
-        public Coroutine StartWriteText(string text, float typingDelay)
-        {
-            return StartCoroutine(TypeWrite(text, typingDelay));
-        }
-        
-        public IEnumerator WriteTextAndWait(string text)
-        {
-            yield return StartCoroutine(TypeWrite(text, _typeWriteDelay));
-            yield return AwaitTimeOrConfirm();
-        }
     }
 
 
     [System.Serializable]
     public partial class BattleGUI : MonoBehaviour
     {
-        [Header("UI Elements")]
-        [SerializeField] [NotNull] private BattleHUD _playerHud;
+        [Header("UI Elements")] [SerializeField] [NotNull] private BattleHUD _playerHud;
         [SerializeField] [NotNull] private BattleHUD _enemyHud;
         [SerializeField] [NotNull] private TextMeshProUGUI _tmpText;
 
-        [Header("Config")]
-        [SerializeField] private float _typeWriteDelay = 0.05f;
-        [SerializeField] private float _guiDelayMin = 0.5f;
-        [SerializeField] private float _guiDelayMax = 4f;
+        [Header("Config")] [SerializeField] private float _typeWriteDelay = 0.05f;
+        [SerializeField] private float _delayMin = 0.5f;
+        [SerializeField] private float _delayMax = 4f;
 
-        [Header("Buttons")]
-        [SerializeField] [NotNull] private GameObject _attackButton;
+        [Header("Buttons")] [SerializeField] [NotNull] private GameObject _attackButton;
         [SerializeField] [NotNull] private GameObject _interactButton;
         [SerializeField] [NotNull] private GameObject _inventoryButton;
         [SerializeField] [NotNull] private GameObject _escapeButton;
-        
-        private Queue<GuiCoroutine> _guiEventQueue = new Queue<GuiCoroutine>();
-        private BattleSystem _system;
-        public class GuiCoroutine
-        {
-            public float PostEventDelay = 0f;
-            public Func<BattleSystem, IEnumerator> CoroutineHandle; // IEnumerator func(MonoBehaviour obj);
-        }
+
         public bool IsIdle { get; private set; } = true;
         public bool GetConfirmKeyDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
-        private GameObject[] AllButtons => new GameObject[] { _attackButton, _interactButton, _inventoryButton, _escapeButton };
+
+        private GameObject[] AllButtons => new GameObject[]
+            {_attackButton, _interactButton, _inventoryButton, _escapeButton};
 
         public void Setup(BattleSystem system)
         {
-            _system = system;
-
             system.Player.StatusUpdated += UpdateHUD;
             system.Enemy.StatusUpdated += UpdateHUD;
 
@@ -82,16 +56,6 @@ namespace Overtail.Battle
             HideButtons();
         }
 
-        public void QueueMessage(string msg)
-        {
-            QueueMessage(msg, _guiDelayMin);
-        }
-
-        public void QueueCoroutine(Func<BattleSystem, IEnumerator> coroutineHandle)
-        {
-            QueueCoroutine(coroutineHandle, _guiDelayMin);
-        }
-
         private void Update()
         {
             if (EventSystem.current.currentSelectedGameObject == null)
@@ -100,57 +64,85 @@ namespace Overtail.Battle
             }
         }
 
-        #region Coroutine Queue
-        public void QueueMessage(string msg, float postEventDelay) // Wrap message as Coroutine
+        #region Coroutines
+
+        public Coroutine StartDialogue(string text)
         {
-            QueueMessage(msg, postEventDelay, _typeWriteDelay);
+            return StartDialogue(text, typeWriteDelay: _typeWriteDelay, delayMin: _delayMin, delayMax: _delayMax);
         }
 
-        public void QueueMessage(string msg, float postEventDelay, float typeWriteDelay) // Wrap message as Coroutine
+        /// <summary>
+        /// Uses defaults from Unity Inspector if not set
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="typeWriteDelay"></param>
+        /// <param name="delayMin"></param>
+        /// <param name="delayMax"></param>
+        /// <returns></returns>
+        public Coroutine StartDialogue(string text, float typeWriteDelay = -1f, float delayMin = -1f,
+            float delayMax = -1f)
         {
-            IEnumerator TextWrapper(MonoBehaviour obj) { return TypeWrite(msg, typeWriteDelay); }
-            QueueCoroutine(TextWrapper, postEventDelay);
+            if (typeWriteDelay < 0) typeWriteDelay = _typeWriteDelay;
+            if (delayMin < 0) delayMin = _delayMin;
+            if (delayMax < 0) delayMax = _delayMax;
+
+            return StartCoroutine(Dialogue(
+                text: text,
+                typingDelay: typeWriteDelay,
+                minDelay: delayMin,
+                maxDelay: delayMax));
         }
 
-        
-        public void QueueCoroutine(Func<BattleSystem, IEnumerator> coroutine, float postEventDelay)
+        public IEnumerator Dialogue(string text, float typingDelay, float minDelay, float maxDelay)
         {
-            var s = new GuiCoroutine();
-            s.CoroutineHandle = coroutine;
-            s.PostEventDelay = postEventDelay;
-            _guiEventQueue.Enqueue(s);
+            yield return StartCoroutine(TypeWriteText(text, typingDelay));
+            yield return AwaitTimeOrConfirm(minDelay, maxDelay);
+            yield return null;
 
-            if (IsIdle)
+            IEnumerator TypeWriteText(string text, float typingDelay)
             {
-                IsIdle = false;
-                StartCoroutine(ProcessQueue());
-            }
-        }
+                _tmpText.text = string.Empty;
 
-        private IEnumerator ProcessQueue()
-        {
-            while (_guiEventQueue.Count > 0)
-            {
-                var next = _guiEventQueue.Dequeue() as GuiCoroutine;
-                Debug.Log($"NextEvent:[{next.PostEventDelay:.00}s][{next.CoroutineHandle.Method.Name}]");
-                yield return StartCoroutine(next.CoroutineHandle(_system));
-                yield return AwaitTimeOrConfirm(minDuration: next.PostEventDelay, _guiDelayMax);
-                yield return new WaitForEndOfFrame();
-            }
+                var timeElapsed = 0f;
+                int i = 0;
 
-            IsIdle = true;
+                while (i < text.Length)
+                {
+                    if (GetConfirmKeyDown)
+                    {
+                        _tmpText.text = text;
+                        break;
+                    }
+
+                    if (timeElapsed > typingDelay)
+                    {
+                        timeElapsed = 0;
+                        i++;
+                        _tmpText.text = text.Substring(0, i);
+                        _tmpText.text += "<color=#00000000>" + text.Substring(i) + "</color>";
+                    }
+
+                    timeElapsed += Time.deltaTime; // time since last frame
+                    yield return null; // Skip to next frame
+                }
+            }
         }
 
         public Coroutine AwaitIdle()
         {
-            IEnumerator Wait() { yield return new WaitUntil(() => IsIdle); }
+            IEnumerator Wait()
+            {
+                yield return new WaitUntil(() => IsIdle);
+            }
+
             return StartCoroutine(Wait());
         }
 
         public Coroutine AwaitTimeOrConfirm()
         {
-            return AwaitTimeOrConfirm(_guiDelayMin, _guiDelayMax);
+            return AwaitTimeOrConfirm(_delayMin, _delayMax);
         }
+
         public Coroutine AwaitTimeOrConfirm(float minDuration, float maxDuration)
         {
             IEnumerator WaitOrConfirm(float min, float max)
@@ -169,36 +161,6 @@ namespace Overtail.Battle
             return StartCoroutine(WaitOrConfirm(minDuration, maxDuration));
         }
 
-        private IEnumerator TypeWrite(string text, float typingDelay)
-        {
-            _tmpText.text = string.Empty;
-
-            var timeElapsed = 0f;
-            int i = 0;
-
-            while (i < text.Length)
-            {
-                if (GetConfirmKeyDown)
-                {
-                    _tmpText.text = text;
-                    break;
-                }
-
-                if (timeElapsed > typingDelay)
-                {
-                    timeElapsed = 0;
-                    i++;
-                    _tmpText.text = text.Substring(0, i);
-                    _tmpText.text += "<color=#00000000>" + text.Substring(i) + "</color>";
-                }
-
-                timeElapsed += Time.deltaTime; // time since last frame
-                yield return null; // Skip to next frame
-            }
-
-            yield break;
-        }
-
         #endregion
 
         #region GUI Interface
@@ -208,9 +170,9 @@ namespace Overtail.Battle
             var type = obj.GetType();
 
             if (type == typeof(PlayerUnit))
-                _playerHud.UpdateHUD(obj);//_UpdateHud(obj, playerHUD);
+                _playerHud.UpdateHUD(obj); //_UpdateHud(obj, playerHUD);
             else if (type.IsSubclassOf(typeof(EnemyUnit)))
-                _enemyHud.UpdateHUD(obj);//_UpdateHud(obj, enemyHUD);
+                _enemyHud.UpdateHUD(obj); //_UpdateHud(obj, enemyHUD);
             else
                 throw new ArgumentException($"Invalid type {obj.GetType().Name}:{typeof(BattleUnit).Name} ");
         }
@@ -231,6 +193,7 @@ namespace Overtail.Battle
             {
                 b.SetActive(false);
             }
+
             AwaitTimeOrConfirm();
         }
 
@@ -238,6 +201,7 @@ namespace Overtail.Battle
         {
             // TODO Proper layout and code structure
             GameObject[] buttons = new GameObject[2];
+
             GameObject CreateButton(string label, Func<UnityEngine.Coroutine> func, Vector2 pos)
             {
                 var root = GameObject.Find("DialogueBox");
@@ -255,6 +219,7 @@ namespace Overtail.Battle
                     {
                         GameObject.Destroy(b);
                     }
+
                     func();
                 });
 

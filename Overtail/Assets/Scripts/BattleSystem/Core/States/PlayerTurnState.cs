@@ -10,14 +10,13 @@ namespace Overtail.Battle
         public override IEnumerator Start()
         {
             Debug.Log("PlayerTurn:Start");
-            yield return _system.GUI.StartWriteText("Choose an action.");
+            yield return _system.GUI.StartDialogue("Choose an action.");
             _system.GUI.ShowButtons();
-            yield break;
         }
         public override IEnumerator Attack()
         {
             yield return _system.StartCoroutine(_system.Player.OnAttack(_system));
-            yield return _system.StartCoroutine(_system.Enemy.GetAttacked(_system));
+            yield return _system.StartCoroutine(_system.Enemy.OnGetAttacked(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
@@ -27,7 +26,7 @@ namespace Overtail.Battle
         public override IEnumerator Flirt()
         {
             yield return _system.StartCoroutine(_system.Player.OnFlirt(_system));
-            yield return _system.StartCoroutine(_system.Enemy.GetFlirted(_system));
+            yield return _system.StartCoroutine(_system.Enemy.OnGetFlirted(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
@@ -35,7 +34,7 @@ namespace Overtail.Battle
         public override IEnumerator Bully()
         {
             yield return _system.StartCoroutine(_system.Player.OnBully(_system));
-            yield return _system.StartCoroutine(_system.Enemy.GetBullied(_system));
+            yield return _system.StartCoroutine(_system.Enemy.OnGetBullied(_system));
             yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
@@ -62,8 +61,7 @@ namespace Overtail.Battle
 
         public override IEnumerator Escape()
         {
-            _system.GUI.QueueMessage("You fled the battle, coward!");
-            yield return new WaitUntil(() => _system.IsIdle);
+            yield return _system.GUI.StartDialogue("You fled the battle, coward!");
             _system.Exit();
         }
         public override IEnumerator CleanUp()
