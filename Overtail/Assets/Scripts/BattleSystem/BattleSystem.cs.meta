@@ -5,8 +5,12 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - battleSetupData: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
+  - playerData: {fileID: 11400000, guid: a2b949a2eec9b5344a4fd5b6e94ca2db, type: 2}
   - playerStation: {instanceID: 0}
   - enemyStation: {instanceID: 0}
+  - _player: {instanceID: 0}
+  - _enemy: {instanceID: 0}
+  - _graphicalUI: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

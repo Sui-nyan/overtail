@@ -28,7 +28,7 @@ namespace Overtail.Battle
         {
             _hp = unit.HP;
             _level = unit.Level;
-            _exp = unit.Exp;
+            _exp = unit.Experience;
             _statusEffects = unit.StatusEffects;
         }
 
@@ -36,7 +36,7 @@ namespace Overtail.Battle
         {
             unit.HP = _hp;
             unit.Level = _level;
-            unit.Exp = _exp;
+            unit.Experience = _exp;
             unit.StatusEffects=_statusEffects;
         }
 

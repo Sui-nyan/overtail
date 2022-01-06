@@ -9,8 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a07d72407d2a44399550da085aab0c, type: 3}
-  m_Name: BattleData
+  m_Script: {fileID: 11500000, guid: 452710daf6c0d0a4388aff494e0e60bb, type: 3}
+  m_Name: PlayerData
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 5259660652032446243, guid: 7274430f9b1fdb543b43fa543b1292f9, type: 3}
-  enemyPrefab: {fileID: 1446084284383507786, guid: a1ed6a950d734eb429efec349f632b56, type: 3}
+  Name: MCute
+  BaseMaxHp: 15
+  BaseAttack: 3
+  BaseDefense: 0
+  Charm: 3
+  Hp: 15
+  Level: 5
+  Experience: 0
+  StatusEffects: []

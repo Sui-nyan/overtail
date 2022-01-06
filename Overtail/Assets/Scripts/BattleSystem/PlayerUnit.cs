@@ -6,12 +6,19 @@ namespace Overtail.Battle
 {
     public class PlayerUnit : BattleUnit
     {
-        public int Exp { get; set; }
         public int Charm { get; private set; }
 
         public void Load(PlayerData data)
         {
-            // TODO
+            Name = data.Name;
+            Level = data.Level;
+            Experience = data.Experience;
+
+            SetBaseStats(data.BaseMaxHp, data.BaseAttack, data.BaseDefense);
+            StatusEffects = data.StatusEffects;
+            HP = data.Hp;
+            
+            Charm = data.Charm;
         }
         public void Save(PlayerData data)
         {
@@ -43,17 +50,15 @@ namespace Overtail.Battle
             yield return new WaitUntil(() => system.IsIdle);
             yield return new WaitForSeconds(1f);
         }
+        
         public override IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)
         { 
             yield break;
         }
-
-
-
+        
         public override IEnumerator OnVictory(BattleSystem system)
         {
-            p.Exp += 0; // system.Enemy.EXPValue
-
+            system.Player.Experience += system.Enemy.Experience;
             // CheckForLevelUp();
 
             yield break;

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5259660652032446243
+--- !u!1 &1446084284383507786
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,65 +8,56 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5259660652032446240}
-  - component: {fileID: 120047454792231163}
+  - component: {fileID: 4488041444548460709}
+  - component: {fileID: 4092058473419366428}
   m_Layer: 0
-  m_Name: PlayerPrefab
+  m_Name: InconspiciousSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5259660652032446240
-Transform:
+--- !u!224 &4488041444548460709
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259660652032446243}
+  m_GameObject: {fileID: 1446084284383507786}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5259660652136119357}
+  - {fileID: 8765832659479930819}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &120047454792231163
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4092058473419366428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259660652032446243}
+  m_GameObject: {fileID: 1446084284383507786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e73febc7025d047a0893031686fc8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9178f6826070ca74d8dfc725aaf88707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Player (from BattleData)
-  level: 1
-  hp: 20
-  maxHp: 20
-  attack: 0
-  defense: 0
+  _displayName: Small Green Slime
+  _level: 2
+  _experience: 1
+  _maxHp: 8
+  _attack: 1
+  _defense: 0
+  _hp: 8
   statusEffects: []
-  persistentData: {fileID: 11400000, guid: a2b949a2eec9b5344a4fd5b6e94ca2db, type: 2}
-  p:
-    name: 
-    status:
-      level: 5
-      exp: 0
-      hp: 0
-      maxHp: 0
-      attack: 0
-      defense: 0
-    statusEffects: []
-    pos:
-      x: 0
-      y: 0
-      z: 0
---- !u!1 &5259660652136119356
+--- !u!1 &6150120163106213397
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,36 +65,36 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5259660652136119357}
-  - component: {fileID: 5259660652136119354}
+  - component: {fileID: 8765832659479930819}
+  - component: {fileID: 6772330616805704220}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: greenSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5259660652136119357
+--- !u!4 &8765832659479930819
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259660652136119356}
+  m_GameObject: {fileID: 6150120163106213397}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.12, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
-  m_Father: {fileID: 5259660652032446240}
+  m_Father: {fileID: 4488041444548460709}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5259660652136119354
+--- !u!212 &6772330616805704220
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5259660652136119356}
+  m_GameObject: {fileID: 6150120163106213397}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -137,12 +128,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 70fc5b6ef7cce404d9011e363c55beaf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 3.14, y: 4.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

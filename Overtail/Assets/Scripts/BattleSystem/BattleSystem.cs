@@ -15,6 +15,7 @@ namespace Overtail.Battle
     {
         [Header("Setup")]
         [SerializeField] private BattleSetupData battleSetupData;
+        [SerializeField] private PlayerData playerData;
         [SerializeField] private Transform playerStation;
         [SerializeField] private Transform enemyStation;
 
@@ -31,7 +32,8 @@ namespace Overtail.Battle
         void Awake()
         {
             GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
-            _player = playerObject.GetComponent<PlayerUnit>();
+            _player = playerObject.AddComponent<PlayerUnit>();
+            _player.Load(playerData);
 
             GameObject enemyGO = Instantiate(battleSetupData.EnemyPrefab, enemyStation);
             _enemy = enemyGO.GetComponent<EnemyUnit>();
@@ -43,19 +45,19 @@ namespace Overtail.Battle
 
         public void Exit()
         {
+            Player.Save(playerData);
             StartCoroutine(Unload());
         }
 
         public void Escape()
         {
-            // Something
+            // Anything different?
             Exit();
         }
 
         private IEnumerator Unload()
         {
-            // TODO
-            Player.Save(null);
+            // TODO Transition or whatever
             SceneManager.LoadScene("SampleScene");
             yield break;
         }
@@ -73,7 +75,7 @@ namespace Overtail.Battle
         }
         public void OnInventoryButton()
         {
-            // Open Inventory
+            // TODO Open Inventory
             // Choose item
             StartCoroutine(_state.UseItem(null));
         }

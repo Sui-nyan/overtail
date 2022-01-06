@@ -17,8 +17,8 @@ namespace Overtail.Battle
 
         public override IEnumerator OnGreeting(BattleSystem system)
         {
-            yield return system.GUI.StartDialogue("Could you please leave me alone?");
-            yield return system.GUI.StartDialogue("I don't want any trouble.");
+            yield return system.GUI.StartDialogue($"{Name.ToUpper()}: Hello, traveler!");
+            yield return system.GUI.StartDialogue("Let's become friends");
 
             // <Insert qq animation>
 
@@ -40,6 +40,16 @@ namespace Overtail.Battle
         public override IEnumerator OnAttack(BattleSystem system)
         {
             yield return system.GUI.StartDialogue($"{Name.ToUpper()} body slams {system.Player.Name}.");
+        }
+
+        public override IEnumerator OnGetFlirted(BattleSystem system)
+        {
+            yield return system.GUI.StartDialogue($"{Name.ToUpper()}: 'I think we should just be friends'");
+        }
+
+        public override IEnumerator OnGetBullied(BattleSystem system)
+        {
+            yield return system.GUI.StartDialogue($"{Name.ToUpper()}: 'I don't know these words.'");
         }
 
         public override IEnumerator OnGetAttacked(BattleSystem system)
@@ -65,7 +75,9 @@ namespace Overtail.Battle
 
             var r = UnityEngine.Random.value * _responses.Count;
 
+            yield return StartCoroutine(FlipAround());
             yield return system.GUI.StartDialogue(_responses[(int)r]);
+            
         }
 
 
@@ -73,7 +85,14 @@ namespace Overtail.Battle
         private IEnumerator GoSuperSaiyan(BattleSystem system)
         {
             _enraged = true;
-            yield return system.GUI.StartDialogue("#!?", typeWriteDelay: 1f);
+            
+            var sprite = Resources.Load<Sprite>("Enemy/greenSlime_enraged");
+            if (sprite != null)
+            {
+                yield return StartCoroutine(FlipAround());
+                var sprRend = GetComponentInChildren<SpriteRenderer>();
+                sprRend.sprite = sprite;
+            }
 
             MaxHP = 999;
             Attack = 999;
@@ -81,18 +100,27 @@ namespace Overtail.Battle
             Name = Name.Replace("Small", "Small(?)").Replace("small", "small(?)");
             HP = MaxHP;
 
-            yield return StartCoroutine(GrowBig(system));
-
-
+            yield return StartCoroutine(GrowBig());
 
             yield return system.GUI.StartDialogue("THAT'S IT, YOU LITTLE SH*T");
         }
-        private IEnumerator GrowBig(MonoBehaviour obj)
+        private IEnumerator FlipAround()
         {
-            // TODO Change sprite
-            return ShakeAndEnlarge(4, 2);
+            var sprRend = GetComponentInChildren<SpriteRenderer>();
+            sprRend.sprite = Resources.Load<Sprite>("Enemy/greenSlime_enraged");
+            var sleep = new WaitForSeconds(0.2f);
+            for (var i = 0; i < 6; i++)
+            {
+                sprRend.flipX ^= true;
+                yield return sleep;
+            }
+            sprRend.sprite = Resources.Load<Sprite>("Enemy/greenSlime");
+        }
+        private IEnumerator GrowBig()
+        {
+            return ShakeAndEnlarge(3, 2, 2);
 
-            IEnumerator ShakeAndEnlarge(float scalar, float time)
+            IEnumerator ShakeAndEnlarge(float scaleX, float scaleY, float time)
             {
                 Vector3 originalPos = transform.localPosition;
                 Vector3 originalScale = transform.localScale;
@@ -104,19 +132,17 @@ namespace Overtail.Battle
                     yield return null;
 
                     var newScale = originalScale;
-                    newScale.x = Mathf.SmoothStep(originalScale.x, originalScale.x * scalar * 1.5f, timeElapsed / time);
-                    newScale.y = Mathf.SmoothStep(originalScale.y, originalScale.y * scalar, timeElapsed / time);
+                    newScale.x = Mathf.SmoothStep(originalScale.x, originalScale.x * scaleX, timeElapsed / time);
+                    newScale.y = Mathf.SmoothStep(originalScale.y, originalScale.y * scaleY, timeElapsed / time);
 
                     transform.localScale = newScale;
 
                     Func<float> rnd = () => (float)(UnityEngine.Random.value - 1); // shaky
                     var newPos = originalPos + new Vector3(.1f * rnd(), .1f * rnd(), .1f * rnd());
-                    newPos.y = newScale.y / 2;
 
                     transform.localPosition = newPos;
                 }
 
-                originalPos.y = transform.localScale.y / 2;
                 transform.localPosition = originalPos;
             }
         }

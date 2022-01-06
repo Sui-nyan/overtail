@@ -15,9 +15,10 @@ namespace Overtail.Battle
     public abstract class BattleUnit : MonoBehaviour, IBattleInteractable
     {
         public event Action<BattleUnit> StatusUpdated;
-
+        
         [SerializeField] private string _displayName;
         [SerializeField] private int _level;
+        [SerializeField] private int _experience;
 
         // Set once on Loading only;
         private int _baseMaxHp;
@@ -28,7 +29,7 @@ namespace Overtail.Battle
         [SerializeField] private int _attack;
         [SerializeField] private int _defense;
 
-        [SerializeField] private int hp;
+        [SerializeField] private int _hp;
 
         private bool _statsInitialized = false;
 
@@ -57,13 +58,18 @@ namespace Overtail.Battle
                 StatusUpdated?.Invoke(this);
             }
         }
+        public int Experience
+        {
+            get => _experience;
+            set => _experience = value;
+        }
 
         public virtual int HP
         {
-            get => hp;
+            get => _hp;
             set
             {
-                hp = Mathf.Clamp(value, 0, MaxHP);
+                _hp = Mathf.Clamp(value, 0, MaxHP);
                 StatusUpdated?.Invoke(this);
             }
         }
@@ -72,7 +78,7 @@ namespace Overtail.Battle
         {
             get
             {
-                if (!_statsInitialized) InitializeStats();
+                if (!_statsInitialized) CalculateFinalStats();
                 return _maxHp;
             }
             set
@@ -86,7 +92,7 @@ namespace Overtail.Battle
         {
             get
             {
-                if (!_statsInitialized) InitializeStats();
+                if (!_statsInitialized) CalculateFinalStats();
                 return _attack;
             }
             set
@@ -100,7 +106,7 @@ namespace Overtail.Battle
         {
             get
             {
-                if (!_statsInitialized) InitializeStats();
+                if (!_statsInitialized) CalculateFinalStats();
                 return _defense;
             }
             set
@@ -108,6 +114,18 @@ namespace Overtail.Battle
                 _defense = value;
                 StatusUpdated?.Invoke(this);
             }
+        }
+
+        protected void SetAll(string displayName, int level, int baseMaxHp, int baseAttack, int baseDefense, int hp, List<StatusEffect> statusEffects)
+        {
+            Name = displayName;
+            Level = level;
+            _baseMaxHp = baseMaxHp;
+            _baseAttack = baseAttack;
+            _baseDefense = baseDefense;
+
+            CalculateStat(StatType.MAXHP);
+            this.HP = hp;
         }
 
         /// <summary>
@@ -119,7 +137,7 @@ namespace Overtail.Battle
             set
             {
                 statusEffects = value;
-                InitializeStats();
+                CalculateFinalStats();
             }
         }
 
@@ -136,10 +154,10 @@ namespace Overtail.Battle
             _baseMaxHp = newMaxHp;
             _baseAttack = newAttack;
             _baseDefense = defense;
-            InitializeStats();
+            CalculateFinalStats();
         }
 
-        private void InitializeStats()
+        private void CalculateFinalStats()
         {
             Debug.LogWarning(Name + "::" + MethodBase.GetCurrentMethod().Name);
 
