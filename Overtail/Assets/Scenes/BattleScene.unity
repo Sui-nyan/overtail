@@ -1337,13 +1337,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8485af875bd4fd3499cfddf5b9b55ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleSetupData: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
-  playerData: {fileID: 11400000, guid: a2b949a2eec9b5344a4fd5b6e94ca2db, type: 2}
-  playerStation: {fileID: 1929546384}
-  enemyStation: {fileID: 1202270077}
+  _battleSetupData: {fileID: 11400000, guid: 3e9fdfc6f2b2e194fbc51e88b9baf3ff, type: 2}
+  _playerData: {fileID: 11400000, guid: a2b949a2eec9b5344a4fd5b6e94ca2db, type: 2}
+  _playerStation: {fileID: 1929546384}
+  _enemyStation: {fileID: 1202270077}
   _player: {fileID: 0}
   _enemy: {fileID: 0}
-  _graphicalUI: {fileID: 1032224193}
+  _gui: {fileID: 1032224193}
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0

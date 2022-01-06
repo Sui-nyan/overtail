@@ -80,7 +80,7 @@ namespace Overtail.Battle
         /// <param name="delayMax"></param>
         /// <returns></returns>
         public Coroutine StartDialogue(string text, float typeWriteDelay = -1f, float delayMin = -1f,
-            float delayMax = -1f)
+            float delayMax = -1f, bool skipAvailable = true)
         {
             if (typeWriteDelay < 0) typeWriteDelay = _typeWriteDelay;
             if (delayMin < 0) delayMin = _delayMin;
@@ -90,10 +90,11 @@ namespace Overtail.Battle
                 text: text,
                 typingDelay: typeWriteDelay,
                 minDelay: delayMin,
-                maxDelay: delayMax));
+                maxDelay: delayMax,
+                skipAvailable:skipAvailable));
         }
 
-        public IEnumerator Dialogue(string text, float typingDelay, float minDelay, float maxDelay)
+        public IEnumerator Dialogue(string text, float typingDelay, float minDelay, float maxDelay, bool skipAvailable)
         {
             yield return StartCoroutine(TypeWriteText(text, typingDelay));
             yield return AwaitTimeOrConfirm(minDelay, maxDelay);
@@ -108,7 +109,7 @@ namespace Overtail.Battle
 
                 while (i < text.Length)
                 {
-                    if (GetConfirmKeyDown)
+                    if (skipAvailable && GetConfirmKeyDown)
                     {
                         _tmpText.text = text;
                         break;

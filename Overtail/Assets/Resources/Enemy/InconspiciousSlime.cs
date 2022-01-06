@@ -49,22 +49,21 @@ namespace Overtail.Battle
 
         public override IEnumerator OnGetBullied(BattleSystem system)
         {
-            yield return system.GUI.StartDialogue($"{Name.ToUpper()}: 'I don't know these words.'");
+            yield return system.GUI.StartDialogue($"{Name.ToUpper()} Ouchie, that hurt.");
+            yield return StartCoroutine(OnGetAttacked(system));
         }
 
         public override IEnumerator OnGetAttacked(BattleSystem system)
         {
             if (_enraged)
             {
-                yield return system.GUI.StartDialogue($".");
-                yield return system.GUI.StartDialogue($"..");
-                yield return system.GUI.StartDialogue($"...");
+                yield return system.GUI.StartDialogue($". . .", typeWriteDelay:0.4f, skipAvailable:false);
                 yield return system.GUI.StartDialogue($"{Name} is unfazed by {system.Player.Name}'s attack.");
                 yield break;
             }
 
             var dmg = Math.Max(system.Player.Attack - this.Defense, 0);
-            HP = Mathf.Clamp(HP - dmg, (int)(0.3*MaxHP), MaxHP); // Won't drop below threshold
+            HP = Mathf.Clamp(HP - dmg, (int)Math.Ceiling(0.1*MaxHP), MaxHP); // Won't drop below threshold
             yield return new WaitForSeconds(1f);
             
             // Text Reactions
@@ -77,7 +76,6 @@ namespace Overtail.Battle
 
             yield return StartCoroutine(FlipAround());
             yield return system.GUI.StartDialogue(_responses[(int)r]);
-            
         }
 
 

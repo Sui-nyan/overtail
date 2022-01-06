@@ -14,8 +14,6 @@ namespace Overtail
         public int BaseMaxHp, BaseAttack, BaseDefense, Charm, Hp, Level, Experience;
         public List<StatusEffect> StatusEffects;
         public Position Position;
-
-        public PlayerSerializable playerSerializable { get; set; }
     }
 
     public struct Position
