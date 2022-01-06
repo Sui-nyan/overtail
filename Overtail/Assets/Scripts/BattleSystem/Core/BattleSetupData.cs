@@ -14,40 +14,9 @@ namespace Overtail.Battle
     public class BattleSetupData : ScriptableObject
     {
         [Header("Debug Only")]
-        [SerializeField] private GameObject playerPrefab;
-        [SerializeField] private GameObject enemyPrefab;
-        public GameObject PlayerPrefab => playerPrefab;
-        public GameObject EnemyPrefab => enemyPrefab;
-
-        private int _hp;
-        private int _level;
-        private List<StatusEffect> _statusEffects;
-        private int _exp;
-
-        public void SaveFromCombat(PlayerUnit unit)
-        {
-            _hp = unit.HP;
-            _level = unit.Level;
-            _exp = unit.Experience;
-            _statusEffects = unit.StatusEffects;
-        }
-
-        public void LoadToCombat(PlayerUnit unit)
-        {
-            unit.HP = _hp;
-            unit.Level = _level;
-            unit.Experience = _exp;
-            unit.StatusEffects=_statusEffects;
-        }
-
-        public void SaveFromRoaming(Player p)
-        {
-            
-        }
-
-        public void LoadToRoaming(Player p)
-        {
-
-        }
+        [SerializeField] private GameObject _playerPrefab;
+        [SerializeField] private GameObject _enemyPrefab;
+        public GameObject PlayerPrefab => _playerPrefab;
+        public GameObject EnemyPrefab => _enemyPrefab;
     }
 }

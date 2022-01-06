@@ -17,7 +17,6 @@ namespace Overtail.Battle
         {
             yield return _system.StartCoroutine(_system.Player.OnAttack(_system));
             yield return _system.StartCoroutine(_system.Enemy.OnGetAttacked(_system));
-            yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
 
@@ -27,7 +26,6 @@ namespace Overtail.Battle
         {
             yield return _system.StartCoroutine(_system.Player.OnFlirt(_system));
             yield return _system.StartCoroutine(_system.Enemy.OnGetFlirted(_system));
-            yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
 
@@ -35,15 +33,13 @@ namespace Overtail.Battle
         {
             yield return _system.StartCoroutine(_system.Player.OnBully(_system));
             yield return _system.StartCoroutine(_system.Enemy.OnGetBullied(_system));
-            yield return new WaitUntil(() => _system.IsIdle);
             EndTurn();
         }
 
         public override IEnumerator UseItem(ItemStack itemStack)
         {
-            yield return _system.StartCoroutine(_system.Player.OnItemUse(_system, itemStack));
             InventoryManager.Instance?.UseItem(itemStack);
-            yield return new WaitUntil(() => _system.IsIdle);
+            yield return _system.StartCoroutine(_system.Player.OnItemUse(_system, itemStack));
             EndTurn();
         }
 
@@ -62,7 +58,7 @@ namespace Overtail.Battle
         public override IEnumerator Escape()
         {
             yield return _system.GUI.StartDialogue("You fled the battle, coward!");
-            _system.Exit();
+            _system.ExitBattle();
         }
         public override IEnumerator CleanUp()
         {

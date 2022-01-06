@@ -47,8 +47,6 @@ namespace Overtail.Battle
         public override IEnumerator OnBully(BattleSystem system)
         {
             yield return system.GUI.StartDialogue($"{Name} is trying to sh*t-talk {system.Enemy.Name}");
-            yield return new WaitUntil(() => system.IsIdle);
-            yield return new WaitForSeconds(1f);
         }
         
         public override IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)

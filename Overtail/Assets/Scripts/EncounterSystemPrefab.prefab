@@ -40,11 +40,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7100318871859195093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 280313fc61b80ed4f84d43b6e2642940, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fc7363db82ea6543b5aa62c59fb8c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerGO: {fileID: 0}
-  setup: {fileID: 11400000, guid: e12c71773fe13fb449965878b6c97674, type: 2}
+  setup: {fileID: 0}
   maxWalkingDistance: 10
   minLevel: 1
   maxLevel: 99

@@ -94,7 +94,7 @@ namespace Overtail.Battle
         {
             yield return system.GUI.StartDialogue($"{Name.ToUpper()}'s stare follows {system.Player.Name}");
             yield return system.GUI.AwaitTimeOrConfirm();
-            system.Escape();
+            system.EscapeBattle();
         }
     }
 }

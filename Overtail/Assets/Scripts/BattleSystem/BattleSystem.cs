@@ -14,28 +14,26 @@ namespace Overtail.Battle
     public class BattleSystem : StateMachine
     {
         [Header("Setup")]
-        [SerializeField] private BattleSetupData battleSetupData;
-        [SerializeField] private PlayerData playerData;
-        [SerializeField] private Transform playerStation;
-        [SerializeField] private Transform enemyStation;
+        [SerializeField] private BattleSetupData _battleSetupData;
+        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private Transform _playerStation;
+        [SerializeField] private Transform _enemyStation;
 
         [SerializeField] private PlayerUnit _player;
         [SerializeField] private EnemyUnit _enemy;
 
-        [SerializeField] private BattleGUI _graphicalUI;
-        public BattleGUI GUI => _graphicalUI;
+        [SerializeField] private BattleGUI _gui;
+        public BattleGUI GUI => _gui;
         public PlayerUnit Player => _player;
         public EnemyUnit Enemy => _enemy;
 
-        public bool IsIdle => GUI.IsIdle;
-
         void Awake()
         {
-            GameObject playerObject = Instantiate(battleSetupData.PlayerPrefab, playerStation);
+            GameObject playerObject = Instantiate(_battleSetupData.PlayerPrefab, _playerStation);
             _player = playerObject.AddComponent<PlayerUnit>();
-            _player.Load(playerData);
+            _player.Load(_playerData);
 
-            GameObject enemyGO = Instantiate(battleSetupData.EnemyPrefab, enemyStation);
+            GameObject enemyGO = Instantiate(_battleSetupData.EnemyPrefab, _enemyStation);
             _enemy = enemyGO.GetComponent<EnemyUnit>();
 
             GUI.Setup(this);
@@ -43,19 +41,19 @@ namespace Overtail.Battle
             SetState(new StartState(this));
         }
 
-        public void Exit()
+        public void ExitBattle()
         {
-            Player.Save(playerData);
-            StartCoroutine(Unload());
+            Player.Save(_playerData);
+            StartCoroutine(UnloadCoroutine());
         }
 
-        public void Escape()
+        public void EscapeBattle()
         {
             // Anything different?
-            Exit();
+            ExitBattle();
         }
 
-        private IEnumerator Unload()
+        private IEnumerator UnloadCoroutine()
         {
             // TODO Transition or whatever
             SceneManager.LoadScene("SampleScene");

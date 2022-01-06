@@ -9,12 +9,9 @@ namespace Overtail.Battle
         public override IEnumerator Start()
         {
             yield return _system.StartCoroutine(_system.Enemy.OnDefeat(_system));
-            yield return new WaitUntil(() => _system.IsIdle);
-
-            yield return _system.GUI.StartDialogue($"{_system.Enemy} has been defeated. You win.");
-            yield return new WaitUntil(() => _system.IsIdle);
-
-            _system.Exit();
+            yield return _system.StartCoroutine(_system.Player.OnVictory(_system));
+            yield return _system.GUI.StartDialogue($"{_system.Enemy} has been defeated.");
+            _system.ExitBattle();
         }
     }
 }

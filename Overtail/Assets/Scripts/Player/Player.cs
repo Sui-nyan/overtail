@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (_movement.IsMoving)
-            _playerData.playerSerializable.Position= gameObject.transform.position;
+        {
+            var pos = transform.position;
+            _playerData.Position.x = pos.x;
+            _playerData.Position.y = pos.y;
+        }
     }
 }
