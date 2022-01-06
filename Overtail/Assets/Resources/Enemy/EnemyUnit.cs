@@ -1,63 +1,75 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using System.Collections;
+using Overtail.Pending;
 
 namespace Overtail.Battle
 {
     public class EnemyUnit : BattleUnit
     {
-        private int _affection;
+        public int Affection { get; protected set; }
 
-        internal virtual IEnumerator OnGreeting(BattleSystem system)
+        public override IEnumerator OnGreeting(BattleSystem system)
         {
-            yield break;
-        }
-        public override IEnumerator DoTurn(BattleSystem system)
-        {
-            system.GUI.QueueMessage($"{this.Name} attacks {system.Player.Name}.");
-
-            system.Player.HP -= Math.Max(0, this.Attack - system.Player.Defense);
-
-            yield return new WaitUntil(() => system.IsIdle);
+            return base.OnGreeting(system);
         }
 
-        internal virtual IEnumerator GetAttacked(BattleSystem system)
+        public override IEnumerator DoTurnLogic(BattleSystem system)
         {
-            var hpBefore = HP;
-            bool hpThreshold(float threshold) => hpBefore / MaxHP > threshold && HP / MaxHP < threshold;
-
-            var dmg = Math.Max(system.Player.Attack - this.Defense, 0 );
-            this.HP -= dmg;
-            Debug.Log($"{Name} took {dmg} Damage");
-
-            if (hpThreshold(0.1f))
-            {
-                system.GUI.QueueMessage($"{Name} is pleading for mercy.");
-            } else if (hpThreshold(0.5f))
-            {
-                system.GUI.QueueMessage($"{Name} looks tired.");
-            }
-
-            yield break;
+            return base.DoTurnLogic(system);
         }
 
-        internal virtual IEnumerator GetFlirted(BattleSystem system)
+        public override IEnumerator OnVictory(BattleSystem system)
         {
-            system.GUI.QueueMessage($"{Name} is not interested in {system.Player.Name}");
-            yield return new WaitUntil(() => system.IsIdle);
+            return base.OnVictory(system);
         }
 
-        internal virtual IEnumerator GetBullied(BattleSystem system)
-        {
-            system.GUI.QueueMessage($"{Name} ignored {system.Player.Name}...");
-            yield return new WaitUntil(() => system.IsIdle);
-        }
         public override IEnumerator OnDefeat(BattleSystem system)
         {
-            system.GUI.QueueMessage($"{Name}: (x x)");
-            yield break;
+            return base.OnDefeat(system);
         }
 
+        public override IEnumerator OnAttack(BattleSystem system)
+        {
+            return base.OnAttack(system);
+        }
 
+        public override IEnumerator GetAttacked(BattleSystem system)
+        {
+            return base.GetAttacked(system);
+        }
+
+        public override IEnumerator OnFlirt(BattleSystem system)
+        {
+            return base.OnFlirt(system);
+        }
+
+        public override IEnumerator GetFlirted(BattleSystem system)
+        {
+            return base.GetFlirted(system);
+        }
+
+        public override IEnumerator OnBully(BattleSystem system)
+        {
+            return base.OnBully(system);
+        }
+
+        public override IEnumerator GetBullied(BattleSystem system)
+        {
+            return base.GetBullied(system);
+        }
+
+        public override IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)
+        {
+            return base.OnItemUse(system, itemStack);
+        }
+
+        public override IEnumerator OnEscape(BattleSystem system)
+        {
+            return base.OnEscape(system);
+        }
+
+        public override IEnumerator OnOpponentEscapes(BattleSystem system)
+        {
+            return base.OnOpponentEscapes(system);
+        }
     }
 }

@@ -13,9 +13,7 @@ namespace Overtail.Battle
         int Attack { get; }
         int Defense { get; }
 
-        IEnumerator DoTurn(BattleSystem system);
-        void InflictStatus(StatusEffect buff);
-        void TurnUpdate(int turns);
-        void TurnUpdate();
+        IEnumerator DoTurnLogic(BattleSystem system);
+        void AddStatusEffect(StatusEffect buff);
     }
 }

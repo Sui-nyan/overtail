@@ -9,6 +9,26 @@ using UnityEngine.UI;
 
 namespace Overtail.Battle
 {
+    public partial class BattleGUI : MonoBehaviour
+    {
+        public Coroutine StartWriteText(string text)
+        {
+            return StartWriteText(text, _typeWriteDelay);
+        }
+
+        public Coroutine StartWriteText(string text, float typingDelay)
+        {
+            return StartCoroutine(TypeWrite(text, typingDelay));
+        }
+        
+        public IEnumerator WriteTextAndWait(string text)
+        {
+            yield return StartCoroutine(TypeWrite(text, _typeWriteDelay));
+            yield return AwaitTimeOrConfirm();
+        }
+    }
+
+
     [System.Serializable]
     public partial class BattleGUI : MonoBehaviour
     {
@@ -29,15 +49,22 @@ namespace Overtail.Battle
         [SerializeField] [NotNull] private GameObject _escapeButton;
         
         private Queue<GuiCoroutine> _guiEventQueue = new Queue<GuiCoroutine>();
-        
+        private BattleSystem _system;
+        public class GuiCoroutine
+        {
+            public float PostEventDelay = 0f;
+            public Func<BattleSystem, IEnumerator> CoroutineHandle; // IEnumerator func(MonoBehaviour obj);
+        }
         public bool IsIdle { get; private set; } = true;
         public bool GetConfirmKeyDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
         private GameObject[] AllButtons => new GameObject[] { _attackButton, _interactButton, _inventoryButton, _escapeButton };
 
         public void Setup(BattleSystem system)
         {
-            system.Player.StatusUpdate += UpdateHUD;
-            system.Enemy.StatusUpdate += UpdateHUD;
+            _system = system;
+
+            system.Player.StatusUpdated += UpdateHUD;
+            system.Enemy.StatusUpdated += UpdateHUD;
 
             _playerHud.UpdateHUD(system.Player);
             _enemyHud.UpdateHUD(system.Enemy);
@@ -59,7 +86,8 @@ namespace Overtail.Battle
         {
             QueueMessage(msg, _guiDelayMin);
         }
-        public void QueueCoroutine(Func<MonoBehaviour, IEnumerator> coroutineHandle)
+
+        public void QueueCoroutine(Func<BattleSystem, IEnumerator> coroutineHandle)
         {
             QueueCoroutine(coroutineHandle, _guiDelayMin);
         }
@@ -85,7 +113,7 @@ namespace Overtail.Battle
         }
 
         
-        public void QueueCoroutine(Func<MonoBehaviour, IEnumerator> coroutine, float postEventDelay)
+        public void QueueCoroutine(Func<BattleSystem, IEnumerator> coroutine, float postEventDelay)
         {
             var s = new GuiCoroutine();
             s.CoroutineHandle = coroutine;
@@ -105,7 +133,7 @@ namespace Overtail.Battle
             {
                 var next = _guiEventQueue.Dequeue() as GuiCoroutine;
                 Debug.Log($"NextEvent:[{next.PostEventDelay:.00}s][{next.CoroutineHandle.Method.Name}]");
-                yield return StartCoroutine(next.CoroutineHandle(this));
+                yield return StartCoroutine(next.CoroutineHandle(_system));
                 yield return AwaitTimeOrConfirm(minDuration: next.PostEventDelay, _guiDelayMax);
                 yield return new WaitForEndOfFrame();
             }
@@ -167,7 +195,8 @@ namespace Overtail.Battle
                 timeElapsed += Time.deltaTime; // time since last frame
                 yield return null; // Skip to next frame
             }
-            yield return new WaitForSeconds(0f);
+
+            yield break;
         }
 
         #endregion

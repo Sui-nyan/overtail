@@ -10,17 +10,16 @@ namespace Overtail.Battle
         bool finalForm = false;
         List<string> reactions = new List<string>();
 
-        internal override IEnumerator OnGreeting(BattleSystem system)
+        public override IEnumerator OnGreeting(BattleSystem system)
         {
-            system.GUI.QueueMessage("Could you please leave me alone?");
-            system.GUI.QueueMessage("I don't want any trouble.");
-
+            yield return system.GUI.StartWriteText("Could you please leave me alone?");
+            yield return system.GUI.StartWriteText("I don't want any trouble.");
             // <Insert qq animation>
 
             yield break;
         }
 
-        internal override IEnumerator GetAttacked(BattleSystem system)
+        public override IEnumerator GetAttacked(BattleSystem system)
         {
             if (finalForm)
             {
@@ -59,11 +58,11 @@ namespace Overtail.Battle
 
             yield return system.GUI.AwaitIdle();
 
-            maxHp = 999;
+            MaxHP = 999;
             HP = MaxHP;
-            attack = 999;
-            level = 99;
-            _name = _name.Replace("Small", "Small(?)").Replace("small", "small(?)");
+            Attack = 999;
+            Level = 99;
+            Name = Name.Replace("Small", "Small(?)").Replace("small", "small(?)");
 
             system.GUI.QueueCoroutine(Transform);
             

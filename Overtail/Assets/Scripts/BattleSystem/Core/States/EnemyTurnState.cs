@@ -13,7 +13,7 @@ namespace Overtail.Battle
             _system.GUI.QueueMessage("Opponent is choosing an action.");
             yield return new WaitUntil(() => _system.IsIdle);
 
-            yield return _system.StartCoroutine(_system.Enemy.DoTurn(_system));
+            yield return _system.StartCoroutine(_system.Enemy.DoTurnLogic(_system));
             yield return new WaitUntil(() => _system.IsIdle);
 
             if (_system.Player.HP <= 0)

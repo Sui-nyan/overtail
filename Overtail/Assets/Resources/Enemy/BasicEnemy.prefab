@@ -44,12 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9178f6826070ca74d8dfc725aaf88707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Small Green Slime
-  level: 3
+  _displayName: Green Slime
+  _level: 3
+  _maxHp: 8
+  _attack: 0
+  _defense: 0
   hp: 8
-  maxHp: 8
-  attack: 0
-  defense: 0
   statusEffects: []
 --- !u!1 &338202084379833712
 GameObject:

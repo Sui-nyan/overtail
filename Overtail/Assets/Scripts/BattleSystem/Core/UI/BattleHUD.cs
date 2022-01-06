@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Data;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,13 +26,23 @@ namespace Overtail.Battle
 
         public float HpSliderSmoothTime = 1.5f;
 
+        private bool _taskRunning = false;
         public void UpdateHUD(BattleUnit unit)
         {
-            StartCoroutine(SmoothValues(unit, 2));
+            if (_taskRunning) return;
+            StartCoroutine(C_UpdateHUD(unit));
+        }
+
+        private IEnumerator C_UpdateHUD(BattleUnit unit)
+        {
+            _taskRunning = true;
+            yield return StartCoroutine(SmoothValues(unit, 2));
+            _taskRunning = false;
         }
 
         private IEnumerator SmoothValues(BattleUnit unit, float time)
         {
+            Debug.LogWarning(unit.Name + "::" + "SmoothValues");
             float timeElapsed = 0f;
 
             var prevName = _name;
@@ -53,8 +64,6 @@ namespace Overtail.Battle
 
                 if (timeElapsed > time) break;
             }
-
-            yield break;
         }
 
         private void ApplyGui()
