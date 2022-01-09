@@ -24,12 +24,16 @@ class IO
 	 *
 	 * @param string $var Name of variable
 	 * @param boolean $exact Get the exact value
-	 * @return string|null Value of variable or null if not exists
+	 * @return array<string,mixed>|string|null Value of variable or null if not exists
 	 */
-	public static function POST(string $var, bool $exact = false): ?string {
+	public static function POST(string $var, bool $exact = false): array|string|null {
 		if (isset($_POST[$var]))
 			if (is_string($_POST[$var]))
 				return $exact ? strval($_POST[$var]): htmlspecialchars(urldecode(strval($_POST[$var])));
+			elseif (is_array($_POST[$var])) {
+				trigger_error('Using this means ', E_USER_WARNING);
+				return $_POST[$var];
+			}
 		return null;
 	}
 
@@ -80,7 +84,7 @@ class IO
 	 *
 	 * @return string|null The auth headers
 	 */
-	public static function getAuthorizationHeader(): ?string {
+	private static function getAuthorizationHeader(): ?string {
 		$headers = null;
 		if (isset($_SERVER['Authorization'])) {
 			$headers = trim($_SERVER["Authorization"]);

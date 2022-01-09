@@ -9,25 +9,34 @@ class RegisterController extends Controller
 	protected function execute(): void {
 		$email = IO::POST('email');
 
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL))		// Check if input is a valid email
+			(new ErrorView(400))->render();
+
 		do {
 			$uuid = Utils::uuid();
 		} while (intval((new Query('SELECT count(`uuid`) count FROM `User` WHERE `uuid`=:uuid;', [':uuid' => $uuid]))->fetch()['count']) > 0);
+		$act = hash('xxh3', $uuid);							// Generate unique activation token (with fastest but insecure hash)
 
 		$success = false;
 		try {
-			$q = new Query(									// Insert user into database
-				'INSERT INTO `User` (`uuid`, `email`, `password`, `activation`) VALUES (:uuid, :email, :pass, 0);',
+			$success = (new Query(							// Insert user into database
+				'INSERT INTO `User` (`uuid`, `email`, `password`, `activation`) VALUES (:uuid, :email, :pass, :act);',
 				[
 					':uuid' => $uuid,
 					':email' => $email,
-					':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT)
+					':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT),
+					':act' => $act
 				]
-			);
+			))->success();
 
-			$message = 'Welcome to Overtail, please <a href="'.DOMAIN.'/activate/'.urlencode($uuid).'">click here</a> activate your account.';
-			$mail = new Mail($email, 'Account activation', $message);
+			if ($success) {
+				$message = 'Welcome to Overtail, please <a href="'.DOMAIN.'/activate/'.urlencode($act).'">click here</a> activate your account.';
+				$mail = new Mail($email, 'Account activation', $message);
+				$success = $mail->send();
 
-			$success = $q->success() && $mail->send();		// Register is successful when 1. user inserted in database; 2. activation email has been send
+				if (!$success)
+					(new Query('DELETE FROM `User` WHERE `uuid`=:uuid;', [':uuid' => $uuid]))->count();
+			}
 		} catch (PDOException) {							// Insert query failed bc of e. g. unique constraints
 			// Check if an account with the email exists already
 			if ((new Query('SELECT `uuid` FROM `User` WHERE `email`=:email;', [':email' => $email]))->count() > 0) {

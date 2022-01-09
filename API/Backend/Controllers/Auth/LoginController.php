@@ -8,34 +8,32 @@ class LoginController extends Controller
 
 	protected function execute(): void {
 		$email = IO::POST('email');
-		$q = new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation`=1;', [':email' => $email]);
+		$q = new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NULL;', [':email' => $email]);
 
 		if (($user = $q->fetch()) !== null) {
-			if (password_verify(IO::POST('password'), $user['password'])) {		// Check password
-				// Check if newer hashing algorithm is available, if so rehash and update password in `User` table
-				if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
+			if (password_verify(IO::POST('password'), $user['password'])) {			// Check password
+				if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {	// Check if newer hashing algorithm is available, if so rehash and update password in `User` table
 					$q = new Query('UPDATE `User` SET `password`=:pass WHERE `uuid`=:uuid;', [':pass' => password_hash(IO::POST('password'), PASSWORD_DEFAULT), ':uuid' => $user['uuid']]);
-					if ($q->success()) {
+					if ($q->success())
 						$user['password'] = (new Query('SELECT `password` FROM `User` WHERE `uuid`=:uuid', [':uuid' => $user['uuid']]))->fetch()['password'];
-					}
 				}
+
+				$pos = (new Query('SELECT `x`, `y` FROM `PlayerData` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]))->fetch();
 				(new APIView(
 					[
-						'uuid' => $user['uuid'],
-						'token' => Auth::generateToken($user['uuid'], $user['password'])
+						'token' => Auth::generateToken($user['uuid'], $user['password']),	// Auth token
+						'position' => $pos													// Player position [x, y]
 					]
 				))->render();
 				return;
-			} else $error = 480;				// Custo error code (Wrong password)
+			} else $error = 480;				// Wrong credentials
 		} else {
-			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation`=0;', [':email' => $email]))->fetch()) != null) {
+			if (($user = (new Query('SELECT `uuid`, `password` FROM `User` WHERE `email`=:email AND `activation` IS NOT NULL;', [':email' => $email]))->fetch()) !== null) {
 				if (password_verify(IO::POST('password'), $user['password']))
-					$error = 481;				// Custom error code (E-Mail not confirmed)
-			}
+					$error = 481;				// E-Mail not confirmed
+				else $error = 480;				// Wrong password
+			} else $error = 482;				// User does not exists
 		}
-
-		if (!isset($error))						// Either the login was a success or a error should have been set. If not, 500 (here: unknown error)
-			$error = 500;
 		(new ErrorView($error))->render();
 	}
 }

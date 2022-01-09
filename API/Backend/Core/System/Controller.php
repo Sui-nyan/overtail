@@ -98,33 +98,4 @@ abstract class Controller
 				return 400;
 		return 200;
 	}
-
-
-	/**
-	 * @return string[]
-	 */
-	public function getPaths(): array {
-		return $this->paths;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getMethods(): array {
-		return $this->methods;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	public function getReqVar(): array {
-		return $this->reqVar;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUserReq(): string {
-		return $this->userRequired ? 'true' : 'false';
-	}
 }

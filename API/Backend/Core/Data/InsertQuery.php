@@ -2,6 +2,11 @@
 
 class InsertQuery extends Query
 {
+	/**
+	 * Create query to insert data safe and secure
+	 *
+	 * @param string $tableName Name of the table in the databse
+	 */
 	public function __construct(string $tableName) {
 		$this->queryStr = "INSERT INTO `{$tableName}` VALUES (";
 	}

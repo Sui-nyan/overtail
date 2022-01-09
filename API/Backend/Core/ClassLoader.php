@@ -13,8 +13,8 @@ class ClassLoader
 	private static array $classes = [];
 
 	/**
-	 * Registers the Autoloader
 	 * Main method of the class loader
+	 * Registers the Autoloader
 	 */
 	public static function 파람(): void {
 		$files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__ . '/../../Backend'), RecursiveIteratorIterator::SELF_FIRST);
