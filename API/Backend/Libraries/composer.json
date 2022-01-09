@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpstan/phpstan": "^1.2",
+        "phpmailer/phpmailer": "^6.5"
+    }
+}

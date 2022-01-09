@@ -1,0 +1,6 @@
+- ***/.git*
+- .*
+- *.md
+- rsync_filter.txt
++ Frontend/***
++ Backend/***

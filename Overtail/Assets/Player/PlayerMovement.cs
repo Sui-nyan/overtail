@@ -2,29 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO remove unused methods
 public class PlayerMovement : MonoBehaviour
 {
-    private float moveSpeed = 5f;
+    public float moveSpeed;
     public Rigidbody2D rb;
-    private Vector2 movement;
+    public Vector2 movement;
+    public Animator animator;
+
+    //public PlayerStats playerStatus;
+
+    public bool IsMoving { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        //transform.localPosition = playerStatus.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+
     }
 
-    // FixedUpdate is called 50 times per second
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);      // fixedDeltaTime == time since last function call
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+        if (movement.x != 0 || movement.y != 0) {
+            if (movement.x < 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+
+            if (movement.x > 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            IsMoving = true;
+            animator.SetBool("isWalking", true);
+            rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        } else {
+            IsMoving = false;
+            animator.SetBool("isWalking", false);
+        }
+
+
     }
 }
