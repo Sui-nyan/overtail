@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
     }
-
+    /*
     void FixedUpdate()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
@@ -49,5 +49,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-    }
+    }*/
 }
+   
+
+

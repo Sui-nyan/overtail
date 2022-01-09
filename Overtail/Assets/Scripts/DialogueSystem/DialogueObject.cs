@@ -13,6 +13,7 @@ public class DialogueObject : ScriptableObject //Objects to store Dialogues
     public string[] Dialogue => dialogue;
 
     public string NPCName;
+    public Sprite NPCSprite;
 
     public Response[] Responses => responses;
 

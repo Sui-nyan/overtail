@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool IsOpen { get; private set; }
     public TMP_Text nameText;
+    public Image NPCSprite;
     public TMP_Text dialogueText;
 
     private ResponseHandler responseHandler;
@@ -26,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(DialogueObject dialogueObject)
     {
         nameText.text = dialogueObject.NPCName;
+        NPCSprite.GetComponent<Image>().sprite = dialogueObject.NPCSprite;
         IsOpen = true;
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));
