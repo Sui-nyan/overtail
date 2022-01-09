@@ -234,13 +234,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 299350290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80279ae6653c8ad4bafd6430d722875c, type: 3}
+  m_Script: {fileID: 11500000, guid: 751a8b8be260cd446a3a396f18d325c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  topBounds: 2.25
-  bottomBounds: -2.25
-  startingPosition: {x: 13, y: 0}
+  moveUp: 119
+  moveDown: 115
+  speed: 10
+  boundY: 2.25
 --- !u!50 &299350292
 Rigidbody2D:
   serializedVersion: 4
@@ -469,10 +469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751a8b8be260cd446a3a396f18d325c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  topBounds: 2.25
-  bottomBounds: -2.25
-  startingPosition: {x: 13, y: 0}
+  moveUp: 273
+  moveDown: 274
+  speed: 10
+  boundY: 2.25
 --- !u!50 &803850003
 Rigidbody2D:
   serializedVersion: 4
@@ -961,7 +961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 937e7ed9243b4974abfedf84f783e5a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballDirection: {x: -1, y: 0}
 --- !u!50 &1769937949
 Rigidbody2D:
   serializedVersion: 4

@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BallControl : MonoBehaviour
 {
-	public Vector2 ballDirection = Vector2.left;
+
 	private Rigidbody2D rb2d;
 
 	void GoBall()
