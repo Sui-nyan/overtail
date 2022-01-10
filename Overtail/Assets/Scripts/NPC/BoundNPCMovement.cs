@@ -119,13 +119,13 @@ public class BoundNPCMovement : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMove player))
         {
             isWalking = false;
         }
     }
 
-    public void Intectact(PlayerMovement player)
+    public void Intectact(PlayerMove player)
     {
         
     }

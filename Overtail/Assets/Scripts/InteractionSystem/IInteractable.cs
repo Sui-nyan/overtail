@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Intectact(PlayerMovement player);
+    void Intectact(PlayerMove player);
 }

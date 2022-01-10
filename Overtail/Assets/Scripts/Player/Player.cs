@@ -4,16 +4,16 @@ using Overtail;
 
 namespace Overtail
 {
-    [RequireComponent(typeof(PlayerMovement))]
+    [RequireComponent(typeof(global::PlayerMove))]
     public class Player : MonoBehaviour
     {
-        PlayerMovement movement;
+        global::PlayerMove movement;
         [SerializeField] private PersistentPlayerData persistantData;
 
         private void Start()
         {
             gameObject.transform.position = persistantData.playerSerializable.Position;
-            movement = gameObject.GetComponent<PlayerMovement>();
+            movement = gameObject.GetComponent<global::PlayerMove>();
         }
 
         /*
