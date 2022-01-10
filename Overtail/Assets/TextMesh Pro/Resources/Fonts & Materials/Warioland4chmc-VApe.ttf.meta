@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 03030ee82b018424183d3a49ad031afa
+guid: 546ad0aecb636d64a970aaa6969e3355
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - 6809 Chargen
+  - WarioLand4CHMC
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
