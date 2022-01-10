@@ -7,7 +7,6 @@ class RegisterController extends Controller
 	protected array $reqVar = ['email', 'password'];
 
 	protected function execute(): void {
-		// TODO: Check if this is an valid email
 		$email = IO::POST('email');
 
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL))		// Check if input is a valid email

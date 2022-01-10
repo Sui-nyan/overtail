@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Dummy2
   - Dummy1
-  - NPC
   layers:
   - Default
   - TransparentFX
@@ -43,10 +42,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Background
-    uniqueID: 649701295
-    locked: 0
-  - name: Player
-    uniqueID: 1010181651
     locked: 0

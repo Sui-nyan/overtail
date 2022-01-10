@@ -1,6 +1,6 @@
 <?php
 
-class SafeInvController extends Controller
+class SaveInvController extends Controller
 {
 	protected array $paths = ['/inv/save', '/inventory/save'];
 	protected array $methods = ['PUT'];
