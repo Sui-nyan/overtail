@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class Game : MonoBehaviour
+public class Game1 : MonoBehaviour
 {
     private GameObject ball;
-    private int computerScore;
-    private int playerScore;
 
-    private GameObject hudCanvas;
+    public int computerScore;
+    public int playerScore;
+
+    private GameObject CanvasHUD;
     private GameObject paddleComputer;
+
     private Hud hud;
 
     public int winningScore = 3;
@@ -22,20 +23,20 @@ public class Game : MonoBehaviour
         Paused,
         Launched
     }
-
     public GameState gameState = GameState.Launched;
 
+    // Start is called before the first frame update
     void Start()
     {
         paddleComputer = GameObject.Find("PaddleComputer");
 
-        hudCanvas = GameObject.Find("CanvasHUD");
-        hud = hudCanvas.GetComponent<Hud>();
+        CanvasHUD = GameObject.Find("CanvasHUD");
+        hud = CanvasHUD.GetComponent<Hud>();
 
-        hud.playAgain.text = "PRESS SPACEBAR TO PLAY";
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
         CheckScore();
         CheckInput();
@@ -54,10 +55,11 @@ public class Game : MonoBehaviour
         {
             if (Input.GetKeyUp(KeyCode.Space))
             {
-                StartGame ();
+                StartGame();
             }
         }
     }
+
     void CheckScore()
     {
         if (playerScore >= winningScore || computerScore >= winningScore)
@@ -79,12 +81,9 @@ public class Game : MonoBehaviour
 
     void SpawnBall()
     {
-        paddleComputer = GameObject.Find("PaddleComputer");
-        
         ball = GameObject.Instantiate((GameObject)Resources.Load("Prefabs/Ball", typeof(GameObject)));
         ball.transform.localPosition = new Vector3(12, 0, -2);
     }
-
     private void PlayerWins()
     {
         hud.winPlayer.enabled = true;
@@ -95,14 +94,12 @@ public class Game : MonoBehaviour
         hud.winComputer.enabled = true;
         GameOver();
     }
-
     public void ComputerPoint()
     {
         computerScore++;
         hud.computerScore.text = computerScore.ToString();
         NextRound();
     }
-
     public void PlayerPoint()
     {
         playerScore++;
@@ -116,8 +113,8 @@ public class Game : MonoBehaviour
 
         hud.playerScore.text = "0";
         hud.computerScore.text = "0";
-        hud.winPlayer.enabled = false;
         hud.winComputer.enabled = false;
+        hud.winPlayer.enabled = false;
 
         hud.playAgain.enabled = false;
 
@@ -129,20 +126,19 @@ public class Game : MonoBehaviour
     }
     private void NextRound()
     {
-        if(gameState == GameState.Playing)
+        if (gameState == GameState.Playing)
         {
             paddleComputer.transform.localPosition = new Vector3(paddleComputer.transform.localPosition.x, 0, paddleComputer.transform.localPosition.z);
 
             GameObject.Destroy(ball.gameObject);
-
             SpawnBall();
         }
     }
     private void GameOver()
     {
         GameObject.Destroy(ball.gameObject);
-        hud.playAgain.text = "PRESS SPACEBAR TO PLAY";
-        hud.playAgain.enabled = true; 
+        hud.playAgain.text = "PRESS SPACEBAR TO PLAY AGAIN";
+        hud.playAgain.enabled = true;
         gameState = GameState.GameOver;
     }
 
@@ -152,10 +148,11 @@ public class Game : MonoBehaviour
         {
             gameState = GameState.Playing;
             hud.playAgain.enabled = false;
-        } else
+        }
+        else
         {
             gameState = GameState.Paused;
-            hud.playAgain.text = "GAME IS PAUSED. PRESS SPACEBAR TO PLAY";
+            hud.playAgain.text = "PRESS SPACEBAR TO PLAY";
             hud.playAgain.enabled = true;
         }
     }

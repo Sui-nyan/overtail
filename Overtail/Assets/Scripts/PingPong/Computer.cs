@@ -33,7 +33,8 @@ public class Computer : MonoBehaviour
     void Move()
     {
         if (!ball)
-            ball = GameObject.FindGameObjectWithTag("ball");
+            ball = GameObject.FindGameObjectWithTag("Ball");
+
         if (ball.GetComponent<Ball>().ballDirection == Vector2.right)
         {
             ballPos = ball.transform.localPosition;

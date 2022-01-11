@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float moveSpeed = 12.0f;
+    public float moveSpeed = 8.0f;
     public Vector2 ballDirection = Vector2.left;
     public float topBounds = 9.4f;
     public float bottomBounds = -9.4f;
@@ -79,14 +79,14 @@ public class Ball : MonoBehaviour
         computerPaddleMaxY = paddleComputer.transform.localPosition.y + computerPaddleHeight / 2;
         computerPaddleMinY = paddleComputer.transform.localPosition.y - computerPaddleHeight / 2;
 
-        if (transform.localPosition.x - ballWidth / 2 <= playerPaddleMaxX && transform.localPosition.x + ballWidth / 2 >= playerPaddleMinX)
+        if (transform.localPosition.x - ballWidth / 2 < playerPaddleMaxX && transform.localPosition.x + ballWidth / 2 >= playerPaddleMinX)
         {
 
-            if (transform.localPosition.y - ballHeight / 2 <= playerPaddleMaxY && transform.localPosition.y + ballHeight / 2 >= playerPaddleMinY)
+            if (transform.localPosition.y - ballHeight / 2 > playerPaddleMaxY && transform.localPosition.y + ballHeight / 2 >= playerPaddleMinY)
             {
                 ballDirection = Vector2.right;
                 collideWithPlayer = true;
-                transform.localPosition = new Vector3(playerPaddleMaxX + ballWidth / 2, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition = new Vector3(playerPaddleMaxX + 0.1f + ballWidth / 2, transform.localPosition.y, transform.localPosition.z);
                 return true;
             } else
             {
@@ -105,7 +105,7 @@ public class Ball : MonoBehaviour
             {
                 ballDirection = Vector2.left;
                 collideWithComputer = true;
-                transform.localPosition = new Vector3(computerPaddleMaxX - ballWidth / 2, transform.localPosition.y, transform.localPosition.z);
+                transform.localPosition = new Vector3(computerPaddleMaxX - 0.1f - ballWidth / 2, transform.localPosition.y, transform.localPosition.z);
                 return true;
             } else
             {
@@ -128,7 +128,6 @@ public class Ball : MonoBehaviour
             collideWithWall = true;
             return true;
         }
-
         return false;
     }
 
@@ -159,7 +158,7 @@ public class Ball : MonoBehaviour
                 bounceAngle = normalizedRelativeIntersectionY * (maxAngle * Mathf.Deg2Rad);
             } else if (collideWithComputer)
             {
-                collideWithPlayer = false;
+                collideWithComputer = false;
                 float relativeIntersectY = paddleComputer.transform.localPosition.y - transform.localPosition.y;
                 float normalizedRelativeIntersectionY = (relativeIntersectY / (computerPaddleHeight / 2));
             

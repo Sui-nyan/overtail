@@ -21,7 +21,7 @@ public class PlayerPaddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (game.gameState != Game.GameState.Playing)
+        if (game.gameState == Game.GameState.Playing)
         {
             CheckUserInput();
         }
