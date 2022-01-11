@@ -8,10 +8,10 @@
 
 Overtail ist ein 2D RPG Game entwickelt von den vier extrem talentierten
 
-- مريم | Marina Banti(@mb365)
-- Kien Dang (@kd049)
-- Felix Schindler (@fs146)
-- 张玉婷 | Elisa Zhang (@ez018)
+- @mb365 | Marina Banti | مريم
+- @kd049 | Kien Dang
+- @fs146 | Felix Schindler
+- @ez018 | Elisa Zhang | 张玉婷
 
 ## What to expect
 
