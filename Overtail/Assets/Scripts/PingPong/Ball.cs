@@ -100,7 +100,6 @@ public class Ball : MonoBehaviour
 
         if (transform.localPosition.x + ballWidth / 2 > computerPaddleMaxX && transform.localPosition.x - ballWidth / 2 < computerPaddleMinX)
         {
-
             if (transform.localPosition.y - ballHeight / 2 < computerPaddleMaxY && transform.localPosition.y + ballHeight / 2 > computerPaddleMinY)
             {
                 ballDirection = Vector2.left;
@@ -120,13 +119,11 @@ public class Ball : MonoBehaviour
         {
             transform.localPosition = new Vector3(transform.localPosition.x, topBounds, transform.localPosition.z);
             collideWithWall = true;
-            return true;
         }
         if (transform.localPosition.y < bottomBounds)
         {
             transform.localPosition = new Vector3(transform.localPosition.x, bottomBounds, transform.localPosition.z);
             collideWithWall = true;
-            return true;
         }
         return false;
     }
