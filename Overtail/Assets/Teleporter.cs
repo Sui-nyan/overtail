@@ -8,10 +8,10 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Teleporter : MonoBehaviour
 {
-    public Vector2 destination;
-    public GameObject destinationObject;
+    public Vector2 targetPos;
+    public GameObject targetObject;
 
-    internal bool usePosition = true;
+    internal bool usePosition;
     internal bool useDefaultCollider;
 
     private Collider2D _collider;
@@ -46,8 +46,18 @@ public class Teleporter : MonoBehaviour
         if (obj.TryGetComponent<Player>(out _))
         {
             var pos = obj.transform.position;
-            pos.x = destination.x;
-            pos.y = destination.y;
+
+            if (usePosition)
+            {
+                pos.x = targetPos.x;
+                pos.y = targetPos.y;
+            }
+            else
+            {
+                var dest = targetObject.transform.position;
+                pos.x = dest.x;
+                pos.y = dest.y;
+            }
 
             obj.transform.position = pos;
         }
@@ -60,27 +70,44 @@ public class TeleporterEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        var tp = (Teleporter)target;
+        var tp = (Teleporter) target;
 
         var type = (DestinationType) EditorGUILayout
-            .EnumPopup("Destination Type", tp.usePosition 
-                ? DestinationType.Position 
+            .EnumPopup("Destination Type", tp.usePosition
+                ? DestinationType.Position
                 : DestinationType.GameObject);
 
         tp.usePosition = type == DestinationType.Position;
 
+        // USE TARGET OBJECT
         using (new EditorGUI.DisabledScope(tp.usePosition == true))
         {
-            tp.destinationObject = (GameObject)EditorGUILayout
-                .ObjectField("Destination", tp.destinationObject, typeof(GameObject), true);
-            if (EditorUtility.IsPersistent(tp.destinationObject))
+            EditorGUILayout.BeginHorizontal();
+            tp.targetObject = (GameObject) EditorGUILayout
+                .ObjectField("Destination", tp.targetObject, typeof(GameObject), true);
+
+            if (GUILayout.Button("Create", GUILayout.ExpandWidth(false)))
+            {
+                var go = new GameObject();
+                go.transform.SetParent(tp.transform);
+
+                go.name = "Teleport Destination";
+                go.transform.position = tp.transform.position;
+
+                tp.targetObject = go;
+            }
+
+            EditorGUILayout.EndHorizontal();
+            if (EditorUtility.IsPersistent(tp.targetObject))
             {
                 EditorGUILayout.HelpBox("The object might not be a scene object.", MessageType.Warning);
             }
         }
+
+        // USE TARGET POS VECTOR2
         using (new EditorGUI.DisabledScope(tp.usePosition == false))
         {
-            tp.destination = EditorGUILayout.Vector2Field("Position", tp.destination);
+            tp.targetPos = EditorGUILayout.Vector2Field("Position", tp.targetPos);
         }
 
         tp.useDefaultCollider = EditorGUILayout.Toggle("Use default collider", tp.useDefaultCollider);
@@ -99,4 +126,3 @@ public class TeleporterEditor : Editor
         Position
     }
 }
-
