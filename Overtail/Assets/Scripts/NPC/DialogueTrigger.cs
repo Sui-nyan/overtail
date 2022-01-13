@@ -9,7 +9,7 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMove player))
+        if(collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
         {
             player.interactable = this;
         }
@@ -17,7 +17,7 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMove player))
+        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
         {
             if(player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
             {
@@ -26,7 +26,7 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
         }
     }
 
-    public void Intectact(PlayerMove player)
+    public void Intectact(PlayerMovement player)
     {
         player.DialogueManager.StartDialogue(dialogueObject);
     }

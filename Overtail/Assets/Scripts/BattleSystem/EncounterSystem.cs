@@ -23,10 +23,10 @@ namespace Overtail.Something {
 
         public List<EnemyEncounter> spawnableEnemies = new List<EnemyEncounter>();
 
-        global::PlayerMove playerMovement;
+        global::PlayerMovement playerMovement;
         private void Start()
         {
-            playerMovement = playerGO.GetComponent<global::PlayerMove>();
+            playerMovement = playerGO.GetComponent<global::PlayerMovement>();
             //setup.playerStats = playerMovement.playerStatus; // get here or manually prepare beforehand
         }
 

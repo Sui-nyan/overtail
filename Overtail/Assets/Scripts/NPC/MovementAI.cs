@@ -55,7 +55,8 @@ public class MovementAI : MonoBehaviour
         {
             reachEndofPath = true;
             return;
-        } else
+        }
+        else
         {
             reachEndofPath = false;
         }
@@ -67,10 +68,11 @@ public class MovementAI : MonoBehaviour
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);
-        if(distance < nextWaypointDistance)
+        if (distance < nextWaypointDistance)
         {
             currentWayPoint++;
         }
-            
+
     }
+
 }

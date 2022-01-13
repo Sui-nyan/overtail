@@ -9,7 +9,7 @@ public class TextWriter : MonoBehaviour
 
     public Coroutine Run(string textToType, TMP_Text textLabel)
     {
-        return StartCoroutine(TypeText(textToType,textLabel));
+        return StartCoroutine(TypeText(textToType, textLabel));
     }
 
     /*
@@ -19,11 +19,12 @@ public class TextWriter : MonoBehaviour
     {
         textLabel.text = string.Empty;
 
-        for( int i = 0; i < textToType.Length; i++)
+        for (int i = 0; i < textToType.Length; i++)
         {
             textLabel.text += textToType[i];
             yield return new WaitForSeconds(delayTime);
         }
 
     }
+
 }
