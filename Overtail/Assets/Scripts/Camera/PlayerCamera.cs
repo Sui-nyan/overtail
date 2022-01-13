@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Overtail.PlayerModule;
+using UnityEngine;
 
 namespace Overtail.Camera
 {
@@ -13,9 +14,9 @@ namespace Overtail.Camera
         [SerializeField] private float refocusCooldown = 5;
         [SerializeField] private float currentCooldown = 0;
 
-        private void Start()
+        private void Awake()
         {
-            FindPlayerTarget();
+            FindPlayerTag();
         }
 
         protected override void LateUpdate()
@@ -27,18 +28,19 @@ namespace Overtail.Camera
         /// <summary>
         /// Finds as assigns GameObject with "Player" tag as tracking target.
         /// </summary>
-        public void FindPlayerTarget()
+        public void FindPlayerTag()
         {
-            DefaultTarget = GameObject.FindGameObjectWithTag("Player");
+            DefaultTarget = GameObject.FindObjectOfType<Player>()?.gameObject
+                            ?? GameObject.FindGameObjectWithTag("Player");
             if (DefaultTarget == null)
-                Debug.Log("[Camera] setup failed. No GameObject with <Player> tag found.");
+                UnityEngine.Debug.Log("[Camera] setup failed. No GameObject with <Player> tag found.");
             else
-                Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
+                UnityEngine.Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
         }
 
         /// <summary>
         /// Use in <see cref="LateUpdate"/>.
-        /// Calls <see cref="FindPlayerTarget"/> with a cooldown time.
+        /// Calls <see cref="FindPlayerTag"/> with a cooldown time.
         /// </summary>
         private void ResetPlayerTarget()
         {
@@ -50,8 +52,8 @@ namespace Overtail.Camera
                 return;
             }
 
-            Debug.Log("[Camera] No default target found.");
-            FindPlayerTarget();
+            UnityEngine.Debug.Log("[Camera] No default target found.");
+            FindPlayerTag();
             currentCooldown = refocusCooldown;
         }
     }

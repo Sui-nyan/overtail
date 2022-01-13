@@ -1,103 +1,123 @@
-using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using System;
 
 namespace Overtail.API
 {
-    [Serializable]
-    abstract class IAPIData
-    {
-
-    }
-
-    class ItemData : IAPIData
-    {
-        public readonly int slot;
-        public readonly string id;
-        public readonly int amount;
-    }
-
-    class LoginData : IAPIData
-    {
-        public readonly string uuid;
-        public readonly string token;
-    }
-
-    class RegisterData : IAPIData
-    {
-        public readonly bool success;
-    }
-
     class API
     {
+#nullable enable
         public static string? Token { get; set; }
+#nullable disable
         private static readonly string _base = "https://overtail.schindlerfelix.de/";
         private static readonly HttpClient _client = new HttpClient();
 
+        /// <summary>
+        /// GET data from API endpoint
+        /// </summary>
+        /// <param name="endpoint">API endpoint (without starting '/')</param>
+        /// <param name="auth">Wheather to send API.Token or not</param>
+        /// <returns>API answer as string</returns>
         public static async Task<string> GET(string endpoint, bool auth = true)
         {
-            if (auth && Token != null)
+            if (auth)
             {
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, _base + endpoint))
-                    {
-                        requestMessage.Headers.Add("Authorization", "Bearer " + Token);
-
-                        HttpResponseMessage res = await _client.SendAsync(requestMessage);
-                        // res.EnsureSuccessStatusCode();
-                        return await res.Content.ReadAsStringAsync();
-                    }
+                if (Token == null || Token == "")
+                    throw new ArgumentException("User is not logged in");
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
             }
 
-            else
-            {
-                return await _client.GetStringAsync(_base + endpoint);
-                // HttpResponseMessage res = await _client.GetAsync(_base + endpoint);
-                // res.EnsureSuccessStatusCode();
-                // return await res.Content.ReadAsStringAsync();
-            }
+            HttpResponseMessage res = await _client.GetAsync(_base + endpoint);
+            res.EnsureSuccessStatusCode();
+            return await res.Content.ReadAsStringAsync();
         }
 
-        public static async Task<string> POST(string endpoint, Dictionary<string,string> data, bool auth = true)
+        /// <summary>
+        /// POST data to API endpoint
+        /// </summary>
+        /// <param name="endpoint">API endpoint (without starting '/')</param>
+        /// <param name="data">Data as [Key, Value] pairs</param>
+        /// <param name="auth">Wheather to send API.Token or not</param>
+        /// <returns>API answer as string</returns>
+        public static async Task<string> POST(string endpoint, Dictionary<string, string> data, bool auth = true)
         {
             FormUrlEncodedContent content = new FormUrlEncodedContent(data);
             if (auth && Token != null)
                 content.Headers.Add("Authorization", "Bearer " + Token);
             HttpResponseMessage res = await _client.PostAsync(_base + endpoint, content);
-            // res.EnsureSuccessStatusCode();
+            res.EnsureSuccessStatusCode();
             return await res.Content.ReadAsStringAsync();
         }
 
+        /// <summary>
+        /// PUT data to API endpoint
+        /// </summary>
+        /// <param name="endpoint">API endpoint (without starting '/')</param>
+        /// <param name="data">Data as [Key, Value] pairs</param>
+        /// <param name="auth">Wheather to send API.Token or not</param>
+        /// <returns>API answer as string</returns>
         public static async Task<string> PUT(string endpoint, Dictionary<string, string> data, bool auth = true)
         {
             FormUrlEncodedContent content = new FormUrlEncodedContent(data);
-            if (auth && Token != null)
-                content.Headers.Add("Authorization", "Bearer " + Token);
+            if (auth)
+                if (Token == null || Token == "")
+                    throw new ArgumentException("User is not logged in");
+                else
+                    content.Headers.Add("Authorization", "Bearer " + Token);
             HttpResponseMessage res = await _client.PutAsync(_base + endpoint, content);
-            // res.EnsureSuccessStatusCode();
+            res.EnsureSuccessStatusCode();
             return await res.Content.ReadAsStringAsync();
         }
 
+        /// <summary>
+        /// PUT json data to API endpoint
+        /// </summary>
+        /// <param name="endpoint">API endpoint (without starting '/')</param>
+        /// <param name="data">JSON data as string</param>
+        /// <param name="auth">Wheather to send API.Token or not</param>
+        /// <returns>API answer as string</returns>
+        public static async Task<string> PUT(string endpoint, string data, bool auth = true)
+        {
+            StringContent content = new StringContent(data);
+            content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            if (auth)
+                if (Token == null || Token == "")
+                    throw new ArgumentException("User is not logged in");
+                else
+                    content.Headers.Add("Authorization", "Bearer " + Token);
+            HttpResponseMessage res = await _client.PutAsync(_base + endpoint, content);
+            res.EnsureSuccessStatusCode();
+            return await res.Content.ReadAsStringAsync();
+        }
+
+        /// <summary>
+        /// Send DELETE request to API endpoint
+        /// </summary>
+        /// <param name="endpoint">API endpoint (without starting '/')</param>
+        /// <param name="auth">Wheather to send API.Token or not</param>
+        /// <returns>API answer as string</returns>
         public static async Task<string> DELETE(string endpoint, bool auth = true)
         {
-            if (auth && Token != null)
+            HttpResponseMessage res;
+            if (auth)
             {
+                if (Token == null || Token == "")
+                    throw new ArgumentException("User is not logged in");
                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, _base + endpoint))
                 {
                     requestMessage.Headers.Add("Authorization", "Bearer " + Token);
 
-                    HttpResponseMessage res = await _client.SendAsync(requestMessage);
-                    // res.EnsureSuccessStatusCode();
+                    res = await _client.SendAsync(requestMessage);
+                    res.EnsureSuccessStatusCode();
                     return await res.Content.ReadAsStringAsync();
                 }
             }
 
-            else
-            {
-                HttpResponseMessage res = await _client.DeleteAsync(_base + endpoint);
-                // res.EnsureSuccessStatusCode();
-                return await res.Content.ReadAsStringAsync();
-            }
+            res = await _client.DeleteAsync(_base + endpoint);
+            res.EnsureSuccessStatusCode();
+            return await res.Content.ReadAsStringAsync();
         }
     }
 }

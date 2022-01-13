@@ -1,0 +1,1 @@
+{"Id":"overtail:key_gold","Name":"Golden Key","Description":"Looks important. I wonder which door it belongs to.","Components":[],"SpriteId":"golden_key.png","references":{"version":1,"00000000":{"type":{"class":"Terminus","ns":"UnityEngine.DMAT","asm":"FAKE_ASM"},"data":{}}}}
