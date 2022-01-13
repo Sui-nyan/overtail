@@ -1,4 +1,6 @@
-﻿namespace Overtail.Items
+﻿using Overtail.Items;
+
+namespace Overtail.Items.Systems
 {
     /// <summary>
     /// Different ways to interact with items!<para/>

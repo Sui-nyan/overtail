@@ -1,8 +1,9 @@
 ﻿using System;
 using Overtail.Battle.Entity;
-using Overtail.Battle;
-using UnityEngine;
-namespace Overtail.Items
+using Overtail.Items;
+using Overtail.Items.Components;
+
+namespace Overtail.Items.Systems
 {
     public class PotionSystem : IItemSystem
     {

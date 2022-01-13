@@ -1,5 +1,4 @@
-﻿using Overtail.Battle;
-namespace Overtail.Items
+﻿namespace Overtail.Items.Components
 {
     /// <summary>
     /// Can be equipped

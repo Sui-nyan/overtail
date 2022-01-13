@@ -7,6 +7,7 @@ using System.Linq;
 using Overtail.Items;
 using Overtail.Collections;
 using System;
+using Overtail.Items.Components;
 using JetBrains.Annotations;
 
 class ItemEditor : EditorWindow

@@ -1,6 +1,9 @@
 ﻿using System;
+using Overtail.Items;
+using Overtail.Items.Components;
 using UnityEngine;
-namespace Overtail.Items
+
+namespace Overtail.Items.Systems
 {
     public class TrashSystem : IItemSystem
     {

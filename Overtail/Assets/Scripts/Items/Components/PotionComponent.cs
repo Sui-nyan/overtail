@@ -1,8 +1,7 @@
-﻿using Overtail.Battle;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Overtail.Battle.Entity;
 
-namespace Overtail.Items
+namespace Overtail.Items.Components
 {
     /// <summary>
     /// Can be used in overworld/general

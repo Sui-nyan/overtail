@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
-using System;
+﻿using System;
+using Overtail.Items;
+using Overtail.Items.Components;
 
-namespace Overtail.Items
+namespace Overtail.Items.Systems
 {
     /// <summary>
     /// Handles equipping items

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using Overtail.Items.Components;
 using UnityEngine;
 
 namespace Overtail.Items

@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using System.IO;
+using Overtail.Items.Components;
 
 namespace Overtail.Items
 {
