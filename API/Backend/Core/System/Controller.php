@@ -26,7 +26,7 @@ abstract class Controller
 	protected array $reqVar = [];
 
 	/**
-	 * Defines wheather user authentication is required
+	 * Defines whether user authentication is required
 	 */
 	protected bool $userRequired = false;
 
@@ -49,7 +49,6 @@ abstract class Controller
 			$this->execute();
 		} else {
 			(new ErrorView($code))->render();
-			return;
 		}
 	}
 

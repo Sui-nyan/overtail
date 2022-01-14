@@ -53,7 +53,7 @@ class Utils
 	 * Check if a string has the correct format to be a uuid (v4)
 	 *
 	 * @param string $uuid String to be checked
-	 * @return boolean Wheather it's the correct format or not
+	 * @return boolean Whether it's the correct format or not
 	 */
 	public static function isUUID(string $uuid) {
 		return preg_match("/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i", $uuid) === 1;
