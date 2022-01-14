@@ -32,11 +32,18 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyLeft += () => direction.x = -1;
             InputManager.Instance.KeyRight += () => direction.x = +1;
 
-            SceneLoader.Instance.OverWorldSceneLoaded += () => _enabled = true;
-            SceneLoader.Instance.OverWorldSceneUnloaded += () => _enabled = false;
+            if (SceneLoader.Instance != null)
+            {
+                SceneLoader.Instance.OverWorldSceneLoaded += () => _enabled = true;
+                SceneLoader.Instance.OverWorldSceneUnloaded += () => _enabled = false;
 
-            SceneLoader.Instance.CombatSceneLoaded += () => GetComponent<SpriteRenderer>().enabled = false;
-            SceneLoader.Instance.CombatSceneUnloaded += () => GetComponent<SpriteRenderer>().enabled = true;
+                SceneLoader.Instance.CombatSceneLoaded += () => GetComponent<SpriteRenderer>().enabled = false;
+                SceneLoader.Instance.CombatSceneUnloaded += () => GetComponent<SpriteRenderer>().enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning("No SceneLoader active");
+            }
 
         }
 
