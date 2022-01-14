@@ -21,7 +21,6 @@ namespace Overtail.Camera
 
         protected override void LateUpdate()
         {
-            ResetPlayerTarget();
             base.LateUpdate();
         }
         
@@ -34,8 +33,7 @@ namespace Overtail.Camera
                             ?? GameObject.FindGameObjectWithTag("Player");
             if (DefaultTarget == null)
                 UnityEngine.Debug.Log("[Camera] setup failed. No GameObject with <Player> tag found.");
-            else
-                UnityEngine.Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
+
         }
 
         /// <summary>
