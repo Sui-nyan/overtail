@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Pathfinding; //namespace imported from https://arongranberg.com/astar/front
 
@@ -19,7 +20,7 @@ public class MovementAI : MonoBehaviour
 
     Seeker seeker; //External Script imported from https://arongranberg.com/astar/front
     Rigidbody2D rb;
-
+    
     void Start()
     {
         seeker = GetComponent<Seeker>();
@@ -31,8 +32,10 @@ public class MovementAI : MonoBehaviour
 
     void UpdatePath()
     {
+        Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
         if (seeker.IsDone())
         {
+            Debug.LogWarning("IsDone() done");
             seeker.StartPath(rb.position, target.position, OnPathComplete);
         }
     }
@@ -63,8 +66,8 @@ public class MovementAI : MonoBehaviour
 
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
 
-        Vector2 force = direction * moveSpeed * Time.deltaTime;
-
+        Vector2 force = direction * moveSpeed * Time.fixedDeltaTime;
+        Debug.Log(force.magnitude);
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);

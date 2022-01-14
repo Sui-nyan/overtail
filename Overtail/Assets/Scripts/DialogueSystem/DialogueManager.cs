@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(DialogueObject dialogueObject)
     {
-        nameText.text = dialogueObject.NPCName;
+        nameText.text = dialogueObject.NPCName; 
         NPCSprite.GetComponent<Image>().sprite = dialogueObject.NPCSprite;
         IsOpen = true;
         dialogueBox.SetActive(true);

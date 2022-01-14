@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Reflection;
 #if UNITY_5_5_OR_NEWER
 using UnityEngine.Profiling;
 #endif
@@ -379,6 +380,7 @@ namespace Pathfinding {
 		/// <param name="end">The end point of the path</param>
 		/// <param name="callback">The function to call when the path has been calculated</param>
 		public Path StartPath (Vector3 start, Vector3 end, OnPathDelegate callback) {
+            Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
 			return StartPath(ABPath.Construct(start, end, null), callback);
 		}
 
