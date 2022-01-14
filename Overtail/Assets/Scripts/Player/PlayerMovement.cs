@@ -32,8 +32,7 @@ public class PlayerMovement : MonoBehaviour
         if (!DialogueManager.IsOpen)
         {
             MoveCharacter();
-            animator.SetFloat("moveX", change.x);
-            animator.SetFloat("moveY", change.y);
+            UpdateAnimation();
         }
         
 
@@ -43,6 +42,12 @@ public class PlayerMovement : MonoBehaviour
         {
             interactable?.Intectact(this);
         }
+    }
+
+    private void UpdateAnimation()
+    {
+        animator.SetFloat("moveX", change.x);
+        animator.SetFloat("moveY", change.y);
     }
 
     public void MoveCharacter()
