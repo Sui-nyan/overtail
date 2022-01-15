@@ -57,12 +57,12 @@ class Auth
 	 * Generates a token with lifespan of 30 days
 	 *
 	 * @param string $uuid UUID of a user
-	 * @param string $pass Password of a user
+	 * @param string $pass Password hash of a user
 	 * @return string Valid token for the next 30 days
 	 */
-	public static function generateToken(string $uuid, string $pass): string {
+	public static function generateToken(string $uuid, string $hash): string {
 		$validUntil = (new DateTime())->add(new DateInterval('P30D'))->format("Y-m-d");
-		$passHash = password_hash($pass, PASSWORD_DEFAULT);
-		return base64_encode(base64_encode($uuid) . "." . base64_encode($passHash) . "." . base64_encode($validUntil));
+		$hashHash = password_hash($hash, PASSWORD_DEFAULT);
+		return base64_encode(base64_encode($uuid) . "." . base64_encode($hashHash) . "." . base64_encode($validUntil));
 	}
 }
