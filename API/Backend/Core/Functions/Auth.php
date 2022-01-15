@@ -57,7 +57,7 @@ class Auth
 	 * Generates a token with lifespan of 30 days
 	 *
 	 * @param string $uuid UUID of a user
-	 * @param string $pass Password hash of a user
+	 * @param string $hash Password hash of a user
 	 * @return string Valid token for the next 30 days
 	 */
 	public static function generateToken(string $uuid, string $hash): string {
