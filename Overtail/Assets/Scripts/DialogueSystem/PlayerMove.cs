@@ -51,12 +51,12 @@ namespace Overtail.Dialogue
                     transform.localScale = new Vector3(1, 1, 1);
                 }
 
-                animator.SetBool("isWalking", true);
+                //animator.SetBool("isWalking", true);
                 rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
             }
             else
             {
-                animator.SetBool("isWalking", false);
+                //animator.SetBool("isWalking", false);
             }
         }
     }

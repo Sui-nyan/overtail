@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26788e67d1549214a9ed706feded3648, type: 3}
-  m_Name: no
+  m_Name: Chest
   m_EditorClassIdentifier: 
   dialogue:
-  - 'But why not? D:'
-  responses: []
+  - There's a chest!
+  - Do you wish to open it?
+  responses:
+  - responseText: Yes
+    dialogueObject: {fileID: 11400000, guid: 2446217744b423141bdf64901576fdc2, type: 2}
+  - responseText: No
+    dialogueObject: {fileID: 11400000, guid: 5201c0c4e39f5644dba553705cda528c, type: 2}
   NPCName: Chest
-  NPCSprite: {fileID: 21300000, guid: 2b2cc1a5506148a4b87827070a56f4f1, type: 3}
+  NPCSprite: {fileID: 0}
