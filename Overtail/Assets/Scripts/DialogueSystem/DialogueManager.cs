@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Overtail.NPC;
+using System.Linq;
 
 namespace Overtail.Dialogue
 {
@@ -15,6 +16,7 @@ namespace Overtail.Dialogue
         public TMP_Text nameText;
         public Image NPCSprite;
         public TMP_Text dialogueText;
+        public NPCObject NPC;
 
         private ResponseHandler responseHandler;
         private TextWriter textWriter;
@@ -29,8 +31,7 @@ namespace Overtail.Dialogue
 
         public void StartDialogue(DialogueObject dialogueObject)
         {
-            nameText.text = dialogueObject.NPCName;
-            NPCSprite.GetComponent<Image>().sprite = dialogueObject.NPCSprite;
+            nameText.text = dialogueObject.npc.name;
             IsOpen = true;
             dialogueBox.SetActive(true);
             StartCoroutine(StepThroughDialogue(dialogueObject));
@@ -66,6 +67,15 @@ namespace Overtail.Dialogue
             }
             else
                 CloseDialogue();
+        }
+
+        public void UpdatePortrait(string emotion)
+        {
+            /*Sprite sprite = NPC.emotions.FirstOrDefault(x => x.ID == emotion);
+            if(sprite != null)
+            {
+                NPCSprite.sprite = sprite;
+            }*/
         }
 
         public void CloseDialogue()

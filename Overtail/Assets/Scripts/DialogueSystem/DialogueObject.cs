@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Overtail.NPC;
 
 namespace Overtail.Dialogue
 {
@@ -8,15 +9,13 @@ namespace Overtail.Dialogue
     [CreateAssetMenu(menuName = "Dialogue/DialogueObject")]
 
     [System.Serializable]
-    public class DialogueObject : ScriptableObject //Objects to store Dialogues
+    public class DialogueObject : ScriptableObject
     {
         [SerializeField] [TextArea] private string[] dialogue; //Input dialogue here
         [SerializeField] Response[] responses; //Responses can be added in this field 
+        public NPCObject npc;
 
         public string[] Dialogue => dialogue;
-
-        public string NPCName;
-        public Sprite NPCSprite;
 
         public Response[] Responses => responses;
 
