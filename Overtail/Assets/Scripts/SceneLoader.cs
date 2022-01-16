@@ -72,12 +72,12 @@ namespace Overtail
             }
         }
 
-        public static void LoadCombatScene()
+        public void LoadCombatScene()
         {
             SceneManager.LoadScene("CombatScene");
         }
 
-        public static void LoadOverWorldScene()
+        public void LoadOverWorldScene()
         {
             SceneManager.LoadScene("OverWorldScene");
         }

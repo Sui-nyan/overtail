@@ -74,7 +74,7 @@ namespace Overtail.Battle.Encounter
             setup.enemy = enemyPrefab;
             UnityEngine.Debug.Log(enemyPrefab.Level + "::" + setup.enemy.Level);
 
-            SceneLoader.LoadCombatScene();
+            SceneLoader.Instance.LoadCombatScene();
         }
 
         EnemyEntity GetRandomEnemy()
