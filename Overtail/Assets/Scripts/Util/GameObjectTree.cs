@@ -11,6 +11,18 @@ namespace Overtail.Util
 {
     public static class GameObjectTree
     {
+        public static bool ContainsGameObject(GameObject root, GameObject test, bool excludeRoot = false)
+        {
+            if (test == null) return false;
+
+            if (excludeRoot && test == root) return true;
+
+            var parent = test.transform.parent;
+            if (parent == null) return false;
+
+            return parent.gameObject == root || ContainsGameObject(root: root, test: parent.gameObject);
+        }
+
         public static T[] GetAllChildren<T>(GameObject parent) where T : MonoBehaviour
         {
             List<T> match = new List<T>();

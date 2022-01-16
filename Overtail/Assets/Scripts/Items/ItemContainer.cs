@@ -70,7 +70,8 @@ namespace Overtail.Items
                 Append(new ItemStack(item, quantityAdded));
             }
 
-            throw new InvalidOperationException($"Method concluded with unexpected quantity={quantity}");
+            if(quantity != 0) throw new InvalidOperationException($"Method concluded with unexpected quantity={quantity}");
+            return true;
         }
 
         public bool RemoveItems(ItemStack itemStack, int quantity = 1)

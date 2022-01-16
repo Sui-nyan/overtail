@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: e4f99a7dd801c23478646b4409525b9b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - subMenuButtonPrefab: {fileID: 4759264338004263274, guid: a85a3fd2644a06e4ca4898a3485ade33, type: 3}
+  - subMenuPrefab: {fileID: 114527582553337141, guid: ad1bd0a64f4fb65458de1389db85b587, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

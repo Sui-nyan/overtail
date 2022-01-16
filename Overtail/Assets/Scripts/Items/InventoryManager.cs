@@ -38,6 +38,16 @@ namespace Overtail.Items
             _playerObject.Inventory = _inventory;
         }
 
+        private static ItemContainer Placeholder()
+        {
+            ItemContainer inv = new ItemContainer();
+
+            // Add items here as placeholder
+            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId:"overtail:cat_ears"), quantity: 1));
+
+            return inv;
+        }
+
         private static ItemContainer LoadInvFromAPI() // might not be instantaneous
         {
             UnityEngine.Debug.Log("[InventoryManager] LoadFromAPI()");
@@ -49,12 +59,13 @@ namespace Overtail.Items
                 API.API.Token =
                     "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkV0UlIzQlNRVlV6UWtocWVFVjVRVzFPWnpOSGFTNTZXVzlhTDIxeGJEbDZOekJuV1RsamFtSXpSQzR2V0RCdVVYWnVkR3RMLk1qQXlNaTB3TWkweE5RPT0=";
                 string jsonStr = Task.Run(() => API.API.GET("inv")).Result;
-                UnityEngine.Debug.Log("[InventoryManager] jsonStr written");
-                UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
+                Debug.Log("[InventoryManager] jsonStr written");
+                // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
                 // Get Items from API
+
                 Dictionary<string, string>[] items =
                     JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
-
+                
                 foreach (Dictionary<string, string> item in items)
                 {
                     // TODO ItemStack == null from API
@@ -65,7 +76,9 @@ namespace Overtail.Items
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.Log(e.Message);
+                Debug.LogError(e.Message);
+                Debug.LogError("<color=red>Could not load Inventory from API</color>");
+                Debug.LogError(e);
             }
 
             return inv;
@@ -150,15 +163,16 @@ namespace Overtail.Items
             PruneEmpty(itemStack);
         }
 
-        internal void PickUp(ItemStack itemStack)
+        public bool PickUp(ItemStack itemStack)
         {
             if (!_inventory.IsFull())
             {
                 _inventory.AddItems(itemStack);
+                return true;
             }
             else
             {
-                throw new NotImplementedException("Unavailable action");
+                return false;
             }
         }
 

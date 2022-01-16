@@ -11,8 +11,8 @@ namespace Overtail.Util
         {
             if (staticInstance != null && staticInstance != obj)
             {
+                Debug.LogWarning($"[{obj.transform.parent?.name ?? obj.name}] Singleton {obj.GetType().Name} already exists. [{staticInstance.transform.parent?.name ?? staticInstance.name}].");
                 UnityEngine.Object.Destroy(obj.gameObject);
-                Debug.LogWarning($"Singleton {obj.GetType().Name} already exists");
             }
             else
             {

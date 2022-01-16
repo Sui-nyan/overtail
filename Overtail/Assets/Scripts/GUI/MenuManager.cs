@@ -3,6 +3,7 @@ using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 using Overtail.Util;
+using UnityEngine.EventSystems;
 
 namespace Overtail.GUI
 {
@@ -18,7 +19,8 @@ namespace Overtail.GUI
         public event Action MenuOpened;
         public event Action MenuClosed;
 
-        private bool _isAssigned => _mainMenu != null && _panelGroup != null && _tabGroup != null;
+        private GameObject _lastSelection;
+        public bool MenuIsActive => _mainMenu?.activeSelf ?? false;
 
         private void Awake()
         {
@@ -29,25 +31,46 @@ namespace Overtail.GUI
 
         private void Start()
         {
-            InputManager.Instance.KeyMenu += ToggleMenu;
-            InputManager.Instance.KeyInventory += () => ToggleMenu("Inventory");
-            InputManager.Instance.KeyOptions += () => ToggleMenu("Settings");
+            InputManager.Instance.KeyMenu += OnMenuKey;
+            InputManager.Instance.KeyInventory += () => OnSpecialMenuKey("Inventory");
+            InputManager.Instance.KeyOptions += () => OnSpecialMenuKey("Settings");
 
-            SceneLoader.Instance.SceneChanged += TryAssign;
+            if (SceneLoader.Instance is null)
+            {
+                Debug.LogError("<color=red>SceneLoader not found</color>");
+                throw new InvalidOperationException();
+            }
+            else
+            {
+                SceneLoader.Instance.SceneChanged += TryAssign;
+            }
+
+            //_tabGroup.EnterUI();
         }
 
         private void TryAssign()
         {
+            _panelGroup = null;
+            _tabGroup = null;
+            _mainMenu = null;
+
             var canvas = FindObjectOfType<Canvas>();
             if (canvas == null) return;
 
             TryGetFirst<PanelGroup>(canvas.gameObject, ref _panelGroup);
-            if (_panelGroup == null) return;
-
-            _mainMenu = _panelGroup.transform.parent.gameObject;
+            _mainMenu = _panelGroup?.transform.parent.gameObject;
             TryGetFirst<TabGroup>(_mainMenu, ref _tabGroup);
 
+            if (_mainMenu == null || _panelGroup == null || _tabGroup == null) Debug.LogWarning("Could not find MainMenu canvas");
+
             StartCoroutine(QuickWakeUp(_mainMenu));
+
+            IEnumerator QuickWakeUp(GameObject o)
+            {
+                o.SetActive(true);
+                yield return null;
+                o.SetActive(false);
+            }
         }
 
         private bool TryGetFirst<T>([NotNull] GameObject parent, ref T obj) where T : MonoBehaviour
@@ -68,31 +91,53 @@ namespace Overtail.GUI
             return false;
         }
 
-        private IEnumerator QuickWakeUp(GameObject o)
+        void Update()
         {
-            o.SetActive(true);
-            yield return null;
-            o.SetActive(false);
+            if (_mainMenu == null || !_mainMenu.activeSelf) return;
+
+            var sel = EventSystem.current?.currentSelectedGameObject;
+            if (sel == null)
+            {
+                Debug.LogWarning("UI Navigation jumped out of context :: Refocus");
+                EventSystem.current?.SetSelectedGameObject(_lastSelection);
+            }
+
+            if (GameObjectTree.ContainsGameObject(_panelGroup.gameObject, sel))
+            {
+                _lastSelection = sel;
+            }
+
+            if (GameObjectTree.ContainsGameObject(_tabGroup.gameObject, sel))
+            {
+                _lastSelection = sel;
+            }
         }
 
-
-        private void ToggleMenu()
+        private void OnMenuKey()
         {
-            if (!_isAssigned) return;
-
             if (_mainMenu.activeSelf)
             {
-                OnClose();
+                var obj = EventSystem.current.currentSelectedGameObject;
+                if (GameObjectTree.ContainsGameObject(_panelGroup.gameObject, obj))
+                {
+                    // If in panel group -> return to tabs
+                    _panelGroup.ExitUI();
+                    _tabGroup.EnterUI();
+                }
+                else
+                {
+                    // In tabs -> exit
+                    CloseMenu();
+                }
             }
             else
             {
-                OnOpen();
+                OpenMenu();
             }
         }
 
-        private void ToggleMenu(string tabName)
+        private void OnSpecialMenuKey(string tabName)
         {
-            if (!_isAssigned) return;
 
             var index = _tabGroup.GetTabIndex(tabName);
             if (index < 0)
@@ -104,37 +149,39 @@ namespace Overtail.GUI
             {
                 if (_tabGroup.TabIndex != index)
                 {
+                    _tabGroup.EnterUI();
                     _tabGroup.SetTab(index);
+                    _tabGroup.ExitUI();
+
+                    _panelGroup.EnterUI();
                 }
-                else
+                else // Current Tab
                 {
-                    OnClose();
+                    CloseMenu();
                 }
             }
             else
             {
-                OnOpen();
+                OpenMenu();
+
+                _tabGroup.EnterUI();
                 _tabGroup.SetTab(index);
+                _tabGroup.ExitUI();
+
+                _panelGroup.EnterUI();
             }
         }
 
-        public void OnOpen()
+        public void OpenMenu()
         {
             _mainMenu.SetActive(true);
-
-            _panelGroup.OnOpen();
-            _tabGroup.OnOpen();
-
             MenuOpened?.Invoke();
+            //EventSystem.current.SetSelectedGameObject(_lastSelection);
         }
 
-        public void OnClose()
+        public void CloseMenu()
         {
-            _panelGroup.OnClose();
-            _tabGroup.OnExit();
-
             _mainMenu.SetActive(false);
-
             MenuClosed?.Invoke();
         }
     }

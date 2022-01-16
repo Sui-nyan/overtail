@@ -20,6 +20,14 @@
             Charm = 0;
         }
 
+        public EquipComponent(EquipComponent equipComponent)
+        {
+            MaxHP = equipComponent.MaxHP;
+            Attack = equipComponent.Attack;
+            Defense = equipComponent.Defense;
+            Charm = equipComponent.Charm;
+        }
+
         public EquipComponent(int maxHp, int attack, int defense, int charm)
         {
             MaxHP = maxHp;

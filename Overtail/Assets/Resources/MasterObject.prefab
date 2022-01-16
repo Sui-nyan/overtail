@@ -1,0 +1,380 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8346001437082875076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8346001437082875097}
+  - component: {fileID: 8346001437082875098}
+  - component: {fileID: 8346001437082875099}
+  m_Layer: 0
+  m_Name: MasterObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8346001437082875097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001437082875076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 33.5294, y: -1.3623447, z: -48.806602}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8346001438214096798}
+  - {fileID: 8346001438270818828}
+  - {fileID: 8346001437659431278}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8346001437082875098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001437082875076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40dd0db5fe37cf946a37fff3dae36b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemDb:
+  - Id: overtail:backpack_big
+    Name: Backpack (big)
+    Description: Giving you even more slots so you don't have to ever use a chest.
+    SpriteId: backpack_big.png
+    Sprite: {fileID: 21300000, guid: 0666ea062b98c481399eb04d126fab25, type: 3}
+    Components: []
+  - Id: overtail:backpack_small
+    Name: Backpack (small)
+    Description: 
+    SpriteId: backpack_small.png
+    Sprite: {fileID: 21300000, guid: 45c5098443a484838b6a8b390fc2b56e, type: 3}
+    Components: []
+  - Id: overtail:blank
+    Name: blank
+    Description: 
+    SpriteId: blank.png
+    Sprite: {fileID: 0}
+    Components: []
+  - Id: overtail:cat_ears
+    Name: Cat Ears
+    Description: Very pretty.
+    SpriteId: cat_ears.png
+    Sprite: {fileID: 21300000, guid: 762ce8e92bde849fdb4bf5a20d57abe3, type: 3}
+    Components:
+    - id: 0
+  - Id: overtail:felix
+    Name: Twig
+    Description: A twig. Hope it doesn't break.
+    SpriteId: twig_aka_felix.png
+    Sprite: {fileID: 21300000, guid: 938cf02453f880d47ac485e27020ed6a, type: 3}
+    Components:
+    - id: 1
+  - Id: overtail:key_gold
+    Name: Golden Key
+    Description: Looks important. I wonder which door it belongs to.
+    SpriteId: golden_key.png
+    Sprite: {fileID: 21300000, guid: f12b370994af6dd45b5f52b92a11fc34, type: 3}
+    Components:
+    - id: 2
+    - id: 3
+  - Id: overtail:key_platinum
+    Name: Platinum Key
+    Description: Very sturdy and pretty. I wonder which door it belongs to.
+    SpriteId: platinum_key.png
+    Sprite: {fileID: 21300000, guid: 8e069bd9100c3fe4d86104eb5831b006, type: 3}
+    Components:
+    - id: 4
+    - id: 5
+  - Id: overtail:potion
+    Name: Potion
+    Description: Smells like grannys feet
+    SpriteId: potion.png
+    Sprite: {fileID: 21300000, guid: a0af50b7dfb194491aca4474596c58b4, type: 3}
+    Components:
+    - id: 6
+    - id: 7
+    - id: 8
+  - Id: overtail:potion_snow
+    Name: Snowflake Potion
+    Description: A pretty snowflake is inside. <OnOpening> Oh no, it melted.
+    SpriteId: snow_potion.png
+    Sprite: {fileID: 21300000, guid: 103b648dc748d02419b415f317eb6358, type: 3}
+    Components:
+    - id: 9
+    - id: 10
+    - id: 11
+  - Id: overtail:stone
+    Name: Stone
+    Description: A simple stone.
+    SpriteId: stone.png
+    Sprite: {fileID: 21300000, guid: bc600b86c152a4ebda4d10a9619ef92b, type: 3}
+    Components:
+    - id: 12
+    - id: 13
+  - Id: overtail:sword
+    Name: Sword
+    Description: A simple sword.
+    SpriteId: sword.png
+    Sprite: {fileID: 21300000, guid: 6d3fb76417b244ea19b62f9a896594cf, type: 3}
+    Components:
+    - id: 14
+    - id: 15
+  references:
+    version: 1
+    00000000:
+      type: {class: EquipComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxHP: 0
+        Attack: 0
+        Defense: 0
+        Charm: 99
+    00000001:
+      type: {class: EquipComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxHP: 0
+        Attack: -1
+        Defense: 0
+        Charm: 0
+    00000002:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    00000003:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+    00000004:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    00000005:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+    00000006:
+      type: {class: PotionComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        IsConsumed: 1
+        effects: []
+        HpRecovery: 22
+    00000007:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    00000008:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+    00000009:
+      type: {class: PotionComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        IsConsumed: 1
+        effects: []
+        HpRecovery: 0
+    0000000A:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    0000000B:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+    0000000C:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    0000000D:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+    0000000E:
+      type: {class: EquipComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxHP: 0
+        Attack: 5
+        Defense: 0
+        Charm: 0
+    0000000F:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+--- !u!114 &8346001437082875099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001437082875076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5744e985865b5fc41a3d84f695a288cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &8346001437659431279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8346001437659431278}
+  - component: {fileID: 8346001437659431277}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8346001437659431278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001437659431279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8346001437082875097}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8346001437659431277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001437659431279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3636c8e3e2493c46bea942270d417b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory:
+    _itemList:
+    - Item:
+        Id: overtail:potion
+        Name: Potion
+        Description: Smells like grannys feet
+        SpriteId: potion.png
+        Sprite: {fileID: 21300000, guid: a0af50b7dfb194491aca4474596c58b4, type: 3}
+        Components:
+        - id: 0
+        - id: 1
+        - id: 2
+      Quantity: 99
+    _capacity: 16
+  references:
+    version: 1
+    00000000:
+      type: {class: PotionComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        IsConsumed: 1
+        effects: []
+        HpRecovery: 22
+    00000001:
+      type: {class: StackComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+      data:
+        MaxQuantity: 99
+    00000002:
+      type: {class: TrashComponent, ns: Overtail.Items.Components, asm: Assembly-CSharp}
+--- !u!1 &8346001438214096799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8346001438214096798}
+  - component: {fileID: 8346001438214096797}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8346001438214096798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001438214096799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8346001437082875097}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8346001438214096797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001438214096799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f59e86ef9783974980c527fcc13f495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BindMenu: 27
+  BindInventory: 105
+  BindOptions: 111
+  BindUp: 119
+  BindDown: 115
+  BindLeft: 97
+  BindRight: 100
+  BindConfirm: 32
+  BindCancel: 8
+  inMenu: 0
+  inDialogue: 0
+  inCombat: 0
+--- !u!1 &8346001438270818829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8346001438270818828}
+  - component: {fileID: 8346001438270818819}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8346001438270818828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001438270818829}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8346001437082875097}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8346001438270818819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346001438270818829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b089e06c03a4a448cd20575e1a7fbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
