@@ -336,7 +336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIexUktHpWQIAABYFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty2jAU/RVG69KxM7gJ3bUOIV0kMKGZbNgo1jXWIEsePXgO/94rWcTGXSHOObr33Id8JlyaBgqr9Fxz9qIYkJ8j4s/k26gjn+FAN0qu+Amumg/ObOVFNGjeqOUK8dRfM6oGq3nxS26EFycIOslLpesZ20CujDUIl1QYQEor629LhM4jcsCf8dRfOeLp7t6fTniaJqMLHguQFnRPmkXlVTfOgs7JQtC6AeZNd/J0+hD16aQNKLGgqPHmCyUEN9ENsccmVJvTxjisBQWMU6wuWPD6Cvimst5p//KiLA3Y6ErT4yPX2KQ2Kvmt2s7V1GxbZzsqXGhUcNSGfPmPHaeBLrWqn69Z08RnsBUvtm/0WFBje43tw4+3tp3cU7GlnwI+KpCvaq6VkwxJq52/6gzcPXZ/vwrLKyi2Hd5aHYCu6fqdDKeDNVxC7Ydc8PrTU98nLbASKnQ7DB80zuUPGg6rYWIIRL2LdwN/6aa/Q5F44tpYpGKV0tv7VE57KZmFnvlqnM2VlhDgaLoBSYU9LjGMHQ5wwPXSDpgn6l9LTB656yMYXAlwp0+SAbVU+69hmUrtX8BUC2cFl/1gnnnFRuVKynbBzID191ZOl7SArtiN4+x2t8iPbEofJmWSMcYyyNg4vc+ShyRLGc3KSVrekbB8XGKhVCxbp7E/ODbZBZe4aNevyGiuaROWnWm6n/NTrfoGuSzVqtAAcnETwoDGJPgo2Yxx7NAKrOUyDJyc10SoYgts3QVah1JnB6vpDdrwnbIeWZM8fDfWxMNf27zUsOOw98nXMfuFXP4BUEsDBBQAAAgIAAAIIez3GuGYbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jM011FQSi9KLMgoBooYgjilmSkgdrSSmallooVJmoFpSkqKaappiq6huamBhYGpYUqiaZqJYZqRUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAAAIIexUktHpWQIAABYFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIez3GuGYbQAAAHgAAAAJACQAAAAAAAAAAAAAAKYCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAXgMAAAAA
+    dataString: UEsDBBQAAAgIAAAIIeyuQ3oDWwIAABUFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVMty2jAU/RVG69KxGdxAd61DSBcEJjSTjTeKdY01yJJHDx7J8O+9kg027gpxzrlX5z7kL8KlqSG3Si81ZyvFgPwcEX8m30Yd+QwnulNyyz/hqnnnzJZeRIPmlVquEI99mFEVWM3zX3InvDhC0EleKF0t2A5SZaxBuKDCAFJaWR8tEfoakRP+jOc+5IynyYM/feJpHo0ueMxBWtA9adIqr7pxEnRO5oJWNTBvupPH81mrj6dNQokFtRpvPldCcNO6IfZch2pTWhuHtaCAcYrVBQteXwLfldY77Qevi8KAbV1pen7kGpvUZCW/VdO5ipp94+xAhQuNCo6alKv/2HEc6EKr6vl6axz5G2zJ8/0rPefU2F5j+/DjvW0nj1Ts6YeA9xLki1pq5SRD0mrnQ52ByWP391ZYWkK+7/DG6gB0ddfvaDgdrOESaj+lglcfnvo+bYCtUKHbYfigcS5/0HBYDdOmQNS7eDPwl+76O9QST1wbi1RbpfT2PpTTXkoWoWe+GmdTpSUEuDVdg6TCnjeYxg4HOOB61w6YJ+pfS3t5y10fwSAkwJ0+igbURh1vwzKlOq7AlGtnBZf9ZJ55wUalSspmwcyA9XFbpwuaQ1fsznF2v1vkRzKns2kRJYyxBBI2jh+SaBYlMaNJMY2LCQnLxyUWSsWmcdr2B8cmu+QSF+36FRktNa3DsjNNj0v+Wam+QS4Ltc01gFzfpTCg8RJ8lGzBOHZoC9ZyGQZOvjIiVL4Hlt30Wah0cbKaZl32jNT8oKxHMpKGz0ZGPHxb5o2GA4ejv/ua7EIu/wBQSwMEFAAACAgAAAgh7Pca4ZhtAAAAeAAAAAkAJABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVipLLSrOzM9TslIw0TPSMzTXUVBKL0osyCgGihiCOKWZKSB2tJKZqWWihUmagWlKSoppqmmKrqG5qYGFgalhSqJpmolhmpFSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAAAgh7K5DegNbAgAAFQUAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAAgh7Pca4ZhtAAAAeAAAAAkAJAAAAAAAAAAAAAAAqAIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABgAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -1186,6 +1186,7 @@ GameObject:
   - component: {fileID: 1665442743}
   - component: {fileID: 1665442746}
   - component: {fileID: 1665442742}
+  - component: {fileID: 1665442748}
   - component: {fileID: 1665442747}
   - component: {fileID: 1665442745}
   m_Layer: 4
@@ -1337,6 +1338,40 @@ MonoBehaviour:
   moveSpeed: 3.5
   maxWaitTime: 4
   maxWalkTime: 4
+--- !u!114 &1665442748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665442741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb49b6d9add927e41bd7e0e14ad1925e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: 31b71f7f6b51d9148a18d7d02ad53fd6, type: 2}
+  events:
+  - name: ye
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1665442741}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: no
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1669754316
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,11 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
 
     [SerializeField] DialogueObject dialogueObject;
 
+    public void UpdateDialogueObject(DialogueObject dialogueObject)
+    {
+        this.dialogueObject = dialogueObject;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
@@ -28,6 +33,14 @@ public class DialogueTrigger : MonoBehaviour, IInteractable
 
     public void Intectact(PlayerMovement player)
     {
+        foreach(DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
+        {
+            if(resposeEvents.DialogueObject == dialogueObject)
+            {
+                player.DialogueManager.AddResponseEvents(resposeEvents.Events);
+                break;
+            }
+        }
         player.DialogueManager.StartDialogue(dialogueObject);
     }
 }

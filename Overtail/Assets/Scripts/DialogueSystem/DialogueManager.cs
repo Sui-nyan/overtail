@@ -33,6 +33,11 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(StepThroughDialogue(dialogueObject));
     }
 
+    public void AddResponseEvents(ResponseEvent[] responseEvents)
+    {
+        responseHandler.AddResponseEvents(responseEvents);
+    }
+
     /*
      * Iterates through each line of the dialogue new line will appear as soon as the player clicks any key
      */
@@ -60,7 +65,7 @@ public class DialogueManager : MonoBehaviour
             CloseDialogue();
     }
 
-    private void CloseDialogue()
+    public void CloseDialogue()
     {
         dialogueBox.SetActive(false);
         dialogueText.text = string.Empty;
