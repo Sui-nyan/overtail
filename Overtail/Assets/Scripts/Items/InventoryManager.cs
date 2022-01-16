@@ -47,7 +47,7 @@ namespace Overtail.Items
             {
                 // TODO: Remove setting API.Token here
                 API.API.Token =
-                    "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkRScmEzZGpiMWR1ZGpoU2JEQkNNelkzTld3MmRXVmhNQzVoVUdsRFNFSmplbmxsVEhZeGFUVk9VVWd3VlZkeFRrbGhRWGxQLk1qQXlNaTB3TVMweE5nPT0=";
+                    "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkV0UlIzQlNRVlV6UWtocWVFVjVRVzFPWnpOSGFTNTZXVzlhTDIxeGJEbDZOekJuV1RsamFtSXpSQzR2V0RCdVVYWnVkR3RMLk1qQXlNaTB3TWkweE5RPT0=";
                 string jsonStr = Task.Run(() => API.API.GET("inv")).Result;
                 UnityEngine.Debug.Log("[InventoryManager] jsonStr written");
                 UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
