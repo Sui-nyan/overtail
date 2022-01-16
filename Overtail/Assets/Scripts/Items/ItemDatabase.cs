@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 // Loaded once on game start. Library of ALL available items in game.
@@ -11,11 +12,17 @@ namespace Overtail.Items
     {
         private static readonly List<Item> _items = new List<Item>();
 
-        public static List<Item> GetAll()
+        internal static List<Item> GetAll()
         {
-            Debug.LogWarning("DEV ENVIRONMENT ONLY");
+            // TODO deep copy
             return _items;
         }
+
+        public static List<string> GetAllIds()
+        {
+            return _items.Select(i => i.Id).ToList();
+        }
+
 
         static ItemDatabase()
         {
@@ -38,7 +45,9 @@ namespace Overtail.Items
             {
                 var i = JsonUtility.FromJson<Item>(file.text);
 
-                var _ = Resources.Load<Sprite>($"{subFolder}/{file.name}"); // Sprite
+                // TODO unify
+                var id = Regex.Replace(i.SpriteId, @"\..*","");
+                i.Sprite = Resources.Load<Sprite>($"{subFolder}/{id}"); // Sprite
 
                 _items.Add(i);
             }
@@ -63,6 +72,11 @@ namespace Overtail.Items
             var i = _items.Find(i => i.Id == itemId);
             if (i == null) UnityEngine.Debug.LogWarning("Unknown item id:" + itemId);
             return i;
+        }
+
+        public static Item GetFromIndex(int index)
+        {
+            return _items[index];
         }
     }
 }

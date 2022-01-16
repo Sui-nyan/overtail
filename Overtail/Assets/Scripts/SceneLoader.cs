@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Overtail.Items;
+using Overtail.PlayerModule;
 using Overtail.Util;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +38,16 @@ namespace Overtail
 
         }
 
+        void Update()
+        {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha0)) SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (Input.GetKeyDown(KeyCode.Alpha1)) LoadOverWorldScene();
+                if (Input.GetKeyDown(KeyCode.Alpha2)) LoadCombatScene();
+            }
+        }
+
         private void TriggerLoaded(Scene next, LoadSceneMode mode)
         {
             Debug.Log($"<color=green>[SceneLoader] Loaded '{next.name}'</color>");
@@ -47,9 +58,11 @@ namespace Overtail
                     LoginSceneLoaded?.Invoke();
                     break;
                 case "OverWorldScene":
+                    FindObjectOfType<Player>().GetComponent<SpriteRenderer>().enabled = true;
                     OverWorldSceneLoaded?.Invoke();
                     break;
                 case "CombatScene":
+                    FindObjectOfType<Player>().GetComponent<SpriteRenderer>().enabled = false;
                     CombatSceneLoaded?.Invoke();
                     break;
             }

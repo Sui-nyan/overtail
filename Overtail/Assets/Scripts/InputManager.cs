@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Overtail.GUI;
 using Overtail.Items;
 using Overtail.Util;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 namespace Overtail
 {
+    // Currently only overworld
     public class InputManager : MonoBehaviour
     {
         private static InputManager _instance;
@@ -37,6 +41,9 @@ namespace Overtail
         public event Action KeyDown;
         public event Action KeyLeft;
         public event Action KeyRight;
+
+        // TODO replace unity input with this? or the otherway idk
+        
 
         void Awake()
         {
@@ -70,7 +77,6 @@ namespace Overtail
         private void TriggerNAND(KeyCode c1, Action e1, KeyCode c2, Action e2)
         {
             if (Input.GetKey(c1) && Input.GetKey(c2)) return;
-
             if (Input.GetKey(c1)) e1?.Invoke();
             if (Input.GetKey(c2)) e2?.Invoke();
         }

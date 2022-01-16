@@ -1,4 +1,6 @@
+using Overtail.GUI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Overtail.PlayerModule
 {
@@ -18,8 +20,6 @@ namespace Overtail.PlayerModule
 
         public bool IsMoving { get; private set; }
 
-        [SerializeField] private bool _enabled = true;
-
         void Awake()
         {
             rb = gameObject.GetComponent<Rigidbody2D>();
@@ -31,19 +31,19 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyDown += () => direction.y = -1;
             InputManager.Instance.KeyLeft += () => direction.x = -1;
             InputManager.Instance.KeyRight += () => direction.x = +1;
-
-            SceneLoader.Instance.OverWorldSceneLoaded += () => _enabled = true;
-            SceneLoader.Instance.OverWorldSceneUnloaded += () => _enabled = false;
-
-            SceneLoader.Instance.CombatSceneLoaded += () => GetComponent<SpriteRenderer>().enabled = false;
-            SceneLoader.Instance.CombatSceneUnloaded += () => GetComponent<SpriteRenderer>().enabled = true;
-
         }
 
+        [SerializeField] private bool inMenu, inDialogue, inCombat;
 
         void FixedUpdate()
         {
-            if (_enabled && (direction.x != 0 || direction.y != 0))
+            inMenu = FindObjectOfType<MenuManager>().MenuIsActive;
+            inDialogue = false;
+            inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
+
+            var enabled = !(inMenu || inDialogue || inCombat);
+
+            if (enabled && (direction.x != 0 || direction.y != 0))
             {
                 if (direction.x < 0)
                 {

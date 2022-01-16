@@ -20,5 +20,12 @@ namespace Overtail.Items.Components
             this.effects = new List<StatusEffect>();
             HpRecovery = 0;
         }
+
+        public PotionComponent(PotionComponent potion)
+        {
+            IsConsumed = potion.IsConsumed;
+            this.effects = new List<StatusEffect>(potion.effects);
+            HpRecovery = potion.HpRecovery;
+        }
     }
 }

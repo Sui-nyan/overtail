@@ -36,12 +36,21 @@ namespace Overtail.PlayerModule
         [SerializeReference] public ItemContainer Inventory;
 
         // Item interaction
-        public Item MainHand { get; set; }
-        public Item OffHand { get; set; }
+
+        [SerializeReference] private Item _main;
+        [SerializeReference] private Item _off;
+        public Item MainHand
+        {
+            get => _main;
+            set => _main = value;
+        }
+        public Item OffHand { get => _off; set => _off = value; }
 
         public void Heal(int hp)
         {
-            throw new System.NotImplementedException();
+            var stats = GetComponent<StatComponent>();
+            stats.HP = Mathf.Clamp(stats.HP, 1, stats.MaxHP);
+            
         }
 
         public void AddStatus(StatusEffect newEffect)

@@ -21,9 +21,23 @@ class ItemEditor : EditorWindow
     private InterfaceDictionary<IItemComponent, bool> _componentToggles { get; } =
         new InterfaceDictionary<IItemComponent, bool>();
 
-    private Item _item;
+    public string _id = "";
+    public string _name = "";
+    public string _description = "";
+    public string _spriteId = "";
 
     private bool _useCustomFilename = false;
+
+    private bool _equipment;
+    private bool _potion;
+    private bool _stack;
+    private bool _trash;
+
+    private EquipComponent _equipComponent;
+    private PotionComponent _potionComponent;
+    private StackComponent _stackComponent;
+    private TrashComponent _trashComponent;
+
 
     // Add menu item named "My Window" to the Window menu
     [MenuItem("OVERTAIL TOOLS/Item Editor")]
@@ -82,18 +96,14 @@ class ItemEditor : EditorWindow
 
     private string[] GetFilesFromPath()
     {
-        if (_directory != "" && _directory != null)
-            return Directory.GetFiles(_directory).Where(file => file.EndsWith(".json")).ToArray();
-        else
-            return new string[] {null};
+        if (string.IsNullOrEmpty(_directory)) return new string[] { };
+
+        return Directory.GetFiles(_directory).Where(file => file.EndsWith(".json")).ToArray();
     }
 
 
     private void ItemEditorGui()
     {
-        if (_item == null) SetBlankItem();
-
-
         EditorGUILayout.BeginVertical();
 
         EditorGUILayout.BeginHorizontal();
@@ -110,7 +120,7 @@ class ItemEditor : EditorWindow
             SaveFile(GetFilePath());
 
         if (GUILayout.Button("Clear", GUILayout.ExpandWidth(false)))
-            SetBlankItem();
+            ClearItem();
 
         EditorGUILayout.EndHorizontal();
 
@@ -118,11 +128,11 @@ class ItemEditor : EditorWindow
         _filename = EditorGUILayout.TextField("File name", _filename);
         EditorGUILayout.EndToggleGroup();
 
-        if (!_useCustomFilename) _filename = _item.Id.Replace("overtail:", "") + ".json";
+        if (!_useCustomFilename) _filename = _id.Replace("overtail:", "") + ".json";
 
         EditorGUILayout.Space();
 
-        DisplayItemInfo(_item);
+        DisplayItemInfo();
 
         EditorGUILayout.EndVertical();
     }
@@ -142,20 +152,17 @@ class ItemEditor : EditorWindow
         return (str.Length > maxLength ? "..." : "") + str.Substring(startIndex, length);
     }
 
-    private void DisplayItemInfo(Item item)
+    private void DisplayItemInfo()
     {
-        if (item == null) return;
-
         EditorGUILayout.BeginHorizontal();
 
         EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-        item.Id = EditorGUILayout.TextField("ID", item.Id);
-        item.Name = EditorGUILayout.TextField("Name", item.Name);
-        item.Description = EditorGUILayout.TextField("Description", item.Description, GUILayout.Height(80));
-        item.SpriteId = EditorGUILayout.TextField("SpriteFile", item.SpriteId);
+        _id = EditorGUILayout.TextField("ID", _id);
+        _name = EditorGUILayout.TextField("Name", _name);
+        _description = EditorGUILayout.TextField("Description", _description, GUILayout.Height(80));
+        _spriteId = EditorGUILayout.TextField("SpriteFile", _spriteId);
 
-        string imgPath = Path.Combine(_directory, item.SpriteId).Replace("\\", "/").Replace("./", "");
-
+        string imgPath = Path.Combine(_directory, _spriteId).Replace("\\", "/").Replace("./", "");
         {
             var _s = new GUIStyle(GUI.skin.GetStyle("Label"));
             Color c = _s.normal.textColor;
@@ -173,154 +180,100 @@ class ItemEditor : EditorWindow
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Components", EditorStyles.boldLabel);
 
-        DisplayComponents(item);
+        DisplayComponents();
     }
-    
-    private void DisplayComponents(Item item)
+
+    private void DisplayComponents()
     {
         // Equip Property
-        _componentToggles[typeof(EquipComponent)] = BeginToggleGroup<EquipComponent>("Equipment");
-        {
-            EquipComponent component = GetOrCreateComponent<EquipComponent>(item);
-
-            component.MaxHP = EditorGUILayout.IntField("Max HP", component.MaxHP);
-            component.Attack = EditorGUILayout.IntField("Attack", component.Attack);
-            component.Defense = EditorGUILayout.IntField("Defense", component.Defense);
-            component.Charm = EditorGUILayout.IntField("Charm", component.Charm);
-        }
+        _equipment = EditorGUILayout.BeginToggleGroup("Equipment", _equipment);
+        _equipComponent ??= new EquipComponent();
+        _equipComponent.MaxHP = EditorGUILayout.IntField("Max HP", _equipComponent.MaxHP);
+        _equipComponent.Attack = EditorGUILayout.IntField("Attack", _equipComponent.Attack);
+        _equipComponent.Defense = EditorGUILayout.IntField("Defense", _equipComponent.Defense);
+        _equipComponent.Charm = EditorGUILayout.IntField("Charm", _equipComponent.Charm);
         EditorGUILayout.EndToggleGroup();
-        EditorGUILayout.Space();
 
         // Potion property
-        _componentToggles[typeof(PotionComponent)] = BeginToggleGroup<PotionComponent>("Potion");
-        {
-            PotionComponent component = GetOrCreateComponent<PotionComponent>(item);
-
-            component.IsConsumed = EditorGUILayout.Toggle("Consumed on Use", component.IsConsumed);
-            component.HpRecovery = EditorGUILayout.IntField("Recovery Amount", component.HpRecovery);
-        }
+        _potion = EditorGUILayout.BeginToggleGroup("Potion", _potion);
+        _potionComponent ??= new PotionComponent();
+        _potionComponent.IsConsumed = EditorGUILayout.Toggle("Consumed on Use", _potionComponent.IsConsumed);
+        _potionComponent.HpRecovery = EditorGUILayout.IntField("Recovery Amount", _potionComponent.HpRecovery);
         EditorGUILayout.EndToggleGroup();
-        EditorGUILayout.Space();
 
         // Stackable Property
-        _componentToggles[typeof(StackComponent)] = BeginToggleGroup<StackComponent>("Stackable");
-        {
-            StackComponent component = GetOrCreateComponent<StackComponent>(item);
-            component.MaxQuantity = EditorGUILayout.IntSlider("Max Stack Size", component.MaxQuantity, 0, 99);
-        }
+        _stack = EditorGUILayout.BeginToggleGroup("Stackable", _stack);
+        _stackComponent ??= new StackComponent();
+        _stackComponent.MaxQuantity = EditorGUILayout.IntSlider("Max Stack Size", _stackComponent.MaxQuantity, 1, 99);
         EditorGUILayout.EndToggleGroup();
-        EditorGUILayout.Space();
 
         // Trashable Property
-        _componentToggles[typeof(TrashComponent)] = BeginToggleGroup<TrashComponent>("Trashable");
-        {
-            TrashComponent component = GetOrCreateComponent<TrashComponent>(item);
-        }
+        _trash = EditorGUILayout.BeginToggleGroup("Trashable", _trash);
+        _trashComponent ??= new TrashComponent();
         EditorGUILayout.EndToggleGroup();
     }
 
-    private bool BeginToggleGroup<T>(string label) where T : IItemComponent
+    private void ClearItem()
     {
-        if (!_componentToggles.ContainsKey<T>()) _componentToggles.Set<T>(_item.GetComponent<T>() != null);
+        _id = "";
+        _name = "";
+        _description = "";
+        _spriteId = "";
 
-        return EditorGUILayout.BeginToggleGroup(label, _componentToggles.Get<T>());
-    }
+        _useCustomFilename = false;
 
-    private static T GetOrCreateComponent<T>(Item item) where T : IItemComponent, new()
-    {
-        var component = item.GetComponent<T>();
-        if (component == null)
-        {
-            component = new T();
-            item.Components.Add(component);
-        }
+        _equipment = false;
+        _potion = false;
+        _stack = false;
+        _trash = false;
 
-        return component;
-    }
-
-    private void SetBlankItem()
-    {
-        _filename = "blank.json";
-        _itemIcon = null;
-
-        var components = new List<IItemComponent>
-        {
-            new EquipComponent(), new PotionComponent(), new StackComponent(), new TrashComponent()
-        };
-        _item = new Item("overtail:blank", "blank", components, "blank.png");
+        _equipComponent = null;
+        _potionComponent = null;
+        _stackComponent = null;
+        _trashComponent = null;
     }
 
     private void LoadFile(string filepath)
     {
-        UnityEngine.Debug.Log($"Loaded item from {filepath}");
+        Debug.Log($"<color=green>Loading item from {filepath}</color>");
 
         _filename = Path.GetFileName(filepath);
 
-        _item = JsonUtility.FromJson<Item>(System.IO.File.ReadAllText(filepath));
+        var jsonItem = JsonUtility.FromJson<Item>(File.ReadAllText(filepath));
 
-        _componentToggles.Clear();
-        foreach (IItemComponent c in _item.Components)
-        {
-            _componentToggles[c.GetType()] = true;
-        }
+        _id = jsonItem.Id;
+        _name = jsonItem.Name;
+        _description = jsonItem.Description;
+        _spriteId = jsonItem.SpriteId;
 
-        _itemIcon = LoadScaledTexture(96);
-    }
+        _equipComponent = jsonItem.GetComponent<EquipComponent>();
+        _potionComponent = jsonItem.GetComponent<PotionComponent>();
+        _stackComponent = jsonItem.GetComponent<StackComponent>();
+        _trashComponent = jsonItem.GetComponent<TrashComponent>();
 
-    private Texture2D LoadScaledTexture(int scale = 128)
-    {
-        try
-        {
-            var imgPath = Path.Combine(_directory, _item.SpriteId).Replace("\\", "/").Replace("./", "");
+        _potion = _potionComponent != null;
+        _stack = _stackComponent != null;
+        _equipment = _equipComponent != null;
+        _trash = _trashComponent != null;
 
-            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(imgPath);
-
-            Texture2D result = new Texture2D(scale, scale, texture.format, false);
-            float incX = (1.0f / scale);
-            float incY = (1.0f / scale);
-
-            for (int i = 0; i < result.height; ++i)
-            {
-                for (int j = 0; j < result.width; ++j)
-                {
-                    Color newColor = texture.GetPixelBilinear((float) j / (float) result.width,
-                        (float) i / (float) result.height);
-                    result.SetPixel(j, i, newColor);
-                }
-            }
-
-            
-            result.filterMode = FilterMode.Point;
-            result.Compress(false);
-            result.Apply();
-            return result;
-        }
-        catch (System.NullReferenceException)
-        {
-            return null;
-        }
+        Debug.Log(
+            $"<color=green>{(_equipment ? "Equip " : "X")}{(_potion ? "Potion " : "X")}{(_stack ? "Stack " : "X")}{(_trash ? "Trash" : "X")}</color>");
     }
 
     private void SaveFile([NotNull] string filepath)
     {
-        FilterComponents(_item, _componentToggles, new Type[]
-            {
-                typeof(EquipComponent),
-                typeof(PotionComponent),
-                typeof(StackComponent),
-                typeof(TrashComponent)
-            }
-        );
+        void Remove<T>() where T : IItemComponent =>
+            Debug.Log(0); //new Item().Components.RemoveAll(c => c.GetType() == typeof(T));
 
-        File.WriteAllText(filepath, JsonUtility.ToJson(_item));
-        UnityEngine.Debug.Log($"Saved item to {filepath}");
-    }
+        List<IItemComponent> components = new List<IItemComponent>();
 
-    private void FilterComponents(Item item, InterfaceDictionary<IItemComponent, bool> dict, Type[] types)
-    {
-        foreach (Type type in types)
-        {
-            if (!dict[type]) item.Components.RemoveAll(c => c.GetType() == type);
-        }
+        if (_equipment) components.Add(_equipComponent);
+        if (_potion) components.Add(_potionComponent);
+        if (_stack) components.Add(_stackComponent);
+        if (_trash) components.Add(_trashComponent);
+
+        var item = new Item(_id, _name, components, _spriteId, _description);
+        File.WriteAllText(filepath, JsonUtility.ToJson(item));
+        Debug.Log($"<color=green>Saved item to {filepath}</color");
     }
 }

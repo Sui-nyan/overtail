@@ -40,12 +40,17 @@ namespace Overtail.Battle.Encounter
             SceneLoader.Instance.OverWorldSceneLoaded += Assign;
         }
 
+        private void OnDestroy()
+        {
+            SceneLoader.Instance.OverWorldSceneLoaded -= Assign;
+        }
+
         private void Assign()
         {
-            Player = FindObjectOfType<PlayerModule.Player>();
+            Player = FindObjectOfType<Player>();
             var grassTiles = GameObject.Find("Environment")?.GetComponent<Tilemap>();
 
-            if(_pedometer != null) _pedometer.EventTick -= TryEncounter;
+            if(_pedometer != null) _pedometer.EventTick -= TryEncounter; //Resubscribe
             _pedometer = new Pedometer(Player, grassTiles);
             _pedometer.EventTick += TryEncounter;
         }

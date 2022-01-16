@@ -33,29 +33,68 @@ namespace Overtail.GUI
 
         private void Start()
         {
-            SetOnClicks();
+            SetNavigation();
+            SetOnSelection();
+            SetOnClick();
         }
 
-        private void SetOnClicks()
+        private void SetOnClick()
+        {
+            for (int i = 0; i < _tabs.Length; i++)
+            {
+                var index = i;
+                var b = _tabs[i].GetComponent<Button>();
+                b.onClick.AddListener(EnterPanel);
+            }
+        }
+
+        private void SetNavigation()
+        {
+            var total = _tabs.Length;
+            for (int i = 0; i < _tabs.Length; i++)
+            {
+                var index = i;
+                var button = _tabs[i].GetComponent<Button>();
+                var nav = button.navigation;
+                nav.mode = Navigation.Mode.Explicit;
+                nav.selectOnDown = _tabs[(i + 1) % total].GetComponent<Button>();
+                nav.selectOnUp = _tabs[(total + i - 1) % total].GetComponent<Button>();
+                button.navigation = nav;
+
+                // Add Event Trigger to right navigation
+                if (!button.TryGetComponent<EventTrigger>(out var trigger))
+                    trigger = button.gameObject.AddComponent<EventTrigger>();
+
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+
+                entry.eventID = EventTriggerType.Move;
+                entry.callback.AddListener((eventData) =>
+                {
+                    var e = (AxisEventData) eventData;
+                    if (e.moveDir == MoveDirection.Right) EnterPanel();
+                });
+
+                trigger.triggers.Add(entry);
+            }
+        }
+
+        private void SetOnSelection()
         {
             for (int i = 0; i < _tabs.Length; i++)
             {
                 var index = i;
                 var button = _tabs[i].GetComponent<Button>();
-                AddOnSelectAction(button.gameObject, () => { SetTab(index); });
+
+                // Add Event Trigger to Selection
+                if (!button.TryGetComponent<EventTrigger>(out var trigger))
+                    trigger = button.gameObject.AddComponent<EventTrigger>();
+
+                EventTrigger.Entry entry = new EventTrigger.Entry();
+                entry.eventID = EventTriggerType.Select;
+                entry.callback.AddListener((eventData) => SetTab(index));
+
+                trigger.triggers.Add(entry);
             }
-        }
-
-        private void AddOnSelectAction(GameObject selectableObj, Action f)
-        {
-            if (!selectableObj.TryGetComponent<EventTrigger>(out var trigger))
-                trigger = selectableObj.AddComponent<EventTrigger>();
-
-            EventTrigger.Entry entry = new EventTrigger.Entry();
-            entry.eventID = EventTriggerType.Select;
-            entry.callback.AddListener((eventData) => f());
-
-            trigger.triggers.Add(entry);
         }
 
         private void SetIndicator(int index)
@@ -78,18 +117,18 @@ namespace Overtail.GUI
         public void SetTab(int index)
         {
             _tabIndex = index;
-            _panelGroup.SetPanel(_tabIndex);
-            // Debug.Log($"[Tab] Clicked {_tabIndex}:{_tabs[_tabIndex].name}");
-
             SetIndicator(_tabIndex);
+            _panelGroup.SetPanel(_tabIndex);
         }
 
-        public void OnOpen()
+        public void EnterUI()
         {
+            EventSystem.current.SetSelectedGameObject(_tabs[_tabIndex]);
         }
 
-        public void OnExit()
+        public void ExitUI()
         {
+
         }
 
         public int GetTabIndex(string tabName)
@@ -108,10 +147,10 @@ namespace Overtail.GUI
             return -1;
         }
 
-        public void SetTab(string tabName)
+        private void EnterPanel()
         {
-            var index = GetTabIndex(tabName);
-            SetTab(index >= 0 ? index : 0);
+            this.ExitUI();
+            _panelGroup.EnterUI();
         }
     }
 }

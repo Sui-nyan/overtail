@@ -5,4 +5,5 @@
     {
         public int MaxQuantity = 1;
     }
+
 }

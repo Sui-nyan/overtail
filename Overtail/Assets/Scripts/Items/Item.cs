@@ -15,21 +15,37 @@ namespace Overtail.Items
         public string Id;
         public string Name = "";
         public string Description = "";
+        public string SpriteId;
+        public Sprite Sprite;
 
         [SerializeReference] public List<IItemComponent> Components = new List<IItemComponent>();
-        public string SpriteId;
 
         private Item()
         {
         }
-
-        public Item(string id, string name = null, List<IItemComponent> components = null, string spriteId = null, string description = null)
+        
+        public Item(string id, string name = null, List<IItemComponent> components = null, string spriteId = null,
+            string description = null)
         {
             Id = id;
             Name = name ?? Id;
             SpriteId = spriteId ?? "";
             if (components != null) this.Components = components;
             Description = description ?? "";
+        }
+
+        public bool AddComponent(IItemComponent newComponent)
+        {
+            IItemComponent comp = Components.Find(c =>
+            {
+                Debug.Log($"{c?.GetType()} :: {c?.GetType() == newComponent?.GetType()} :: {newComponent?.GetType()}");
+                return c.GetType() == newComponent.GetType();
+            });
+
+            if (comp != null) return false;
+
+            Components.Add(newComponent);
+            return true;
         }
 
         /// <summary>
@@ -45,7 +61,7 @@ namespace Overtail.Items
                 {
                     return (T) c;
                 }
-                catch (System.InvalidCastException)
+                catch (InvalidCastException)
                 {
                 }
             }

@@ -16,14 +16,14 @@ namespace Overtail.Camera
 
         private void Awake()
         {
-            FindPlayerTag();
+            DefaultTarget = GameObject.FindObjectOfType<Player>()?.gameObject
+                            ?? GameObject.FindGameObjectWithTag("Player");
+            if (DefaultTarget == null)
+                UnityEngine.Debug.LogError("[Camera] setup failed. No GameObject with <Player> tag found.");
+            else
+                UnityEngine.Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
         }
 
-        protected override void LateUpdate()
-        {
-            ResetPlayerTarget();
-            base.LateUpdate();
-        }
         
         /// <summary>
         /// Finds as assigns GameObject with "Player" tag as tracking target.
@@ -33,9 +33,9 @@ namespace Overtail.Camera
             DefaultTarget = GameObject.FindObjectOfType<Player>()?.gameObject
                             ?? GameObject.FindGameObjectWithTag("Player");
             if (DefaultTarget == null)
-                UnityEngine.Debug.Log("[Camera] setup failed. No GameObject with <Player> tag found.");
+                UnityEngine.Debug.LogError("[Camera] setup failed. No GameObject with <Player> tag found.");
             else
-                UnityEngine.Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
+                UnityEngine.Debug.LogError($"[Camera] Following <{DefaultTarget.name}>");
         }
 
         /// <summary>

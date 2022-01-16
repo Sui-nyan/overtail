@@ -13,29 +13,32 @@ namespace Overtail.GUI
 
         [Header("Assign")] [SerializeField] private TabGroup _tabGroup;
         private int _panelIndex;
-
+        
         public void Awake()
         {
             // _tabGroup = UnityHelper.FindSingleObjectOfType<TabGroup>();
             _panels = GetComponentsInChildren<Panel>(true).Select(c => c.gameObject).ToArray();
         }
 
-        public void OnOpen()
+        public void EnterUI()
         {
+            var p = _panels[_panelIndex].GetComponent<Panel>();
+            p.EnterUI();
         }
 
-        public void OnClose()
+        public void ExitUI()
         {
+            var p = _panels[_panelIndex].GetComponent<Panel>();
+            p.ExitUI();
         }
 
-        private void ShowCurrentPanel()
+        private void UpdatePanelVisibility()
         {
             for (int i = 0; i < _panels.Length; i++)
             {
                 if (i == _panelIndex)
                 {
                     _panels[i].SetActive(true);
-                    _panels[i].GetComponent<Panel>()?.Refresh();
                 }
                 else
                 {
@@ -47,8 +50,7 @@ namespace Overtail.GUI
         public void SetPanel(int index)
         {
             _panelIndex = index;
-            // Debug.Log($"[Panel] Showing{_panelIndex}:{_panels[_panelIndex].name}");
-            ShowCurrentPanel();
+            UpdatePanelVisibility();
         }
     }
 }
