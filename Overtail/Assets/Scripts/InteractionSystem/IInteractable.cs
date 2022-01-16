@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IInteractable
+namespace Overtail.Dialogue
 {
-    void Intectact(PlayerMovement player);
+    public interface IInteractable
+    {
+        void Intectact(PlayerMove player);
+    }
+
 }

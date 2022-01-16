@@ -4,72 +4,77 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+
+namespace Overtail.Dialogue
 {
-    [SerializeField] private GameObject dialogueBox;
-
-    public bool IsOpen { get; private set; }
-    public TMP_Text nameText;
-    public Image NPCSprite;
-    public TMP_Text dialogueText;
-
-    private ResponseHandler responseHandler;
-    private TextWriter textWriter;
-
-    private void Start()
+    public class DialogueManager : MonoBehaviour
     {
-        textWriter = GetComponent<TextWriter>();
-        responseHandler = GetComponent<ResponseHandler>();
+        [SerializeField] private GameObject dialogueBox;
 
-        CloseDialogue();
-    }
+        public bool IsOpen { get; private set; }
+        public TMP_Text nameText;
+        public Image NPCSprite;
+        public TMP_Text dialogueText;
 
-    public void StartDialogue(DialogueObject dialogueObject)
-    {
-        nameText.text = dialogueObject.NPCName; 
-        NPCSprite.GetComponent<Image>().sprite = dialogueObject.NPCSprite;
-        IsOpen = true;
-        dialogueBox.SetActive(true);
-        StartCoroutine(StepThroughDialogue(dialogueObject));
-    }
+        private ResponseHandler responseHandler;
+        private TextWriter textWriter;
 
-    public void AddResponseEvents(ResponseEvent[] responseEvents)
-    {
-        responseHandler.AddResponseEvents(responseEvents);
-    }
-
-    /*
-     * Iterates through each line of the dialogue new line will appear as soon as the player clicks any key
-     */
-    private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
-    {
-
-        for(int i = 0; i < dialogueObject.Dialogue.Length; i++)
+        private void Start()
         {
-            string dialogue = dialogueObject.Dialogue[i];
-            yield return textWriter.Run(dialogue, dialogueText);
+            textWriter = GetComponent<TextWriter>();
+            responseHandler = GetComponent<ResponseHandler>();
 
-            if(i == dialogueObject.Dialogue.Length -1 && dialogueObject.HasResponses)
+            CloseDialogue();
+        }
+
+        public void StartDialogue(DialogueObject dialogueObject)
+        {
+            nameText.text = dialogueObject.NPCName;
+            NPCSprite.GetComponent<Image>().sprite = dialogueObject.NPCSprite;
+            IsOpen = true;
+            dialogueBox.SetActive(true);
+            StartCoroutine(StepThroughDialogue(dialogueObject));
+        }
+
+        public void AddResponseEvents(ResponseEvent[] responseEvents)
+        {
+            responseHandler.AddResponseEvents(responseEvents);
+        }
+
+        /*
+         * Iterates through each line of the dialogue new line will appear as soon as the player clicks any key
+         */
+        private IEnumerator StepThroughDialogue(DialogueObject dialogueObject)
+        {
+
+            for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
             {
-                break;
+                string dialogue = dialogueObject.Dialogue[i];
+                yield return textWriter.Run(dialogue, dialogueText);
+
+                if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses)
+                {
+                    break;
+                }
+
+                yield return new WaitUntil(() => Input.anyKeyDown);
             }
 
-            yield return new WaitUntil(() => Input.anyKeyDown);
+            if (dialogueObject.HasResponses)
+            {
+                responseHandler.showResponses(dialogueObject.Responses);
+            }
+            else
+                CloseDialogue();
         }
 
-        if (dialogueObject.HasResponses)
+        public void CloseDialogue()
         {
-            responseHandler.showResponses(dialogueObject.Responses);
+            dialogueBox.SetActive(false);
+            dialogueText.text = string.Empty;
+            nameText.text = string.Empty;
+            IsOpen = false;
         }
-        else
-            CloseDialogue();
-    }
-
-    public void CloseDialogue()
-    {
-        dialogueBox.SetActive(false);
-        dialogueText.text = string.Empty;
-        nameText.text = string.Empty;
-        IsOpen = false;
     }
 }
+

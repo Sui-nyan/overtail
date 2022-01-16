@@ -2,45 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour, IInteractable
+namespace Overtail.Dialogue
 {
-
-    [SerializeField] DialogueObject dialogueObject;
-
-    public void UpdateDialogueObject(DialogueObject dialogueObject)
+    public class DialogueTrigger : MonoBehaviour, IInteractable
     {
-        this.dialogueObject = dialogueObject;
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+        [SerializeField] DialogueObject dialogueObject;
+
+        public void UpdateDialogueObject(DialogueObject dialogueObject)
         {
-            player.interactable = this;
+            this.dialogueObject = dialogueObject;
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
+            if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMove player))
             {
-                player.interactable = null;
+                player.interactable = this;
             }
         }
-    }
 
-    public void Intectact(PlayerMovement player)
-    {
-        foreach(DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            if(resposeEvents.DialogueObject == dialogueObject)
+            if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMove player))
             {
-                player.DialogueManager.AddResponseEvents(resposeEvents.Events);
-                break;
+                if (player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
+                {
+                    player.interactable = null;
+                }
             }
         }
-        player.DialogueManager.StartDialogue(dialogueObject);
+
+        public void Intectact(PlayerMove player)
+        {
+            foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
+            {
+                if (resposeEvents.DialogueObject == dialogueObject)
+                {
+                    player.DialogueManager.AddResponseEvents(resposeEvents.Events);
+                    break;
+                }
+            }
+            player.DialogueManager.StartDialogue(dialogueObject);
+        }
     }
 }

@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(DialogueResposeEvents))]
-
-public class DialogueResponseEventEditor : Editor
+namespace Overtail.Dialogue
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(DialogueResposeEvents))]
+
+    public class DialogueResponseEventEditor : Editor
     {
-        base.OnInspectorGUI();
+        public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
-
-            DialogueResposeEvents resposeEvents = (DialogueResposeEvents)target;
-
-            if (GUILayout.Button("Refresh"))
+            base.OnInspectorGUI();
             {
-                resposeEvents.OnValidate();
+                DrawDefaultInspector();
+
+                DialogueResposeEvents resposeEvents = (DialogueResposeEvents)target;
+
+                if (GUILayout.Button("Refresh"))
+                {
+                    resposeEvents.OnValidate();
+                }
             }
         }
     }
 }
+

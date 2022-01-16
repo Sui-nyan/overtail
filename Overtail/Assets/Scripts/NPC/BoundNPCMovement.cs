@@ -2,131 +2,122 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundNPCMovement : MonoBehaviour, IInteractable
+namespace Overtail.NPC
 {
-    [SerializeField] Sprite portrait;
-
-    private Rigidbody2D NPCBody;
-    private Transform transform;
-    public Collider2D boundary;
-
-    public float moveSpeed;
-    private bool isWalking;
-    private bool playerInRange;
-
-    private int directions;
-    private Vector3 directionVector;
-
-    private float waitCounter;
-    public float maxWaitTime;
-    private float walkCounter;
-    public float maxWalkTime;
-
-
-    void Start()
+    public class BoundNPCMovement : MonoBehaviour
     {
-        NPCBody = GetComponent<Rigidbody2D>();
-        transform = GetComponent<Transform>();
-        
-        waitCounter = Random.Range(0, maxWaitTime);
-        walkCounter = Random.Range(0, maxWalkTime);
-        changeDirection();
-    }
+        [SerializeField] Sprite portrait;
 
-    void Update()
+        private Rigidbody2D NPCBody;
+        private Transform transform;
+        public Collider2D boundary;
 
-    {
-        if (isWalking)
-        {
-            walkCounter -= Time.deltaTime;
-            if(walkCounter <= 0)
-            {
-                walkCounter = maxWalkTime;
-                isWalking = false;
-            }
-            movement();
-        }
-        else
-        {
-            waitCounter -= Time.deltaTime;
-            if(waitCounter <= 0)
-            {
-                isWalking = true;
-                waitCounter = maxWaitTime;
-                changeDirection();
-            }
-        }
+        public float moveSpeed;
+        private bool isWalking;
+        private bool playerInRange;
 
-    }
+        private int directions;
+        private Vector3 directionVector;
 
-    public void movement()
-    {
-        Vector3 temp = transform.position + directionVector * moveSpeed * Time.deltaTime;
-        if (boundary.bounds.Contains(temp))
+        private float waitCounter;
+        public float maxWaitTime;
+        private float walkCounter;
+        public float maxWalkTime;
+
+
+        void Start()
         {
-            NPCBody.MovePosition(temp); 
-        }
-        else
-        {
+            NPCBody = GetComponent<Rigidbody2D>();
+            transform = GetComponent<Transform>();
+
+            waitCounter = Random.Range(0, maxWaitTime);
+            walkCounter = Random.Range(0, maxWalkTime);
             changeDirection();
         }
-        
-    }
 
-    public void changeDirection() //NPC will randomly change their movement direction
-    {
-        directions = Random.Range(0, 4);
-        isWalking = true;
+        void Update()
 
-        if (isWalking)
         {
-            
-
-            switch (directions)
+            if (isWalking)
             {
-                case 0:
-                    directionVector = Vector3.left;
-                    break; //Walk left
-                case 1:
-                    directionVector = Vector3.right;
-                    break; //Walk right
-                case 2:
-                    directionVector = Vector3.up;
-                    break; //Walk up
-                case 3:
-                    directionVector = Vector3.down;
-                    break; //Walk down
-                default: break;
+                walkCounter -= Time.deltaTime;
+                if (walkCounter <= 0)
+                {
+                    walkCounter = maxWalkTime;
+                    isWalking = false;
+                }
+                movement();
+            }
+            else
+            {
+                waitCounter -= Time.deltaTime;
+                if (waitCounter <= 0)
+                {
+                    isWalking = true;
+                    waitCounter = maxWaitTime;
+                    changeDirection();
+                }
             }
 
-            if (walkCounter < 0)
-            {
-                isWalking = false;
-                
-            }
         }
 
-        else
+        public void movement()
         {
-            waitCounter -= Time.deltaTime;
-
-            if (waitCounter < 0)
+            Vector3 temp = transform.position + directionVector * moveSpeed * Time.deltaTime;
+            if (boundary.bounds.Contains(temp))
+            {
+                NPCBody.MovePosition(temp);
+            }
+            else
             {
                 changeDirection();
             }
-        }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+        }
+
+        public void changeDirection() //NPC will randomly change their movement direction
         {
-            isWalking = false;
-        }
-    }
+            directions = Random.Range(0, 4);
+            isWalking = true;
 
-    public void Intectact(PlayerMovement player)
-    {
-        
+            if (isWalking)
+            {
+
+
+                switch (directions)
+                {
+                    case 0:
+                        directionVector = Vector3.left;
+                        break; //Walk left
+                    case 1:
+                        directionVector = Vector3.right;
+                        break; //Walk right
+                    case 2:
+                        directionVector = Vector3.up;
+                        break; //Walk up
+                    case 3:
+                        directionVector = Vector3.down;
+                        break; //Walk down
+                    default: break;
+                }
+
+                if (walkCounter < 0)
+                {
+                    isWalking = false;
+
+                }
+            }
+
+            else
+            {
+                waitCounter -= Time.deltaTime;
+
+                if (waitCounter < 0)
+                {
+                    changeDirection();
+                }
+            }
+        }
     }
 }
+

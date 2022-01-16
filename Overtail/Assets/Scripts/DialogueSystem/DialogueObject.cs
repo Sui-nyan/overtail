@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Dialogue/DialogueObject")]
-
-[System.Serializable]
-public class DialogueObject : ScriptableObject //Objects to store Dialogues
+namespace Overtail.Dialogue
 {
-    [SerializeField] [TextArea] private string[] dialogue; //Input dialogue here
-    [SerializeField] Response[] responses; //Responses can be added in this field 
 
-    public string[] Dialogue => dialogue;
+    [CreateAssetMenu(menuName = "Dialogue/DialogueObject")]
 
-    public string NPCName;
-    public Sprite NPCSprite;
+    [System.Serializable]
+    public class DialogueObject : ScriptableObject //Objects to store Dialogues
+    {
+        [SerializeField] [TextArea] private string[] dialogue; //Input dialogue here
+        [SerializeField] Response[] responses; //Responses can be added in this field 
 
-    public Response[] Responses => responses;
+        public string[] Dialogue => dialogue;
 
-    public bool HasResponses => Responses != null && Responses.Length > 0; //Returns true, if the Dialogue has any responses
+        public string NPCName;
+        public Sprite NPCSprite;
+
+        public Response[] Responses => responses;
+
+        public bool HasResponses => Responses != null && Responses.Length > 0; //Returns true, if the Dialogue has any responses
+    }
+
 }
+

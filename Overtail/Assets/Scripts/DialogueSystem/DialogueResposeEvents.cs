@@ -3,41 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class DialogueResposeEvents : MonoBehaviour
+namespace Overtail.Dialogue
 {
-    [SerializeField] private DialogueObject dialogueObject;
-    [SerializeField] private ResponseEvent[] events;
-
-    public DialogueObject DialogueObject => dialogueObject;
-
-    public ResponseEvent[] Events => events;
-
-    public void OnValidate()
+    public class DialogueResposeEvents : MonoBehaviour
     {
-        if (dialogueObject == null) return;
-        if (dialogueObject.Responses == null) return;
-        if (events != null && events.Length == dialogueObject.Responses.Length) return;
+        [SerializeField] private DialogueObject dialogueObject;
+        [SerializeField] private ResponseEvent[] events;
 
-        if(events == null)
-        {
-            events = new ResponseEvent[dialogueObject.Responses.Length];
-        } else
-        {
-            Array.Resize(ref events, dialogueObject.Responses.Length);
-        }
+        public DialogueObject DialogueObject => dialogueObject;
 
-        for(int i = 0; i < dialogueObject.Responses.Length; i++)
-        {
-            Response response = dialogueObject.Responses[i];
+        public ResponseEvent[] Events => events;
 
-            if(events[i] != null)
+        public void OnValidate()
+        {
+            if (dialogueObject == null) return;
+            if (dialogueObject.Responses == null) return;
+            if (events != null && events.Length == dialogueObject.Responses.Length) return;
+
+            if (events == null)
             {
-                events[i].name = response.ResponseText;
-                continue;
+                events = new ResponseEvent[dialogueObject.Responses.Length];
+            }
+            else
+            {
+                Array.Resize(ref events, dialogueObject.Responses.Length);
             }
 
-            events[i] = new ResponseEvent() { name = response.ResponseText };
-        }
-    }
+            for (int i = 0; i < dialogueObject.Responses.Length; i++)
+            {
+                Response response = dialogueObject.Responses[i];
 
+                if (events[i] != null)
+                {
+                    events[i].name = response.ResponseText;
+                    continue;
+                }
+
+                events[i] = new ResponseEvent() { name = response.ResponseText };
+            }
+        }
+
+    }
 }
+
