@@ -1439,6 +1439,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8621387590772995818, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
+      propertyPath: HP
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621387590772995818, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
+      propertyPath: Level
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8621387590772995820, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
       propertyPath: m_Name
       value: Player 1
@@ -1475,7 +1483,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
-  setup: {fileID: 0}
+  setup: {fileID: 11400000, guid: 3e9fdfc6f2b2e194fbc51e88b9baf3ff, type: 2}
   _pedometer:
     distanceMax: 3
     distanceWalked: 0
@@ -1484,7 +1492,13 @@ MonoBehaviour:
     alwaysGrass: 1
   minLevel: 1
   maxLevel: 99
-  spawnableEnemies: []
+  spawnableEnemies:
+  - enemy: {fileID: 4092058473419366428, guid: a1ed6a950d734eb429efec349f632b56, type: 3}
+    weightedProbability: 1
+    randomizeLevel: 0
+  - enemy: {fileID: 4092058473419366428, guid: a1ed6a950d734eb429efec349f632b56, type: 3}
+    weightedProbability: 0
+    randomizeLevel: 0
 --- !u!4 &1384262655
 Transform:
   m_ObjectHideFlags: 0

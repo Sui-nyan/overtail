@@ -8,15 +8,16 @@ namespace Overtail.Battle.Encounter
     [System.Serializable]
     internal class Pedometer
     {
-        [SerializeField] private float distanceMax = 5;
-        [SerializeField] private float distanceWalked;
-        [SerializeField] private float tickCooldown = 1f;
-        [SerializeField] private float timeSpentWalking;
-        public bool alwaysGrass;
+        [SerializeField] public float distanceMax;
+        [SerializeField] public float distanceWalked;
+        [SerializeField] public float tickCooldown;
+        [SerializeField] public float timeSpentWalking;
 
-        private readonly Player _player;
-        private readonly Tilemap _tilemap;
-        private readonly PlayerMovement _playerMovement;
+        [SerializeField] public bool alwaysGrass;
+
+        private Player _player;
+        private Tilemap _tilemap;
+        private PlayerMovement _playerMovement;
 
         internal Pedometer(Player p, Tilemap m)
         {
@@ -27,6 +28,17 @@ namespace Overtail.Battle.Encounter
             this._player = p;
             this._playerMovement = p.GetComponent<PlayerMovement>();
 
+            this._tilemap = m;
+        }
+
+        public void SetPlayer(Player p)
+        {
+            this._player = p;
+            this._playerMovement = p.GetComponent<PlayerMovement>();
+        }
+
+        public void SetMap(Tilemap m)
+        {
             this._tilemap = m;
         }
 

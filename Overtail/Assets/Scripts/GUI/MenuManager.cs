@@ -61,21 +61,25 @@ namespace Overtail.GUI
             _mainMenu = _panelGroup?.transform.parent.gameObject;
             TryGetFirst<TabGroup>(_mainMenu, ref _tabGroup);
 
-            if (_mainMenu == null || _panelGroup == null || _tabGroup == null) Debug.LogWarning("Could not find MainMenu canvas");
+            if (_mainMenu == null || _panelGroup == null || _tabGroup == null)
+            {
+                Debug.LogWarning("Could not find MainMenu canvas");
+                return;
+            }
 
             StartCoroutine(QuickWakeUp(_mainMenu));
 
             IEnumerator QuickWakeUp(GameObject o)
             {
-                o.SetActive(true);
+                o?.SetActive(true);
                 yield return null;
-                o.SetActive(false);
+                o?.SetActive(false);
             }
         }
 
-        private bool TryGetFirst<T>([NotNull] GameObject parent, ref T obj) where T : MonoBehaviour
+        private bool TryGetFirst<T>(GameObject parent, ref T obj) where T : MonoBehaviour
         {
-            if (parent == null) throw new ArgumentNullException(nameof(parent));
+            if (parent == null) return false;//throw new ArgumentNullException(nameof(parent));
 
             foreach (Transform t in parent.transform)
             {
