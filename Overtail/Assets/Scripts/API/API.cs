@@ -9,11 +9,13 @@ namespace Overtail
 {
     class API
     {
+        private static readonly string _base = "https://overtail.schindlerfelix.de/";
+        private static readonly HttpClient _client = new HttpClient();
+
+        #region Token
 #nullable enable
         public static string? Token { get; set; }
 #nullable disable
-        private static readonly string _base = "https://overtail.schindlerfelix.de/";
-        private static readonly HttpClient _client = new HttpClient();
 
         /// <summary>
         /// Checks if the user token is valid, throws exception if not
@@ -37,6 +39,7 @@ namespace Overtail
                 }
             }
         }
+        #endregion
 
         #region Requests
         /// <summary>

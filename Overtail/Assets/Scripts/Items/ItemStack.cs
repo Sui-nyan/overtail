@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-namespace Overtail.Items
+﻿namespace Overtail.Items
 {
     // Unit of item. "One slot" in inventory
     [System.Serializable]
     public class ItemStack
     {
-        public Item Item; 
+        public Item Item;
         public int Quantity;
 
         public ItemStack()
@@ -17,7 +16,7 @@ namespace Overtail.Items
         {
             if (item == null || quantity < 0)
             {
-                UnityEngine.Debug.LogWarning($"Created ItemStack with [Item:{(item == null ? "NULL" : item.ToString())} x {quantity}]"+
+                UnityEngine.Debug.LogWarning($"Created ItemStack with [Item:{(item == null ? "NULL" : item.ToString())} x {quantity}]" +
                                              "\nAre you sure?");
             }
 

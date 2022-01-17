@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Overtail.Battle.Entity;
-using Overtail.Battle;
+﻿using Overtail.Battle.Entity;
 
 namespace Overtail.Items
 {

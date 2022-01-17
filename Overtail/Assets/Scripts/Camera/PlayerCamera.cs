@@ -24,7 +24,7 @@ namespace Overtail.Camera
                 UnityEngine.Debug.Log($"[Camera] Following <{DefaultTarget.name}>");
         }
 
-        
+
         /// <summary>
         /// Finds as assigns GameObject with "Player" tag as tracking target.
         /// </summary>

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Overtail.Battle.Entity;
-using Overtail.Battle;
-using UnityEditor;
 using UnityEngine;
 
 namespace Overtail.PlayerModule
@@ -48,7 +46,7 @@ namespace Overtail.PlayerModule
 
         public static int ExpLevelUp(int level)
         {
-            return Mathf.CeilToInt((float) (0.8f * Math.Pow(level, 3)));
+            return Mathf.CeilToInt((float)(0.8f * Math.Pow(level, 3)));
         }
 
         public static int ScaledMaxHP(int level, int baseMaxHp)

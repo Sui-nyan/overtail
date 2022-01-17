@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using UnityEngine;
 
@@ -13,7 +10,7 @@ namespace Overtail.GUI
 
         [Header("Assign")] [SerializeField] private TabGroup _tabGroup;
         private int _panelIndex;
-        
+
         public void Awake()
         {
             // _tabGroup = UnityHelper.FindSingleObjectOfType<TabGroup>();

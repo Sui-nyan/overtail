@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,8 +53,8 @@ namespace Overtail.GUI
             var parentHeight = rectTransform.rect.height;
 
             var c = (parentWidth + spacing.x - padding.left - padding.right) / (size.x + spacing.x);
-            columns = (int) c;
-            rows = Mathf.CeilToInt((float) transform.childCount / columns);
+            columns = (int)c;
+            rows = Mathf.CeilToInt((float)transform.childCount / columns);
         }
 
         private void AutoSize()
@@ -68,12 +64,12 @@ namespace Overtail.GUI
 
             columns = constraint == ConstraintType.ForceColumns
                 ? columns
-                : Mathf.CeilToInt(transform.childCount / (float) rows);
+                : Mathf.CeilToInt(transform.childCount / (float)rows);
             ;
 
             rows = constraint == ConstraintType.ForceRows
                 ? rows
-                : Mathf.CeilToInt(transform.childCount / (float) columns);
+                : Mathf.CeilToInt(transform.childCount / (float)columns);
 
 
             var xCutOff = (spacing.x * (columns - 1) + padding.left + padding.right) / columns;

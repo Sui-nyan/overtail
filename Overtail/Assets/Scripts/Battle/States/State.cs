@@ -5,8 +5,8 @@ namespace Overtail.Battle.States
 {
     public abstract class State
     {
-        protected readonly Battle.BattleSystem _system;
-        public State(Battle.BattleSystem system)
+        protected readonly BattleSystem _system;
+        public State(BattleSystem system)
         {
             this._system = system;
         }

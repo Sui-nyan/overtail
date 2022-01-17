@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
-using System.IO;
 using Overtail.Items.Components;
 
 namespace Overtail.Items
@@ -23,7 +22,7 @@ namespace Overtail.Items
         private Item()
         {
         }
-        
+
         public Item(string id, string name = null, List<IItemComponent> components = null, string spriteId = null,
             string description = null)
         {
@@ -59,7 +58,7 @@ namespace Overtail.Items
             {
                 try
                 {
-                    return (T) c;
+                    return (T)c;
                 }
                 catch (InvalidCastException)
                 {

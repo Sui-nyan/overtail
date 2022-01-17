@@ -6,7 +6,6 @@ using Overtail.Items.Systems;
 using JetBrains.Annotations;
 using Overtail.PlayerModule;
 using UnityEngine;
-using Overtail.GUI;
 using Overtail.Util;
 
 namespace Overtail.Items
@@ -43,7 +42,7 @@ namespace Overtail.Items
             ItemContainer inv = new ItemContainer();
 
             // Add items here as placeholder
-            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId:"overtail:cat_ears"), quantity: 1));
+            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId: "overtail:cat_ears"), quantity: 1));
 
             return inv;
         }
@@ -63,7 +62,7 @@ namespace Overtail.Items
 
                 Dictionary<string, string>[] items =
                     JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
-                
+
                 foreach (Dictionary<string, string> item in items)
                 {
                     // TODO ItemStack == null from API

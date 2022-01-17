@@ -29,7 +29,7 @@ namespace Overtail.GUI
         {
             string mail = MailField.text;
             string pass = PassField.text;
-            Dictionary<string, string> authData = new Dictionary<string, string> {{"email", mail}, {"password", pass}};
+            Dictionary<string, string> authData = new Dictionary<string, string> { { "email", mail }, { "password", pass } };
 
             switch (action)
             {
@@ -60,7 +60,7 @@ namespace Overtail.GUI
                 case "register":
                     try
                     {
-                        await Overtail.API.POST("register", authData, false);
+                        await API.POST("register", authData, false);
                         status.text = "Registration successful, you can now log in :)";
                     }
                     catch (Exception)

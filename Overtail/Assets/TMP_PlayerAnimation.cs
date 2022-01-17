@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TMP_PlayerAnimation : MonoBehaviour
@@ -9,6 +7,5 @@ public class TMP_PlayerAnimation : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-
     }
 }

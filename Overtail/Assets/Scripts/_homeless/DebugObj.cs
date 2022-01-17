@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Overtail.Items;
 using Overtail.Util;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class DebugObj : MonoBehaviour
 {
@@ -27,7 +25,7 @@ public class DebugObj : MonoBehaviour
     {
         for (int i = 282; i <= 293; i++)
         {
-            if (Input.GetKeyDown((KeyCode) i)) SceneManager.LoadScene(i - 282);
+            if (Input.GetKeyDown((KeyCode)i)) SceneManager.LoadScene(i - 282);
         }
     }
 

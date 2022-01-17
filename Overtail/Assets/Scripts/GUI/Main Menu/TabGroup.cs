@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,7 +10,8 @@ namespace Overtail.GUI
     {
         public float indicatorOffset = 20f;
 
-        [Header("Initialize")] [SerializeField]
+        [Header("Initialize")]
+        [SerializeField]
         private GameObject indicator;
 
         [SerializeField] private PanelGroup _panelGroup;
@@ -70,7 +68,7 @@ namespace Overtail.GUI
                 entry.eventID = EventTriggerType.Move;
                 entry.callback.AddListener((eventData) =>
                 {
-                    var e = (AxisEventData) eventData;
+                    var e = (AxisEventData)eventData;
                     if (e.moveDir == MoveDirection.Right) EnterPanel();
                 });
 

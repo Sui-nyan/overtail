@@ -1,9 +1,9 @@
+using Overtail.Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Overtail.Items;
 using UnityEngine;
-using Overtail.Battle;
+
 namespace Overtail.Battle.Entity
 {
     /// <summary>
@@ -14,7 +14,7 @@ namespace Overtail.Battle.Entity
     public abstract class BattleEntity : MonoBehaviour, IBattleInteractable
     {
         public event Action<BattleEntity> StatusUpdated;
-        
+
         [SerializeField] private string _displayName;
         [SerializeField] private int _level;
         [SerializeField] private int _experience;
@@ -168,7 +168,7 @@ namespace Overtail.Battle.Entity
                 if (_baseAttack == 0) _baseAttack = _attack;
                 if (_baseDefense == 0) _baseDefense = _defense;
 
-                foreach (var type in (StatType[]) Enum.GetValues(typeof(StatType)))
+                foreach (var type in (StatType[])Enum.GetValues(typeof(StatType)))
                 {
                     CalculateStat(type);
                 }
@@ -195,20 +195,20 @@ namespace Overtail.Battle.Entity
                     percent += status.Value;
 
                 if (status.ModifierType == ModifierType.FLAT)
-                    flat += (int) status.Value;
+                    flat += (int)status.Value;
             }
 
-            
+
             switch (statType)
             {
                 case StatType.MAXHP:
-                    MaxHP = (int) (_baseMaxHp * (1 + percent) + flat);
+                    MaxHP = (int)(_baseMaxHp * (1 + percent) + flat);
                     break;
                 case StatType.ATTACK:
-                    Attack = (int) (_baseAttack * (1 + percent) + flat);
+                    Attack = (int)(_baseAttack * (1 + percent) + flat);
                     break;
                 case StatType.DEFENSE:
-                    Defense = (int) (_baseDefense * (1 + percent) + flat);
+                    Defense = (int)(_baseDefense * (1 + percent) + flat);
                     break;
                 default:
                     throw new System.ArgumentException("Unknown Stat Type");

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Overtail.Items;
 using UnityEngine;
 
 namespace Overtail.Items
@@ -13,7 +9,7 @@ namespace Overtail.Items
 
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.Space)) nearestLootable?.Interact();
+            if (Input.GetKeyDown(KeyCode.Space)) nearestLootable?.Interact();
         }
 
         void FixedUpdate()

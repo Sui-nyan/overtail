@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Overtail.Battle;
 using Overtail.Items;
 using Overtail.PlayerModule;
 using UnityEngine;
@@ -13,7 +12,8 @@ namespace Overtail.Battle.Entity
 
         public int Charm { get; private set; }
         public int ExpLevelUp { get; private set; }
-        public float ExpProgress {
+        public float ExpProgress
+        {
             get
             {
                 var expAboveCurrent = (Experience - StatComponent.ExpLevelUp(Level - 1));
@@ -61,7 +61,7 @@ namespace Overtail.Battle.Entity
             data.Position.x = pos.x;
             data.Position.y = pos.y;
         }
-        
+
         public void LevelUp()
         {
             var s = _player.GetComponent<StatComponent>();
@@ -77,7 +77,7 @@ namespace Overtail.Battle.Entity
             yield break;
         }
 
-        public override IEnumerator OnFlirt(Overtail.Battle.BattleSystem system)
+        public override IEnumerator OnFlirt(BattleSystem system)
         {
             // Placeholder
             yield return system.GUI.StartDialogue("You found some corny lyrics");
@@ -91,17 +91,17 @@ namespace Overtail.Battle.Entity
             yield break;
         }
 
-        public override IEnumerator OnBully(Overtail.Battle.BattleSystem system)
+        public override IEnumerator OnBully(BattleSystem system)
         {
             yield return system.GUI.StartDialogue($"{Name} is trying to sh*t-talk {system.Enemy.Name}");
         }
-        
-        public override IEnumerator OnItemUse(Overtail.Battle.BattleSystem system, ItemStack itemStack)
-        { 
+
+        public override IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)
+        {
             yield break;
         }
-        
-        public override IEnumerator OnVictory(Overtail.Battle.BattleSystem system)
+
+        public override IEnumerator OnVictory(BattleSystem system)
         {
             var exp = system.Enemy.Experience;
 

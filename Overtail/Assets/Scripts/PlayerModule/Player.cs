@@ -1,7 +1,5 @@
 using Overtail.Battle.Entity;
 using UnityEngine;
-using Overtail;
-using Overtail.Battle;
 using Overtail.Items;
 using Overtail.Map;
 using Overtail.Util;
@@ -50,7 +48,7 @@ namespace Overtail.PlayerModule
         {
             var stats = GetComponent<StatComponent>();
             stats.HP = Mathf.Clamp(stats.HP, 1, stats.MaxHP);
-            
+
         }
 
         public void AddStatus(StatusEffect newEffect)
