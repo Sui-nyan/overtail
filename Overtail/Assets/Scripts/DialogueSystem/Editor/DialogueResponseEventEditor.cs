@@ -11,17 +11,15 @@ namespace Overtail.Dialogue
     {
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
+            DrawDefaultInspector();
+
+            DialogueResposeEvents resposeEvents = (DialogueResposeEvents)target;
+
+            if (GUILayout.Button("Refresh"))
             {
-                DrawDefaultInspector();
-
-                DialogueResposeEvents resposeEvents = (DialogueResposeEvents)target;
-
-                if (GUILayout.Button("Refresh"))
-                {
-                    resposeEvents.OnValidate();
-                }
+                resposeEvents.OnValidate();
             }
+            
         }
     }
 }
