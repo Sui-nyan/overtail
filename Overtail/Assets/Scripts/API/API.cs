@@ -36,6 +36,7 @@ namespace Overtail
 
                 if (!(a.Days > 0 && a.Days <= 30))
                 {
+                    Debug.Log("Token invalid, expired " + (a.Days - 30) + " ago");
                     // Show password promt
                     SpawnPasswordPromt();
                 }

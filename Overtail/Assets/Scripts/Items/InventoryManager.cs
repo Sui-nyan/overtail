@@ -49,16 +49,15 @@ namespace Overtail.Items
 
         private static ItemContainer LoadInvFromAPI() // might not be instantaneous
         {
-            UnityEngine.Debug.Log("[InventoryManager] LoadFromAPI()");
+            Debug.Log("[InventoryManager] LoadFromAPI()");
             ItemContainer inv = new ItemContainer();
 
             try
             {
-                // TODO: Remove setting API.Token here
+                // Get Items from API
                 string jsonStr = Task.Run(() => API.GET("inv")).Result;
                 Debug.Log("[InventoryManager] jsonStr written");
                 // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
-                // Get Items from API
 
                 Dictionary<string, string>[] items =
                     JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
