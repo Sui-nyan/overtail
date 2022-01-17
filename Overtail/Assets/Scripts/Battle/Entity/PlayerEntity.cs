@@ -11,7 +11,6 @@ namespace Overtail.Battle.Entity
     {
         private Player _player;
 
-
         public int Charm { get; private set; }
         public int ExpLevelUp { get; private set; }
         public float ExpProgress {
@@ -22,8 +21,6 @@ namespace Overtail.Battle.Entity
                 return expAboveCurrent / (float)expCurrentToNext;
             }
         }
-            
-
 
         public void Load(Player p)
         {
@@ -123,6 +120,4 @@ namespace Overtail.Battle.Entity
             yield break;
         }
     }
-
-
 }
