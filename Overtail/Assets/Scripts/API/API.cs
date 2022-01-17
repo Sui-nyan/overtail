@@ -5,6 +5,8 @@ using System.Net.Http.Headers;
 using System;
 using System.Text;
 using Newtonsoft.Json;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace Overtail
 {
@@ -34,15 +36,45 @@ namespace Overtail
 
                 if (!(a.Days > 0 && a.Days <= 30))
                 {
-                    string pass = "";           // TODO: Popup with password input for revalidating
-                    string jsonStr = Task.Run(() => POST("revalidate", new Dictionary<string, string> { { "password", pass } })).Result;    // Get new token
-                    Dictionary<string, string> revData = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
-                    Token = revData["token"];   // Set new token
-                    return true;
+                    // Show password promt
+                    SpawnPasswordPromt();
                 }
             }
             return false;
         }
+
+        private static void SpawnPasswordPromt()
+        {
+            GameObject uiObj = (GameObject)GameObject.Instantiate(Resources.Load("GUI/PasswordPromt"));
+            var input = uiObj.GetComponent<InputField>();
+            var button = uiObj.GetComponent<Button>();
+
+            button.onClick.AddListener(() =>
+            {
+                string pass = input.text;
+                GameObject.Destroy(uiObj);
+                if (!Task.Run(async () => await RevalidateToken(pass)).Result)
+                {
+                    SpawnPasswordPromt();
+                }
+            });
+        }
+
+        public static async Task<bool> RevalidateToken(string pass)
+        {
+            try
+            {
+                string jsonStr = await POST("revalidate", new Dictionary<string, string> { { "password", pass } });
+                Dictionary<string, string> revData = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                Token = revData["token"];   // Set new token
+                return true;
+            }
+            catch (Exception _)
+            {
+                return false;
+            }
+        }
+
         #endregion
 
         #region Requests

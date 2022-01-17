@@ -36,13 +36,13 @@ namespace Overtail.GUI
                 case "login":
                     try
                     {
-                        string jsonStr = await Overtail.API.POST("login", authData, false);
+                        string jsonStr = await API.POST("login", authData, false);
                         Dictionary<string, string> loginData =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
                         Dictionary<string, string> pos =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(loginData["postition"]);
 
-                        Overtail.API.Token = loginData["token"];    // Set token for API authorization
+                        API.Token = loginData["token"];    // Set token for API authorization
                         GameObject player = GameObject.FindGameObjectWithTag("Player");
                         var rb = player.gameObject.GetComponent<Rigidbody2D>();
                         rb.MovePosition(new Vector2(int.Parse(pos["x"]),
