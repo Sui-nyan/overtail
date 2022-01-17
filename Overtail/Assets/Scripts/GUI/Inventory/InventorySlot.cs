@@ -11,6 +11,7 @@ using Overtail.Items.Components;
 using Overtail.PlayerModule;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using PointerType = UnityEngine.PointerType;
 
 [RequireComponent(typeof(Button))]
@@ -46,7 +47,7 @@ public class InventorySlot : MonoBehaviour
         icon = GetComponentsInChildren<Image>().First(c => c.gameObject != this.gameObject);
         button = GetComponent<Button>();
 
-        root = GameObject.FindObjectOfType<PanelGroup>().gameObject;
+        root = GameObject.FindObjectOfType<InventoryPanel>().gameObject;
 
         if (subMenuButtonPrefab is null || subMenuPrefab is null) throw new ArgumentNullException();
         if (label is null || icon is null || button is null) throw new ArgumentNullException();
@@ -54,8 +55,11 @@ public class InventorySlot : MonoBehaviour
 
     private void SetupButton()
     {
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(CreateSubMenu);
+        if (!SceneManager.GetActiveScene().name.Equals("CombatScene"))
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(CreateSubMenu);
+        }
     }
     
     public void Update()

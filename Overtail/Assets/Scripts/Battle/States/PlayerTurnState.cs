@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Overtail.Items;
+using UnityEngine;
 
 namespace Overtail.Battle.States
 {
@@ -9,8 +10,8 @@ namespace Overtail.Battle.States
         public override IEnumerator Start()
         {
             UnityEngine.Debug.Log("PlayerTurn:Start");
-            yield return _system.GUI.StartDialogue("Choose an action.");
             _system.GUI.ShowButtons();
+            yield return null;
         }
         public override IEnumerator Attack()
         {
@@ -37,10 +38,12 @@ namespace Overtail.Battle.States
 
         public override IEnumerator UseItem(ItemStack itemStack)
         {
-            InventoryManager.Instance?.UseItem(itemStack);
+            Debug.Log("player used item");
+            InventoryManager.Instance?.UseItem(itemStack, _system.Player);
             yield return _system.StartCoroutine(_system.Player.OnItemUse(_system, itemStack));
             EndTurn();
         }
+
 
         private void EndTurn()
         {

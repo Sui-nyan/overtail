@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Overtail.Battle.Entity
 {
-    public class PlayerEntity : BattleEntity
+    public class PlayerEntity : BattleEntity, IItemInteractor
     {
         private Player _player;
 
@@ -121,6 +121,19 @@ namespace Overtail.Battle.Entity
             }
 
             yield break;
+        }
+
+        public Item MainHand { get; set; }
+        public Item OffHand { get; set; }
+        public void Heal(int hp)
+        {
+            HP += hp;
+            Debug.Log("HEAL TO " + HP);
+        }
+
+        public void AddStatus(StatusEffect newEffect)
+        {
+            return;
         }
     }
 

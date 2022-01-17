@@ -1445,7 +1445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621387590772995818, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
       propertyPath: Level
-      value: 2
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8621387590772995820, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
       propertyPath: m_Name
@@ -1485,7 +1485,7 @@ MonoBehaviour:
   Player: {fileID: 0}
   setup: {fileID: 11400000, guid: 3e9fdfc6f2b2e194fbc51e88b9baf3ff, type: 2}
   _pedometer:
-    distanceMax: 3
+    distanceMax: 1
     distanceWalked: 0
     tickCooldown: 0
     timeSpentWalking: 0

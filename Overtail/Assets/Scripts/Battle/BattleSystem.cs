@@ -5,6 +5,8 @@ using Overtail.PlayerModule;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Overtail.Battle.UI;
+using Overtail.GUI;
+
 namespace Overtail.Battle
 {
 
@@ -92,7 +94,7 @@ namespace Overtail.Battle
         {
             // TODO Open Inventory
             // Choose item
-            StartCoroutine(_state.UseItem(null));
+            GUI.OpenInventoryGUI(callback: (stack) => StartCoroutine(_state.UseItem(stack)));
         }
         public void OnEscapeButton()
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Overtail.Items.Systems;
 using JetBrains.Annotations;
+using Overtail.Battle.Entity;
 using Overtail.PlayerModule;
 using UnityEngine;
 using Overtail.GUI;
@@ -133,6 +134,12 @@ namespace Overtail.Items
         internal void UseItem(ItemStack itemStack)
         {
             _potionSystem.UseItem(itemStack, _player);
+            PruneEmpty(itemStack);
+        }
+
+        internal void UseItem(ItemStack itemStack, IItemInteractor player)
+        {
+            _potionSystem.UseItem(itemStack, player);
             PruneEmpty(itemStack);
         }
 
