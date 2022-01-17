@@ -25,7 +25,7 @@ namespace Overtail
         /// </summary>
         /// <exception cref="NotLoggedInException">Thrown when user is not logged in</exception>
         /// <exception cref="UnvalidTokenException">Thrown when token is older than 30 days</exception>
-        private static bool CheckToken()
+        private static void CheckToken()
         {
             if (Token != null)
             {
@@ -40,7 +40,6 @@ namespace Overtail
                     SpawnPasswordPromt();
                 }
             }
-            return false;
         }
 
         private static void SpawnPasswordPromt()
