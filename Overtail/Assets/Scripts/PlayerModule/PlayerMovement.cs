@@ -39,7 +39,7 @@ namespace Overtail.PlayerModule
         {
             inMenu = FindObjectOfType<MenuManager>().MenuIsActive;
             inDialogue = false;
-            inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
+            inCombat = SceneManager.GetActiveScene().name.Equals("CombatScene");
 
             var enabled = !(inMenu || inDialogue || inCombat);
 

@@ -12,6 +12,7 @@ namespace Overtail.Battle.Encounter
         [SerializeField] private float distanceWalked;
         [SerializeField] private float tickCooldown = 1f;
         [SerializeField] private float timeSpentWalking;
+        public bool alwaysGrass;
 
         private readonly Player _player;
         private readonly Tilemap _tilemap;
@@ -46,7 +47,7 @@ namespace Overtail.Battle.Encounter
             if (!isMoving) return;
 
             bool tallGrass = _tilemap != null && _tilemap.HasTile(Vector3Int.FloorToInt(pos));
-            if (tallGrass)
+            if (tallGrass || alwaysGrass)
             {
                 timeSpentWalking += Time.fixedDeltaTime;
                 distanceWalked += _playerMovement.CurrentMoveSpeed * Time.fixedDeltaTime;
