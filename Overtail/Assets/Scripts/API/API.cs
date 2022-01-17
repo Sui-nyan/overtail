@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Overtail
 {
@@ -22,22 +23,25 @@ namespace Overtail
         /// </summary>
         /// <exception cref="NotLoggedInException">Thrown when user is not logged in</exception>
         /// <exception cref="UnvalidTokenException">Thrown when token is older than 30 days</exception>
-        private static void CheckToken()
+        private static bool CheckToken()
         {
-            if (Token == null)
-                throw new NotLoggedInException();
-            else
+            if (Token != null)
             {
                 string decoded = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
                 DateTime validUntil = DateTime.ParseExact(decoded.Split('.')[2], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                 DateTime today = DateTime.Today;
                 TimeSpan a = today.Subtract(validUntil);
+
                 if (!(a.Days > 0 && a.Days <= 30))
                 {
-                    // TODO: Popup with password input for revalidating
-                    throw new UnvalidTokenException("Token unvalid since " + (a.Days - 30) + " days");
+                    string pass = "";           // TODO: Popup with password input for revalidating
+                    string jsonStr = Task.Run(() => POST("revalidate", new Dictionary<string, string> { { "password", pass } })).Result;    // Get new token
+                    Dictionary<string, string> revData = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                    Token = revData["token"];   // Set new token
+                    return true;
                 }
             }
+            return false;
         }
         #endregion
 

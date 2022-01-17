@@ -241,63 +241,63 @@ namespace Overtail.Battle.Entity
             }
         }
 
-        public virtual IEnumerator OnGreeting(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnGreeting(BattleSystem system)
         {
             yield break;
         }
-        public virtual IEnumerator DoTurnLogic(Overtail.Battle.BattleSystem system)
-        {
-            yield break;
-        }
-
-        public virtual IEnumerator OnVictory(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator DoTurnLogic(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnDefeat(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnVictory(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnAttack(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnDefeat(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnGetAttacked(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnAttack(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnFlirt(Overtail.Battle.BattleSystem system)
-        {
-            yield break;
-        }
-        public virtual IEnumerator OnGetFlirted(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnGetAttacked(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnBully(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnFlirt(BattleSystem system)
         {
             yield break;
         }
-        public virtual IEnumerator OnGetBullied(Overtail.Battle.BattleSystem system)
-        {
-            yield break;
-        }
-        public virtual IEnumerator OnItemUse(Overtail.Battle.BattleSystem system, ItemStack itemStack)
+        public virtual IEnumerator OnGetFlirted(BattleSystem system)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnEscape(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnBully(BattleSystem system)
+        {
+            yield break;
+        }
+        public virtual IEnumerator OnGetBullied(BattleSystem system)
+        {
+            yield break;
+        }
+        public virtual IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)
         {
             yield break;
         }
 
-        public virtual IEnumerator OnOpponentEscapes(Overtail.Battle.BattleSystem system)
+        public virtual IEnumerator OnEscape(BattleSystem system)
+        {
+            yield break;
+        }
+
+        public virtual IEnumerator OnOpponentEscapes(BattleSystem system)
         {
             yield break;
         }
