@@ -23,7 +23,7 @@ public class InteractablePopUp : MonoBehaviour
         if(obj != null) Set(obj);
 
 
-        popup.SetActive(nearestInteractable is not null);
+        popup.SetActive(nearestInteractable != null);
     }
 
     private GameObject LocateNearest()
