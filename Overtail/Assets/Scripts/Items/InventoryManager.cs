@@ -56,9 +56,7 @@ namespace Overtail.Items
             try
             {
                 // TODO: Remove setting API.Token here
-                API.API.Token =
-                    "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkV0UlIzQlNRVlV6UWtocWVFVjVRVzFPWnpOSGFTNTZXVzlhTDIxeGJEbDZOekJuV1RsamFtSXpSQzR2V0RCdVVYWnVkR3RMLk1qQXlNaTB3TWkweE5RPT0=";
-                string jsonStr = Task.Run(() => API.API.GET("inv")).Result;
+                string jsonStr = Task.Run(() => API.GET("inv")).Result;
                 Debug.Log("[InventoryManager] jsonStr written");
                 // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
                 // Get Items from API
@@ -101,7 +99,7 @@ namespace Overtail.Items
 
                 data += "]";
 
-                _ = Task.Run(() => API.API.PUT("inv/save", data)); // Save to API
+                _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
                 return true;
             }
             catch (Exception)

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System;
+using System.Text;
 
-namespace Overtail.API
+namespace Overtail
 {
     class API
     {
@@ -15,6 +16,30 @@ namespace Overtail.API
         private static readonly HttpClient _client = new HttpClient();
 
         /// <summary>
+        /// Checks if the user token is valid, throws exception if not
+        /// </summary>
+        /// <exception cref="NotLoggedInException">Thrown when user is not logged in</exception>
+        /// <exception cref="UnvalidTokenException">Thrown when token is older than 30 days</exception>
+        private static void CheckToken()
+        {
+            if (Token == null)
+                throw new NotLoggedInException();
+            else
+            {
+                string decoded = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
+                DateTime validUntil = DateTime.ParseExact(decoded.Split('.')[2], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                DateTime today = DateTime.Today;
+                TimeSpan a = today.Subtract(validUntil);
+                if (!(a.Days > 0 && a.Days <= 30))
+                {
+                    // TODO: Popup with password input for revalidating
+                    throw new UnvalidTokenException("Token unvalid since " + (a.Days - 30) + " days");
+                }
+            }
+        }
+
+        #region Requests
+        /// <summary>
         /// GET data from API endpoint
         /// </summary>
         /// <param name="endpoint">API endpoint (without starting '/')</param>
@@ -24,8 +49,7 @@ namespace Overtail.API
         {
             if (auth)
             {
-                if (Token == null || Token == "")
-                    throw new ArgumentException("User is not logged in");
+                CheckToken();
                 _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
             }
 
@@ -44,80 +68,47 @@ namespace Overtail.API
         public static async Task<string> POST(string endpoint, Dictionary<string, string> data, bool auth = true)
         {
             FormUrlEncodedContent content = new FormUrlEncodedContent(data);
-            if (auth && Token != null)
+            if (auth)
+            {
+                CheckToken();
                 content.Headers.Add("Authorization", "Bearer " + Token);
+            }
             HttpResponseMessage res = await _client.PostAsync(_base + endpoint, content);
             res.EnsureSuccessStatusCode();
             return await res.Content.ReadAsStringAsync();
         }
+        #endregion
 
-        /// <summary>
-        /// PUT data to API endpoint
-        /// </summary>
-        /// <param name="endpoint">API endpoint (without starting '/')</param>
-        /// <param name="data">Data as [Key, Value] pairs</param>
-        /// <param name="auth">Wheather to send API.Token or not</param>
-        /// <returns>API answer as string</returns>
-        public static async Task<string> PUT(string endpoint, Dictionary<string, string> data, bool auth = true)
+        #region Exceptions
+        [Serializable]
+        public class NotLoggedInException : Exception
         {
-            FormUrlEncodedContent content = new FormUrlEncodedContent(data);
-            if (auth)
-                if (Token == null || Token == "")
-                    throw new ArgumentException("User is not logged in");
-                else
-                    content.Headers.Add("Authorization", "Bearer " + Token);
-            HttpResponseMessage res = await _client.PutAsync(_base + endpoint, content);
-            res.EnsureSuccessStatusCode();
-            return await res.Content.ReadAsStringAsync();
+            public NotLoggedInException()
+            { }
+
+            public NotLoggedInException(string message)
+                : base(message)
+            { }
+
+            public NotLoggedInException(string message, Exception innerException)
+                : base(message, innerException)
+            { }
         }
 
-        /// <summary>
-        /// PUT json data to API endpoint
-        /// </summary>
-        /// <param name="endpoint">API endpoint (without starting '/')</param>
-        /// <param name="data">JSON data as string</param>
-        /// <param name="auth">Wheather to send API.Token or not</param>
-        /// <returns>API answer as string</returns>
-        public static async Task<string> PUT(string endpoint, string data, bool auth = true)
+        [Serializable]
+        public class UnvalidTokenException : Exception
         {
-            StringContent content = new StringContent(data);
-            content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-            if (auth)
-                if (Token == null || Token == "")
-                    throw new ArgumentException("User is not logged in");
-                else
-                    content.Headers.Add("Authorization", "Bearer " + Token);
-            HttpResponseMessage res = await _client.PutAsync(_base + endpoint, content);
-            res.EnsureSuccessStatusCode();
-            return await res.Content.ReadAsStringAsync();
+            public UnvalidTokenException()
+            { }
+
+            public UnvalidTokenException(string message)
+                : base(message)
+            { }
+
+            public UnvalidTokenException(string message, Exception innerException)
+                : base(message, innerException)
+            { }
         }
-
-        /// <summary>
-        /// Send DELETE request to API endpoint
-        /// </summary>
-        /// <param name="endpoint">API endpoint (without starting '/')</param>
-        /// <param name="auth">Wheather to send API.Token or not</param>
-        /// <returns>API answer as string</returns>
-        public static async Task<string> DELETE(string endpoint, bool auth = true)
-        {
-            HttpResponseMessage res;
-            if (auth)
-            {
-                if (Token == null || Token == "")
-                    throw new ArgumentException("User is not logged in");
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Delete, _base + endpoint))
-                {
-                    requestMessage.Headers.Add("Authorization", "Bearer " + Token);
-
-                    res = await _client.SendAsync(requestMessage);
-                    res.EnsureSuccessStatusCode();
-                    return await res.Content.ReadAsStringAsync();
-                }
-            }
-
-            res = await _client.DeleteAsync(_base + endpoint);
-            res.EnsureSuccessStatusCode();
-            return await res.Content.ReadAsStringAsync();
-        }
+        #endregion
     }
 }
