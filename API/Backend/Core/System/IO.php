@@ -46,7 +46,7 @@ class IO
 	 *
 	 * @param string $var Name of variable
 	 * @param boolean $exact Get the exact value
-	 * @return array|string|null Value of variable or null if not exists
+	 * @return array<string,mixed>|string|null Value of variable or null if not exists
 	 */
 	public static function PUT(string $var, bool $exact = false): array|string|null {
 		$data = file_get_contents('php://input');
@@ -63,8 +63,7 @@ class IO
 			}
 			if (is_string($arr[$var]))
 				return $exact ? strval($arr[$var]): htmlspecialchars(urldecode(strval($arr[$var])));
-			elseif (is_array($arr[$var]))
-				return $arr[$var];
+			// TODO: is_array()
 		}
 		return null;
 	}
