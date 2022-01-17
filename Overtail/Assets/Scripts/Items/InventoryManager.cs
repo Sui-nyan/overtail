@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Overtail.Items.Systems;
 using JetBrains.Annotations;
-using Overtail.PlayerModule;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Overtail.PlayerModule;
 using Overtail.Util;
+using Overtail.Items.Systems;
 
 namespace Overtail.Items
 {
@@ -80,7 +81,8 @@ namespace Overtail.Items
             return inv;
         }
 
-        private bool SaveInvToAPI()
+        // TODO: Put this where the application quits
+        private bool SavePlayerDataToAPI()
         {
             try
             {
@@ -97,6 +99,10 @@ namespace Overtail.Items
 
                 data += "]";
 
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                Vector2 pos = player.gameObject.GetComponent<Rigidbody2D>().position;
+
+                _ = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", SceneManager.GetActiveScene().name } }));
                 _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
                 return true;
             }

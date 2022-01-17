@@ -18,7 +18,7 @@ class LoginController extends Controller
 						$user['password'] = (new Query('SELECT `password` FROM `User` WHERE `uuid`=:uuid', [':uuid' => $user['uuid']]))->fetch()['password'];
 				}
 
-				$pos = (new Query('SELECT `x`, `y` FROM `PlayerData` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]))->fetch();
+				$pos = (new Query('SELECT `x`, `y`, `scene` FROM `PlayerData` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]))->fetch();
 				(new APIView(
 					[
 						'token' => Auth::generateToken($user['uuid'], $user['password']),	// Auth token
