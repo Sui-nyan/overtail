@@ -1,5 +1,4 @@
 ﻿using System;
-using Overtail.Items;
 using Overtail.Items.Components;
 using UnityEngine;
 

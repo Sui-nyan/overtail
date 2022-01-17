@@ -1,12 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Overtail.GUI;
-using Overtail.Items;
 using Overtail.Util;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Overtail
 {
@@ -43,7 +37,7 @@ namespace Overtail
         public event Action KeyRight;
 
         // TODO replace unity input with this? or the otherway idk
-        
+
 
         void Awake()
         {

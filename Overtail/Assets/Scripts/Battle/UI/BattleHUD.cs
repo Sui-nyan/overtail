@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Data;
-using System.Reflection;
 using Overtail.Battle.Entity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
 
 namespace Overtail.Battle.UI
 {

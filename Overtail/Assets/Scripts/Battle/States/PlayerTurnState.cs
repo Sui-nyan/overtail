@@ -5,7 +5,7 @@ namespace Overtail.Battle.States
 {
     public class PlayerTurnState : State
     {
-        public PlayerTurnState(Battle.BattleSystem system) : base(system) { }
+        public PlayerTurnState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
             UnityEngine.Debug.Log("PlayerTurn:Start");

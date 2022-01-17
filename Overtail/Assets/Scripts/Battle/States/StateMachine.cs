@@ -1,5 +1,4 @@
-﻿using Overtail.Battle.States;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Overtail.Battle.States
 {

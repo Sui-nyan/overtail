@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Overtail.Items;
 using Overtail.PlayerModule;
 using Overtail.Util;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
 
 namespace Overtail.GUI
 {
@@ -26,7 +22,7 @@ namespace Overtail.GUI
         private InventoryManager _inventoryManager;
 
         private GameObject _lastSelection;
-        
+
 
         void Awake()
         {
@@ -57,7 +53,7 @@ namespace Overtail.GUI
             LoadFromInventory();
             LoadFromPlayer();
         }
-        
+
 
         private void SetNavigation()
         {
@@ -77,7 +73,7 @@ namespace Overtail.GUI
                     nav.mode = Navigation.Mode.Explicit;
                     nav.selectOnRight = parent.transform
                         .GetChild(i)
-                        .GetChild((j+1)%columns).GetComponentInChildren<Button>();
+                        .GetChild((j + 1) % columns).GetComponentInChildren<Button>();
                     nav.selectOnLeft = parent.transform
                         .GetChild(i)
                         .GetChild((columns + j - 1) % columns).GetComponentInChildren<Button>();
@@ -89,23 +85,23 @@ namespace Overtail.GUI
                         .GetChild((i + 1) % rows)
                         .GetChild(j).GetComponentInChildren<Button>();
 
-                    
+
                     // last row
                     if (i == (rows - 1))
                     {
                         // two outer right slots
                         if (j == columns - 2)
                         {
-                            
+
                             nav.selectOnDown = _mainHand.GetComponentInChildren<Button>();
                         }
-                        
+
                         if (j == columns - 1)
                         {
                             nav.selectOnDown = _offHand.GetComponentInChildren<Button>();
                         }
                     }
-                    
+
                     button.navigation = nav;
                 }
             }
@@ -128,7 +124,7 @@ namespace Overtail.GUI
                 entry.eventID = EventTriggerType.Move;
                 entry.callback.AddListener((eventData) =>
                 {
-                    var e = (AxisEventData) eventData;
+                    var e = (AxisEventData)eventData;
                     if (e.moveDir == MoveDirection.Left)
                     {
                         FindObjectOfType<PanelGroup>().ExitUI();
@@ -153,7 +149,7 @@ namespace Overtail.GUI
         private void LoadFromPlayer()
         {
             Player p = GameObject.FindObjectOfType<Player>();
-            
+
             _mainHand.Stack = p.MainHand != null ? new ItemStack(p.MainHand, 1) : null;
             _offHand.Stack = p.OffHand != null ? new ItemStack(p.OffHand, 1) : null;
         }

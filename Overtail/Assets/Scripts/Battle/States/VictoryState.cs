@@ -4,7 +4,7 @@ namespace Overtail.Battle.States
 {
     public class VictoryState : State
     {
-        public VictoryState(Battle.BattleSystem system) : base(system) { }
+        public VictoryState(BattleSystem system) : base(system) { }
 
         public override IEnumerator Start()
         {

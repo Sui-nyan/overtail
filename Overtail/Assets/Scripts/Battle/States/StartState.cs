@@ -4,7 +4,7 @@ namespace Overtail.Battle.States
 {
     public class StartState : State
     {
-        public StartState(Battle.BattleSystem system) : base(system) { }
+        public StartState(BattleSystem system) : base(system) { }
         public override IEnumerator Start()
         {
             yield return _system.GUI.StartDialogue($"A wild {_system.Enemy.Name} appears.");

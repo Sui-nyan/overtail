@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Unity;
+
 namespace Overtail.Util
 {
     public static class MonoBehaviourExtension
@@ -12,15 +11,15 @@ namespace Overtail.Util
             if (staticInstance != null && staticInstance != obj)
             {
                 Debug.LogWarning($"[{obj.transform.parent?.name ?? obj.name}] Singleton {obj.GetType().Name} already exists. [{staticInstance.transform.parent?.name ?? staticInstance.name}].");
-                UnityEngine.Object.Destroy(obj.gameObject);
+                Object.Destroy(obj.gameObject);
             }
             else
             {
                 staticInstance = obj;
             }
 
-            if (keepAlive && null == obj.transform.parent) UnityEngine.Object.DontDestroyOnLoad(obj);
-            if(destroyOnSceneZero) obj.StartCoroutine(LateAwake());
+            if (keepAlive && null == obj.transform.parent) Object.DontDestroyOnLoad(obj);
+            if (destroyOnSceneZero) obj.StartCoroutine(LateAwake());
 
             IEnumerator LateAwake()
             {
@@ -32,8 +31,8 @@ namespace Overtail.Util
             {
                 if (scene.buildIndex != 0) return;
                 SceneManager.sceneLoaded -= Dispose;
-                UnityEngine.Debug.LogWarning("DISPOSE" + obj.GetType().Name);
-                UnityEngine.Object.Destroy(obj.gameObject);
+                Debug.LogWarning("DISPOSE" + obj.GetType().Name);
+                Object.Destroy(obj.gameObject);
             }
         }
     }

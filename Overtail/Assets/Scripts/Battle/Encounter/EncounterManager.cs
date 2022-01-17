@@ -1,14 +1,8 @@
-using System;
 using Overtail.Battle.Entity;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Newtonsoft.Json;
-using Overtail.Battle;
-using Overtail.Items;
 using Overtail.PlayerModule;
 using Overtail.Util;
 using UnityEngine.Tilemaps;
-using Random = System.Random;
 
 namespace Overtail.Battle.Encounter
 {
@@ -16,7 +10,8 @@ namespace Overtail.Battle.Encounter
     /// Class to generate a random encounter and transition into battle.
     /// Attach to any GameObject.
     /// </summary>
-    public class EncounterManager : MonoBehaviour{
+    public class EncounterManager : MonoBehaviour
+    {
         private static EncounterManager _instance;
         public static EncounterManager Instance => _instance;
 
@@ -31,7 +26,7 @@ namespace Overtail.Battle.Encounter
 
         private void Awake()
         {
-            MonoBehaviourExtension.MakeSingleton(this, ref _instance, keepAlive:true, destroyOnSceneZero:true);
+            MonoBehaviourExtension.MakeSingleton(this, ref _instance, keepAlive: true, destroyOnSceneZero: true);
         }
 
         private void Start()
@@ -50,7 +45,7 @@ namespace Overtail.Battle.Encounter
             Player = FindObjectOfType<Player>();
             var grassTiles = GameObject.Find("Environment")?.GetComponent<Tilemap>();
 
-            if(_pedometer != null) _pedometer.EventTick -= TryEncounter; //Resubscribe
+            if (_pedometer != null) _pedometer.EventTick -= TryEncounter; //Resubscribe
             _pedometer = new Pedometer(Player, grassTiles);
             _pedometer.EventTick += TryEncounter;
         }

@@ -6,7 +6,6 @@ using Overtail.Items.Systems;
 using JetBrains.Annotations;
 using Overtail.PlayerModule;
 using UnityEngine;
-using Overtail.GUI;
 using Overtail.Util;
 
 namespace Overtail.Items
@@ -43,29 +42,26 @@ namespace Overtail.Items
             ItemContainer inv = new ItemContainer();
 
             // Add items here as placeholder
-            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId:"overtail:cat_ears"), quantity: 1));
+            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId: "overtail:cat_ears"), quantity: 1));
 
             return inv;
         }
 
         private static ItemContainer LoadInvFromAPI() // might not be instantaneous
         {
-            UnityEngine.Debug.Log("[InventoryManager] LoadFromAPI()");
+            Debug.Log("[InventoryManager] LoadFromAPI()");
             ItemContainer inv = new ItemContainer();
 
             try
             {
-                // TODO: Remove setting API.Token here
-                API.API.Token =
-                    "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkV0UlIzQlNRVlV6UWtocWVFVjVRVzFPWnpOSGFTNTZXVzlhTDIxeGJEbDZOekJuV1RsamFtSXpSQzR2V0RCdVVYWnVkR3RMLk1qQXlNaTB3TWkweE5RPT0=";
-                string jsonStr = Task.Run(() => API.API.GET("inv")).Result;
+                // Get Items from API
+                string jsonStr = Task.Run(() => API.GET("inv")).Result;
                 Debug.Log("[InventoryManager] jsonStr written");
                 // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
-                // Get Items from API
 
                 Dictionary<string, string>[] items =
                     JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
-                
+
                 foreach (Dictionary<string, string> item in items)
                 {
                     // TODO ItemStack == null from API
@@ -101,7 +97,7 @@ namespace Overtail.Items
 
                 data += "]";
 
-                _ = Task.Run(() => API.API.PUT("inv/save", data)); // Save to API
+                _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
                 return true;
             }
             catch (Exception)

@@ -4,7 +4,6 @@ using UnityEngine;
 using System.Reflection;
 using System.Linq;
 
-
 namespace K.SandBox
 {
     /// <summary>
@@ -77,7 +76,7 @@ namespace K.SandBox
             c.items = new List<K.SandBox.ItemStack>();
             UnityEngine.Debug.Log(ListToString(c.items));
 
-            c.items = new List<K.SandBox.ItemStack>{new ItemStack(), null, new ItemStack()};
+            c.items = new List<K.SandBox.ItemStack> { new ItemStack(), null, new ItemStack() };
             UnityEngine.Debug.Log(ListToString(c.items));
             foreach (var a in c.items)
             {

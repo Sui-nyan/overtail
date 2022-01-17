@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 namespace Overtail.Battle.UI
 {
     public partial class BattleGUI : MonoBehaviour
@@ -93,7 +92,7 @@ namespace Overtail.Battle.UI
                 typingDelay: typeWriteDelay,
                 minDelay: delayMin,
                 maxDelay: delayMax,
-                skipAvailable:skipAvailable));
+                skipAvailable: skipAvailable));
         }
 
         public IEnumerator Dialogue(string text, float typingDelay, float minDelay, float maxDelay, bool skipAvailable)
@@ -228,7 +227,7 @@ namespace Overtail.Battle.UI
 
                 buttonGameObject.name = label;
                 buttonGameObject.transform.localPosition = new Vector3(pos.x, pos.y, 0);
-                ((RectTransform) buttonGameObject.transform).sizeDelta = new Vector2(200, 100);
+                ((RectTransform)buttonGameObject.transform).sizeDelta = new Vector2(200, 100);
 
 
                 return buttonGameObject;

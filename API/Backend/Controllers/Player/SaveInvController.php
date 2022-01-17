@@ -3,10 +3,11 @@
 class SaveInvController extends Controller
 {
 	protected array $paths = ['/inv/save', '/inventory/save'];
-	protected array $methods = ['PUT'];
+	protected array $methods = ['POST'];
+	protected array $reqVar = ['invData'];
 
 	protected function execute(): void {
-		$invData = json_decode(file_get_contents('php://input'), true);
+		$invData = json_decode(IO::POST("invData"));
 		$uuid = Auth::tokenUuid();
 		$q = new Query('DELETE FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => $uuid]);
 

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Overtail;
 
 /// <summary>
 /// Please just use <see cref="Overtail.Camera.PlayerCamera"/>
