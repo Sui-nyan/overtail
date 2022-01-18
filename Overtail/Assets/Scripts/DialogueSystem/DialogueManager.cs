@@ -16,10 +16,10 @@ namespace Overtail.Dialogue
         public TMP_Text nameText;
         public Image NPCSprite;
         public TMP_Text dialogueText;
-        public NPCObject NPC;
 
         private ResponseHandler responseHandler;
         private TextWriter textWriter;
+        private char[] seperator = { '{', '}' };
 
         private void Start()
         {
@@ -31,7 +31,12 @@ namespace Overtail.Dialogue
 
         public void StartDialogue(DialogueObject dialogueObject)
         {
-            nameText.text = dialogueObject.npc.name;
+            //if(dialogueObject.npc != null)
+            //{
+            //    nameText.text = dialogueObject.npc.NPCName;
+            //    NPCSprite.sprite = dialogueObject.npc.portrait.sprite;
+            //}
+         
             IsOpen = true;
             dialogueBox.SetActive(true);
             StartCoroutine(StepThroughDialogue(dialogueObject));
@@ -50,7 +55,21 @@ namespace Overtail.Dialogue
 
             for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
             {
-                string dialogue = dialogueObject.Dialogue[i];
+                string[] temp = SeperateText(dialogueObject.Dialogue[i]);
+                string dialogue;
+
+                if(temp.Length < 1)
+                {
+                    string emotion_id = temp[0];
+                    //dialogueObject.npc.SetPortairt("emotion");
+                    dialogue = temp[1];
+                }
+                else
+                {
+                    dialogue = string.Join("", temp);
+                }
+
+                
                 yield return textWriter.Run(dialogue, dialogueText);
 
                 if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses)
@@ -69,13 +88,10 @@ namespace Overtail.Dialogue
                 CloseDialogue();
         }
 
-        public void UpdatePortrait(string emotion)
+        string[] SeperateText(string text)
         {
-            /*Sprite sprite = NPC.emotions.FirstOrDefault(x => x.ID == emotion);
-            if(sprite != null)
-            {
-                NPCSprite.sprite = sprite;
-            }*/
+            string[] temp = text.Split(seperator);
+            return temp;
         }
 
         public void CloseDialogue()

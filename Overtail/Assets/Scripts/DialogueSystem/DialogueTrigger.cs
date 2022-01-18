@@ -1,3 +1,4 @@
+using Overtail.PlayerModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,19 @@ namespace Overtail.Dialogue
         }
 
         public void Intectact(PlayerMove player)
+        {
+            foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
+            {
+                if (resposeEvents.DialogueObject == dialogueObject)
+                {
+                    player.DialogueManager.AddResponseEvents(resposeEvents.Events);
+                    break;
+                }
+            }
+            player.DialogueManager.StartDialogue(dialogueObject);
+        }
+
+        public void Intectact(PlayerMovement player)
         {
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {

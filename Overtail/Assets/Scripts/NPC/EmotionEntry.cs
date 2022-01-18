@@ -5,18 +5,12 @@ using UnityEngine;
 namespace Overtail.NPC
 
 {
-    [CreateAssetMenu(menuName = "NPC/EmotionEntry")]
-
-    [System.Serializable]
-    public class EmotionEntry : ScriptableObject
+    public class EmotionEntry
     {
-        [SerializeField] public string id;
+        public string id;
 
-        [SerializeField] private Sprite[] sprites;
+        public Sprite portrait; 
 
-        public string ID => id;
-
-        public Sprite[] Sprites => sprites;
     }
 
 }

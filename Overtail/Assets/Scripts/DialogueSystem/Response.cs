@@ -7,7 +7,7 @@ namespace Overtail.Dialogue
 
     [System.Serializable]
 
-    public class Response //Object to store responses
+    public class Response
     {
         [SerializeField] private string responseText; //Response
         [SerializeField] private DialogueObject dialogueObject; //Dialogue that follows the response

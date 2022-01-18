@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7057385207487570887}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 2
+  dialogueManager: {fileID: 0}
   direction: {x: 0, y: 0}
   animator: {fileID: 0}
   inMenu: 0
