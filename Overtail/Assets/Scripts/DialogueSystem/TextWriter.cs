@@ -24,12 +24,11 @@ namespace Overtail.Dialogue
 
             for (int i = 0; i < textToType.Length; i++)
             {
-                textLabel.text += textToType[i];
+                textLabel.text = textToType.Substring(0, i + 1);
+                textLabel.text += "<color=#00000000>" + textToType.Substring(i + 1) + "</color>";
                 yield return new WaitForSeconds(delayTime);
             }
-
         }
-
     }
 
 }

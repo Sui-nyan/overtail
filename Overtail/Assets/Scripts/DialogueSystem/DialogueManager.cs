@@ -93,7 +93,6 @@ namespace Overtail.Dialogue
 
         private void TrySetSprite(string emotion)
         {
-            Debug.LogWarning(_currentNPC.Name + "::" + emotion);
             NPCSprite.sprite = emotion switch
             {
                 "angry" => _currentNPC.portrait.Angry,
