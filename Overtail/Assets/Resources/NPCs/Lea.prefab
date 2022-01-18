@@ -20,6 +20,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: portrait._angry
+      value: 
+      objectReference: {fileID: 21300000, guid: 2ebd3f52f6b7c194ca765a98bda6dd43, type: 3}
+    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: portrait.neutral
       value: 
       objectReference: {fileID: 21300000, guid: af498ccbe1174a34ba322155e7c6f480, type: 3}
@@ -27,6 +31,14 @@ PrefabInstance:
       propertyPath: portrait.special
       value: 
       objectReference: {fileID: 21300000, guid: 2ebd3f52f6b7c194ca765a98bda6dd43, type: 3}
+    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: portrait._neutral
+      value: 
+      objectReference: {fileID: 21300000, guid: af498ccbe1174a34ba322155e7c6f480, type: 3}
+    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: portrait._special
+      value: 
+      objectReference: {fileID: 21300000, guid: 2abd61790bf65534d8809eaa60e25701, type: 3}
     - target: {fileID: 5612746283606047451, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_RootOrder
       value: 0

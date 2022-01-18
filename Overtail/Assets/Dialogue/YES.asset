@@ -15,4 +15,3 @@ MonoBehaviour:
   dialogue:
   - Then let's go!
   responses: []
-  npc: {fileID: 0}

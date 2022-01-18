@@ -7,8 +7,8 @@ namespace Overtail.Dialogue
 {
     public interface IInteractable
     {
-        void Intectact(PlayerMove player);
-        void Intectact(PlayerMovement playerMovement);
+        void Interact(PlayerMove player);
+        void Interact(PlayerMovement playerMovement);
     }
 
 }

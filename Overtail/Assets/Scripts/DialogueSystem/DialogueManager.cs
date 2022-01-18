@@ -1,10 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Overtail.NPC;
+using Overtail.NPCs;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Overtail.Dialogue
 {
@@ -15,7 +17,9 @@ namespace Overtail.Dialogue
         public bool IsOpen { get; private set; }
         public TMP_Text nameText;
         public Image NPCSprite;
+        public Sprite protraitObj;
         public TMP_Text dialogueText;
+        private NPC _currentNPC;
 
         private ResponseHandler responseHandler;
         private TextWriter textWriter;
@@ -29,13 +33,15 @@ namespace Overtail.Dialogue
             CloseDialogue();
         }
 
-        public void StartDialogue(DialogueObject dialogueObject)
+        public void StartDialogue(DialogueObject dialogueObject, NPC npc = null)
         {
             //if(dialogueObject.npc != null)
             //{
             //    nameText.text = dialogueObject.npc.NPCName;
             //    NPCSprite.sprite = dialogueObject.npc.portrait.sprite;
             //}
+
+            if (npc != null) _currentNPC = npc;
          
             IsOpen = true;
             dialogueBox.SetActive(true);
@@ -55,21 +61,18 @@ namespace Overtail.Dialogue
 
             for (int i = 0; i < dialogueObject.Dialogue.Length; i++)
             {
-                string[] temp = SeperateText(dialogueObject.Dialogue[i]);
-                string dialogue;
+                string dialogue = dialogueObject.Dialogue[i];
 
-                if(temp.Length < 1)
-                {
-                    string emotion_id = temp[0];
-                    //dialogueObject.npc.SetPortairt("emotion");
-                    dialogue = temp[1];
-                }
-                else
-                {
-                    dialogue = string.Join("", temp);
-                }
+                Regex regex = new Regex(@"{[A-Za-z]*}");
+                string emotionSpecifier = regex.Match(dialogue).Value;
 
-                
+                if (!emotionSpecifier.Equals("")) // if emotion tag found
+                {
+                    dialogue = dialogue.Replace(emotionSpecifier, "").Trim();
+                }
+                string emotion = emotionSpecifier.Replace("{", "").Replace("}", "").Trim();
+                TrySetSprite(emotion);
+
                 yield return textWriter.Run(dialogue, dialogueText);
 
                 if (i == dialogueObject.Dialogue.Length - 1 && dialogueObject.HasResponses)
@@ -86,6 +89,18 @@ namespace Overtail.Dialogue
             }
             else
                 CloseDialogue();
+        }
+
+        private void TrySetSprite(string emotion)
+        {
+            Debug.LogWarning(_currentNPC.Name + "::" + emotion);
+            NPCSprite.sprite = emotion switch
+            {
+                "angry" => _currentNPC.portrait.Angry,
+                "happy" => _currentNPC.portrait.Happy,
+                "special" => _currentNPC.portrait.Special,
+                _ => _currentNPC.portrait.Neutral
+            };
         }
 
         string[] SeperateText(string text)

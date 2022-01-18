@@ -32,7 +32,7 @@ namespace Overtail.Dialogue
 
             if (Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsOpen)
             {
-                interactable?.Intectact(this);
+                interactable?.Interact(this);
             }
         }
 

@@ -1,6 +1,7 @@
 using Overtail.PlayerModule;
 using System.Collections;
 using System.Collections.Generic;
+using Overtail.NPCs;
 using UnityEngine;
 
 namespace Overtail.Dialogue
@@ -34,7 +35,7 @@ namespace Overtail.Dialogue
             }
         }
 
-        public void Intectact(PlayerMove player)
+        public void Interact(PlayerMove player)
         {
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {
@@ -44,10 +45,10 @@ namespace Overtail.Dialogue
                     break;
                 }
             }
-            player.DialogueManager.StartDialogue(dialogueObject);
+            player.DialogueManager.StartDialogue(dialogueObject, GetComponent<NPC>());
         }
 
-        public void Intectact(PlayerMovement player)
+        public void Interact(PlayerMovement player)
         {
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {
@@ -57,7 +58,7 @@ namespace Overtail.Dialogue
                     break;
                 }
             }
-            player.DialogueManager.StartDialogue(dialogueObject);
+            player.DialogueManager.StartDialogue(dialogueObject, GetComponent<NPC>());
         }
     }
 }

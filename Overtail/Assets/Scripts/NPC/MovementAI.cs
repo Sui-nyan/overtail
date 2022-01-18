@@ -32,10 +32,8 @@ public class MovementAI : MonoBehaviour
 
     void UpdatePath()
     {
-        Debug.LogWarning(MethodBase.GetCurrentMethod().Name);
         if (seeker.IsDone())
         {
-            Debug.LogWarning("IsDone() done");
             seeker.StartPath(rb.position, target.position, OnPathComplete);
         }
     }
@@ -67,7 +65,6 @@ public class MovementAI : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWayPoint] - rb.position).normalized;
 
         Vector2 force = direction * moveSpeed * Time.fixedDeltaTime;
-        Debug.Log(force.magnitude);
         rb.AddForce(force);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWayPoint]);

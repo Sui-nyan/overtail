@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace Overtail.NPC
+namespace Overtail.NPCs
 {
     [DisallowMultipleComponent]
     public class NPC : MonoBehaviour
@@ -21,9 +21,14 @@ namespace Overtail.NPC
     [System.Serializable]
     public struct Portrait
     {
-        public Sprite neutral;
-        public Sprite angry;
-        public Sprite happy;
-        public Sprite special;
+        [SerializeField] private Sprite _neutral;
+        [SerializeField] private Sprite _angry;
+        [SerializeField] private Sprite _happy;
+        [SerializeField] private Sprite _special;
+
+        public Sprite Neutral => _neutral;
+        public Sprite Angry => _angry != null ? _angry : _neutral;
+        public Sprite Happy => _happy != null ? _happy : _neutral;
+        public Sprite Special => _special != null ? _special : _neutral;
     }
 }

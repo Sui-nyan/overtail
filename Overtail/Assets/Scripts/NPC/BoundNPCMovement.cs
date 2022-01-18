@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Overtail.NPC
+namespace Overtail.NPCs
 {
     public class BoundNPCMovement : MonoBehaviour
     {

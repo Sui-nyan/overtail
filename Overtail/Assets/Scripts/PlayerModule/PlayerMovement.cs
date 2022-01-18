@@ -68,7 +68,7 @@ namespace Overtail.PlayerModule
                 rb.MovePosition(newPos);
                 //playerStatus.SetPosition(transform.localPosition);
                 if (Input.GetKeyDown(KeyCode.E))
-                    interactable?.Intectact(this);
+                    interactable?.Interact(this);
             }
             else
             {
