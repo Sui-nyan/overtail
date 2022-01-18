@@ -81,35 +81,22 @@ namespace Overtail.Items
             return inv;
         }
 
-        // TODO: Put this where the application quits
-        private bool SavePlayerDataToAPI()
+        public void SaveInvToAPI()
         {
-            try
+            // JSON encode inventory data
+            string data = "[";
+
+            foreach (ItemStack stack in _inventory.ItemList)
             {
-                // JSON encode inventory data
-                string data = "[";
-
-                foreach (ItemStack stack in _inventory.ItemList)
-                {
-                    data += "{";
-                    data += "\"id\": \"" + stack?.Item.Id + "\"";
-                    data += "\"amount\": \"" + stack?.Quantity + "\"";
-                    data += "}";
-                }
-
-                data += "]";
-
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                Vector2 pos = player.gameObject.GetComponent<Rigidbody2D>().position;
-
-                _ = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", SceneManager.GetActiveScene().name } }));
-                _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
-                return true;
+                data += "{";
+                data += "\"id\": \"" + stack?.Item.Id + "\"";
+                data += "\"amount\": \"" + stack?.Quantity + "\"";
+                data += "}";
             }
-            catch (Exception)
-            {
-                return false; // TODO: Display user friendly error (failed to save)
-            }
+
+            data += "]";
+
+            _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
         }
 
         public List<ItemStack> GetItems()
