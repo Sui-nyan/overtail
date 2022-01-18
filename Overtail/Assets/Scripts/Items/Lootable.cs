@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Overtail.Dialogue;
 using Overtail.Items;
 using UnityEngine;
 
 namespace Overtail.Items
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class Lootable : MonoBehaviour
+    public class Lootable : MonoBehaviour, IInteractable
     {
         [SerializeField] public ItemStack stack;
 
@@ -51,6 +52,11 @@ namespace Overtail.Items
 
             loot.stack = stack;
             loot.spriteRenderer.sprite = loot.stack.Item.Sprite;
+        }
+
+        public void Intectact(PlayerMove player)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
