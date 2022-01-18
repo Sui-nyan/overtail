@@ -9,12 +9,12 @@ namespace Overtail.GUI
 {
     public class LoginMenu : MonoBehaviour
     {
-        public Text status; // Status label
-        public Button RegBtn; // Register button
-        public Button LogBtn; // Login button
+        public Text status;             // Status label
+        public Button RegBtn;           // Register button
+        public Button LogBtn;           // Login button
 
-        public InputField MailField; // Email input field
-        public InputField PassField; // Password input field
+        public InputField MailField;    // Email input field
+        public InputField PassField;    // Password input field
 
         private void Start()
         {
@@ -29,27 +29,27 @@ namespace Overtail.GUI
         {
             string mail = MailField.text;
             string pass = PassField.text;
-            Dictionary<string, string> authData = new Dictionary<string, string> {{"email", mail}, {"password", pass}};
+            Dictionary<string, string> authData = new Dictionary<string, string> { { "email", mail }, { "password", pass } };
 
             switch (action)
             {
                 case "login":
                     try
                     {
-                        string jsonStr = await Overtail.API.API.POST("login", authData, false);
+                        string jsonStr = await API.POST("login", authData, false);
                         Dictionary<string, string> loginData =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
                         Dictionary<string, string> pos =
                             JsonConvert.DeserializeObject<Dictionary<string, string>>(loginData["postition"]);
 
-                        Overtail.API.API.Token = loginData["token"]; // Set token for API authorization
+                        API.Token = loginData["token"];             // Set token for API authorization
                         GameObject player = GameObject.FindGameObjectWithTag("Player");
-                        var rb = player.gameObject.GetComponent<Rigidbody2D>();
+                        Rigidbody2D rb = player.gameObject.GetComponent<Rigidbody2D>();
                         rb.MovePosition(new Vector2(int.Parse(pos["x"]),
-                            int.Parse(pos["y"]))); // Move player to the saved position
+                            int.Parse(pos["y"])));                  // Move player to the saved position
 
                         status.text = "Welcome back!";
-                        SceneManager.LoadScene(1);
+                        SceneManager.LoadScene(pos["scene"]);
                     }
                     catch (Exception)
                     {
@@ -60,7 +60,7 @@ namespace Overtail.GUI
                 case "register":
                     try
                     {
-                        await Overtail.API.API.POST("register", authData, false);
+                        await API.POST("register", authData, false);
                         status.text = "Registration successful, you can now log in :)";
                     }
                     catch (Exception)

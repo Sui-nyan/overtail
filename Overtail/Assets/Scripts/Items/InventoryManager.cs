@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Overtail.Items.Systems;
 using JetBrains.Annotations;
-using Overtail.PlayerModule;
+using Newtonsoft.Json;
 using UnityEngine;
-using Overtail.GUI;
+using UnityEngine.SceneManagement;
+using Overtail.PlayerModule;
 using Overtail.Util;
+using Overtail.Items.Systems;
 
 namespace Overtail.Items
 {
@@ -43,29 +43,26 @@ namespace Overtail.Items
             ItemContainer inv = new ItemContainer();
 
             // Add items here as placeholder
-            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId:"overtail:cat_ears"), quantity: 1));
+            inv.Append(new ItemStack(ItemDatabase.GetFromId(itemId: "overtail:cat_ears"), quantity: 1));
 
             return inv;
         }
 
         private static ItemContainer LoadInvFromAPI() // might not be instantaneous
         {
-            UnityEngine.Debug.Log("[InventoryManager] LoadFromAPI()");
+            Debug.Log("[InventoryManager] LoadFromAPI()");
             ItemContainer inv = new ItemContainer();
 
             try
             {
-                // TODO: Remove setting API.Token here
-                API.API.Token =
-                    "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkV0UlIzQlNRVlV6UWtocWVFVjVRVzFPWnpOSGFTNTZXVzlhTDIxeGJEbDZOekJuV1RsamFtSXpSQzR2V0RCdVVYWnVkR3RMLk1qQXlNaTB3TWkweE5RPT0=";
-                string jsonStr = Task.Run(() => API.API.GET("inv")).Result;
+                // Get Items from API
+                string jsonStr = Task.Run(() => API.GET("inv")).Result;
                 Debug.Log("[InventoryManager] jsonStr written");
                 // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
-                // Get Items from API
 
                 Dictionary<string, string>[] items =
                     JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
-                
+
                 foreach (Dictionary<string, string> item in items)
                 {
                     // TODO ItemStack == null from API
@@ -84,7 +81,8 @@ namespace Overtail.Items
             return inv;
         }
 
-        private bool SaveInvToAPI()
+        // TODO: Put this where the application quits
+        private bool SavePlayerDataToAPI()
         {
             try
             {
@@ -101,7 +99,11 @@ namespace Overtail.Items
 
                 data += "]";
 
-                _ = Task.Run(() => API.API.PUT("inv/save", data)); // Save to API
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                Vector2 pos = player.gameObject.GetComponent<Rigidbody2D>().position;
+
+                _ = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", SceneManager.GetActiveScene().name } }));
+                _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
                 return true;
             }
             catch (Exception)

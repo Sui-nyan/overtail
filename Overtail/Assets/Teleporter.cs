@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Overtail.PlayerModule;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 
 [DisallowMultipleComponent]
 public class Teleporter : MonoBehaviour
@@ -63,7 +60,7 @@ public class Teleporter : MonoBehaviour
             obj.transform.position = pos;
         }
     }
-    }
+}
 
 [CanEditMultipleObjects]
 [CustomEditor(typeof(Teleporter))]
@@ -72,9 +69,9 @@ public class TeleporterEditor : Editor
     public override void OnInspectorGUI()
     {
         //base.OnInspectorGUI();
-        var tp = (Teleporter) target;
+        var tp = (Teleporter)target;
 
-        var type = (DestinationType) EditorGUILayout
+        var type = (DestinationType)EditorGUILayout
             .EnumPopup("Destination Type", tp.usePosition
                 ? DestinationType.Position
                 : DestinationType.GameObject);
@@ -85,7 +82,7 @@ public class TeleporterEditor : Editor
         using (new EditorGUI.DisabledScope(tp.usePosition == true))
         {
             EditorGUILayout.BeginHorizontal();
-            tp.targetObject = (GameObject) EditorGUILayout
+            tp.targetObject = (GameObject)EditorGUILayout
                 .ObjectField("Destination", tp.targetObject, typeof(GameObject), true);
 
             if (GUILayout.Button("Create", GUILayout.ExpandWidth(false)))
@@ -129,7 +126,7 @@ public class TeleporterEditor : Editor
         sr.sprite = Resources.Load<Sprite>("Square");
         sr.color = Color.red;
         sr.sortingLayerName = "UI";
-        
+
 
         tp.targetObject = go;
     }
@@ -138,7 +135,7 @@ public class TeleporterEditor : Editor
     {
         // Settings
         var color = Color.red;
-        
+
         var tp = target as Teleporter;
 
 

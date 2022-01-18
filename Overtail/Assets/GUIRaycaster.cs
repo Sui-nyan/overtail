@@ -28,7 +28,7 @@ namespace Overtail.GUI
             //Fetch the Event System from the Scene
             _eventSystem = GetComponent<EventSystem>() ?? FindObjectOfType<EventSystem>();
         }
-        
+
         void Update()
         {
             var GetClick = Input.GetKeyDown(KeyCode.Mouse0);

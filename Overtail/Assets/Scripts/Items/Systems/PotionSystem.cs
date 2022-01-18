@@ -1,6 +1,5 @@
 ﻿using System;
 using Overtail.Battle.Entity;
-using Overtail.Items;
 using Overtail.Items.Components;
 
 namespace Overtail.Items.Systems
@@ -17,7 +16,8 @@ namespace Overtail.Items.Systems
             PotionComponent u = itemStack.Item.GetComponent<PotionComponent>();
             if (u == null) throw new ArgumentException();
 
-            if (u.IsConsumed) {
+            if (u.IsConsumed)
+            {
                 itemStack.Quantity -= 1;
             }
 

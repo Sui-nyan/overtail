@@ -13,18 +13,20 @@ class LayoutView extends View
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?=$this->title?></title>
+	<title><?=TITLE . " &middot; " . $this->title?></title>
 	<base href="/">
 
 	<meta name="color-scheme" content="dark light">
-	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#EEEEEE">
-	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101010">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1f2348">
 
+	<link rel="stylesheet" href="https://felix-schindler.github.io/nimiq-style/nimiq-style.min.css">
 	<link rel="stylesheet" href="/Frontend/css/main.css">
 </head>
 <body>
 	<header>
 		<a href="/">Home</a>
+		<a href="https://gitlab.mi.hdm-stuttgart.de/mb365/Overtail">GitLab</a>
 	</header>
 
 	<main>
@@ -33,7 +35,7 @@ class LayoutView extends View
 	</main>
 
 	<footer>
-		&copy <?=date('Y')?> &middot; Felix Schindler
+		<p>&copy; 2021-<?=date('Y')?> &middot; <a href="https://schindlerfelix.de">Felix Schindler</a></p>
 	</footer>
 </body>
 </html>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System;
 using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -46,7 +45,7 @@ namespace Overtail.Items
                 var i = JsonUtility.FromJson<Item>(file.text);
 
                 // TODO unify
-                var id = Regex.Replace(i.SpriteId, @"\..*","");
+                var id = Regex.Replace(i.SpriteId, @"\..*", "");
                 i.Sprite = Resources.Load<Sprite>($"{subFolder}/{id}"); // Sprite
 
                 _items.Add(i);

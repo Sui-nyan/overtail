@@ -13,7 +13,7 @@ namespace Overtail.Battle.Entity
         int Attack { get; }
         int Defense { get; }
 
-        IEnumerator DoTurnLogic(Overtail.Battle.BattleSystem system);
+        IEnumerator DoTurnLogic(BattleSystem system);
         void AddStatusEffect(StatusEffect buff);
     }
 }

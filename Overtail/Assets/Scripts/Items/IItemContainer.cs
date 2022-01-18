@@ -18,10 +18,10 @@ namespace Overtail.Items
         void Clear();
         bool Contains(ItemStack itemStack);
         bool Exists(Predicate<ItemStack> match);
-        #nullable enable
+#nullable enable
         ItemStack? Find(Predicate<ItemStack> match);
         ItemStack? FindLast(Predicate<ItemStack> match);
-        #nullable disable
+#nullable disable
         List<ItemStack> FindAll(Predicate<ItemStack> match);
         void ForEach(Action<ItemStack> action);
         List<ItemStack>.Enumerator GetEnumerator();

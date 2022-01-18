@@ -5,9 +5,9 @@ using Overtail.PlayerModule;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Overtail.Battle.UI;
+
 namespace Overtail.Battle
 {
-
     /// <summary>
     /// Overarching system for Battle Scenes.
     /// Logical main entry point. Sets up the battle, starts it and manages the state (State machine).
@@ -34,10 +34,10 @@ namespace Overtail.Battle
         void Awake()
         {
             _gui = FindObjectOfType<BattleGUI>();
-            if(_gui is null) Debug.LogError("Failed to initialize GUI");
+            if (_gui is null) Debug.LogError("Failed to initialize GUI");
 
             var playerPrefab = Resources.Load<PlayerEntity>("Prefabs/PlayerEntity")?.gameObject;
-            if(playerPrefab is null) Debug.LogError($"No player prefab found{playerPrefab}");
+            if (playerPrefab is null) Debug.LogError($"No player prefab found{playerPrefab}");
 
             _playerEntity = Instantiate(playerPrefab, _playerStation).GetComponent<PlayerEntity>();
 
@@ -86,7 +86,7 @@ namespace Overtail.Battle
             // Open interaction >
             // a) Flirt
             // b) Bully
-            GUI.InteractionSubMenu(()=> StartCoroutine(_state.Flirt()),() => StartCoroutine(_state.Bully()));
+            GUI.InteractionSubMenu(() => StartCoroutine(_state.Flirt()), () => StartCoroutine(_state.Bully()));
         }
         public void OnInventoryButton()
         {

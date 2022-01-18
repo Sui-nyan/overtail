@@ -14,7 +14,7 @@ namespace Overtail.GUI
             Debug.Log($"Exit {this.name} => {previous?.name}");
 
             this.OnExitUI();
-            
+
             previous?.OnEnterUI();
             ContextChanged?.Invoke(previous);
 
@@ -36,7 +36,7 @@ namespace Overtail.GUI
         {
             context.OnEnterUI();
             context.previous = null;
-            
+
             context.ContextChanged?.Invoke(context);
         }
 

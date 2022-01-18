@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Overtail.Battle.Entity;
-using Overtail.Battle;
 
 namespace Overtail.Battle.Encounter
 {

@@ -30,10 +30,41 @@ class IO
 		if (isset($_POST[$var]))
 			if (is_string($_POST[$var]))
 				return $exact ? strval($_POST[$var]): htmlspecialchars(urldecode(strval($_POST[$var])));
-			elseif (is_array($_POST[$var])) {
-				trigger_error('Using this means ', E_USER_WARNING);
+			elseif (is_array($_POST[$var]))
 				return $_POST[$var];
+		elseif (($json = json_decode(file_get_contents('php://input'), true))[$var])
+			if (is_string($json[$var]))
+				return $exact ? strval($json[$var]): htmlspecialchars(urldecode(strval($json[$var])));
+			elseif (is_array($json[$var]))
+				return $json[$var];
+		return null;
+	}
+
+
+	/**
+	 * Get a PUT variables
+	 *
+	 * @param string $var Name of variable
+	 * @param boolean $exact Get the exact value
+	 * @return array<string,mixed>|string|null Value of variable or null if not exists
+	 */
+	public static function PUT(string $var, bool $exact = false): array|string|null {
+		$data = file_get_contents('php://input');
+		if (($json = json_decode($data, true))[$var])
+			if (is_string($json[$var]))
+				return $exact ? strval($json[$var]): htmlspecialchars(urldecode(strval($json[$var])));
+			elseif (is_array($json[$var]))
+				return $json[$var];
+		else {		// x-www-form-encoded
+			$arr = [];
+			foreach (explode('&', $data) as $chunk) {
+				$param = explode("=", $chunk);
+				$arr[urldecode($param[0])] = urldecode($param[1]);
 			}
+			if (is_string($arr[$var]))
+				return $exact ? strval($arr[$var]): htmlspecialchars(urldecode(strval($arr[$var])));
+			// TODO: is_array()
+		}
 		return null;
 	}
 
@@ -86,7 +117,7 @@ class IO
 	 */
 	private static function getAuthorizationHeader(): ?string {
 		$headers = null;
-		if (isset($_SERVER['Authorization'])) {
+		if (isset($_SERVER['Authorization'])) {					// "Normal"
 			$headers = trim($_SERVER["Authorization"]);
 		} elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {		// Nginx or fast CGI
 			$headers = trim($_SERVER["HTTP_AUTHORIZATION"]);

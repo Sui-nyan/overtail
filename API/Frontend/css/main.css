@@ -1,24 +1,4 @@
-/* VARIABLES */
-:root {
-    --on-bg: #101010;
-    --bg: #eee;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-    :root {
-        --on-bg: #eee;
-        --bg: #101010;
-    }
-}
-
-
 /* LAYOUT */
-html, body {
-    font-family: system-ui;
-    color: var(--on-bg);
-    background-color: var(--bg);
-}
-
 body {
     display: grid;
     grid-template-rows: auto 1fr auto;
@@ -26,10 +6,6 @@ body {
 
     width: 95%;
     margin: 0 auto;
-}
-
-body h1:first-child {
-    margin-top: .125em;
 }
 
 @media screen and (min-width: 768px) {
@@ -47,4 +23,27 @@ body h1:first-child {
 header, footer {
     padding: 1em 0;
     font-style: bold;
+}
+
+
+header > a {
+    padding: .4em .6em;
+    border-radius: .25em;
+}
+
+header > a:hover {
+    text-decoration: none;
+    color: var(--nimiq-white);
+    background: var(--nimiq-light-blue-on-dark);
+}
+
+header > a:active {
+    color: var(--nimiq-white);
+    background: var(--nimiq-light-blue-darkened);
+}
+
+
+img {
+    height: auto;
+    width: 100%;
 }

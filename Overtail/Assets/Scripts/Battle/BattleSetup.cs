@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Overtail.Battle.Entity;
 using Overtail.PlayerModule;
 using UnityEngine;
-
 
 namespace Overtail.Battle
 {
