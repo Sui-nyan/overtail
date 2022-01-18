@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Overtail.PlayerModule;
 using Overtail.Util;
 using Overtail.Items.Systems;
@@ -65,10 +64,7 @@ namespace Overtail.Items
 
                 foreach (Dictionary<string, string> item in items)
                 {
-                    // TODO ItemStack == null from API
-                    inv.Append(item["id"] == ""
-                        ? null
-                        : new ItemStack(ItemDatabase.GetFromId(item["id"]), int.Parse(item["amount"])));
+                    inv.Append(new ItemStack(ItemDatabase.GetFromId(item["id"]), int.Parse(item["amount"])));
                 }
             }
             catch (Exception e)

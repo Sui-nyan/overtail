@@ -20,6 +20,8 @@ namespace Overtail
         public static string? Token { get; set; }
 #nullable disable
 
+        private static string Base64Decode(string decoded) => Encoding.UTF8.GetString(Convert.FromBase64String(decoded));
+
         /// <summary>
         /// Checks if the user token is valid, throws exception if not
         /// </summary>
@@ -29,10 +31,10 @@ namespace Overtail
         {
             if (Token != null)
             {
-                string decoded = Encoding.UTF8.GetString(Convert.FromBase64String(Token));
-                DateTime validUntil = DateTime.ParseExact(decoded.Split('.')[2], "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                string decoded = Base64Decode(Token);
+                DateTime validUntil = DateTime.ParseExact(Base64Decode(decoded.Split('.')[2]), "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                 DateTime today = DateTime.Today;
-                TimeSpan a = today.Subtract(validUntil);
+                TimeSpan a = validUntil.Subtract(today);
 
                 if (!(a.Days > 0 && a.Days <= 30))
                 {
@@ -69,7 +71,7 @@ namespace Overtail
                 Token = revData["token"];   // Set new token
                 return true;
             }
-            catch (Exception _)
+            catch (Exception)
             {
                 return false;
             }
