@@ -10,9 +10,7 @@ namespace Overtail.Dialogue
     public class ResponseEvent
     {
         [HideInInspector] public string name;
-        [SerializeField] public UnityEvent onPickedResponse;
-
-        public UnityEvent OnPickedResponse => onPickedResponse;
+        [SerializeField] public UnityEvent OnPickedResponse;
     }
 
 }

@@ -9,7 +9,7 @@ namespace Overtail.NPC
 
 
     [System.Serializable]
-    public class NPCObject : INPC
+    public class NPCObject : NPC
     {
         public string NPCName;
 
@@ -25,7 +25,6 @@ namespace Overtail.NPC
             {
                 portrait.sprite = sprite.portrait;
             }
-
         }
 
 

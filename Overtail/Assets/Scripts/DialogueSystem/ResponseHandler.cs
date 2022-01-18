@@ -39,7 +39,7 @@ namespace Overtail.Dialogue
                 GameObject responseButton = Instantiate(responseButtonTemp.gameObject, responseContainer);
                 responseButton.gameObject.SetActive(true);
                 responseButton.GetComponent<TMP_Text>().text = response.ResponseText;
-                responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickeedResponse(response, responseIndex));
+                responseButton.GetComponent<Button>().onClick.AddListener(() => OnPickedResponse(response, responseIndex));
 
                 tempResponseButtons.Add(responseButton);
 
@@ -54,7 +54,7 @@ namespace Overtail.Dialogue
         /*
          * Clears out all the options as soon as one is picked
          */
-        private void OnPickeedResponse(Response response, int responseIndex)
+        private void OnPickedResponse(Response response, int responseIndex)
         {
             responseBox.gameObject.SetActive(false);
 

@@ -14,6 +14,7 @@ namespace Overtail.Dialogue
         [SerializeField] [TextArea] private string[] dialogue; //Input dialogue here
         [SerializeField] Response[] responses; //Responses can be added in this field 
         public NPCObject npc;
+        public NPC.NPC myNPC;
 
         public string[] Dialogue => dialogue;
 
