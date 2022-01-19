@@ -779,8 +779,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 649701295
-  m_SortingLayer: 0
+  m_SortingLayerID: -1514074091
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0, g: 0.13236016, b: 0.41509432, a: 0.25490198}
@@ -1259,8 +1259,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1010181651
-  m_SortingLayer: 0
+  m_SortingLayerID: -849030017
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 12de897476fbc4544bbcc25f2eba8939, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1333,7 +1333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82369ff349d16ec42ab62b4cb1b66639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portrait: {fileID: 21300000, guid: 12de897476fbc4544bbcc25f2eba8939, type: 3}
   boundary: {fileID: 968666656}
   moveSpeed: 3.5
   maxWaitTime: 4
@@ -1350,7 +1349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb49b6d9add927e41bd7e0e14ad1925e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: 31b71f7f6b51d9148a18d7d02ad53fd6, type: 2}
+  dialogueObject: {fileID: 11400000, guid: 959f51ae52ef7f0409a451a079ca10aa, type: 2}
   events:
   - name: ye
     OnPickedResponse:
@@ -1935,7 +1934,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1285207591
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1918509981
@@ -2041,6 +2040,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8482048103408176516, guid: af62259600b941f48b38dff92f3bceac, type: 3}
+      propertyPath: portrait._angry
+      value: 
+      objectReference: {fileID: 21300000, guid: 015e6a62753c43b489cbd2dd20704d15, type: 3}
+    - target: {fileID: 8482048103408176516, guid: af62259600b941f48b38dff92f3bceac, type: 3}
+      propertyPath: portrait._happy
+      value: 
+      objectReference: {fileID: 21300000, guid: ec2a67dd10b5ae946a5effe2d14cbc70, type: 3}
+    - target: {fileID: 8482048103408176516, guid: af62259600b941f48b38dff92f3bceac, type: 3}
+      propertyPath: portrait._neutral
+      value: 
+      objectReference: {fileID: 21300000, guid: ec2a67dd10b5ae946a5effe2d14cbc70, type: 3}
+    - target: {fileID: 8482048103408176516, guid: af62259600b941f48b38dff92f3bceac, type: 3}
+      propertyPath: portrait._special
+      value: 
+      objectReference: {fileID: 21300000, guid: a968c339bace211449c99e87d0e343e7, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af62259600b941f48b38dff92f3bceac, type: 3}
 --- !u!1 &2076560510

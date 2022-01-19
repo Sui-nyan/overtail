@@ -521,8 +521,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 324775522}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 93.10347}
-  m_LocalScale: {x: 0.0028734482, y: 0.0028734482, z: 0.0028734482}
+  m_LocalPosition: {x: 0, y: 0, z: 93.103455}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2140146994}
   - {fileID: 1994734518}
@@ -535,7 +535,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 220.32428}
+  m_SizeDelta: {x: 0, y: 233.65802}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &366869889
 GameObject:
@@ -551,6 +551,9 @@ GameObject:
   - component: {fileID: 366869893}
   - component: {fileID: 366869895}
   - component: {fileID: 366869894}
+  - component: {fileID: 366869896}
+  - component: {fileID: 366869897}
+  - component: {fileID: 366869898}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -651,13 +654,25 @@ MonoBehaviour:
   dialogueObject: {fileID: 11400000, guid: 959f51ae52ef7f0409a451a079ca10aa, type: 2}
   events:
   - name: Yes
-    onPickedResponse:
+    OnPickedResponse:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 366869889}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
+        - m_Target: {fileID: 366869896}
+          m_TargetAssemblyTypeName: Chest, Assembly-CSharp
+          m_MethodName: Magic
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 366869896}
+          m_TargetAssemblyTypeName: Chest, Assembly-CSharp
+          m_MethodName: OpenChest
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -667,7 +682,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - name: No
-    onPickedResponse:
+    OnPickedResponse:
       m_PersistentCalls:
         m_Calls: []
 --- !u!61 &366869894
@@ -683,7 +698,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.026172385}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -694,7 +709,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 0.7801528}
   m_EdgeRadius: 1
 --- !u!50 &366869895
 Rigidbody2D:
@@ -717,6 +732,64 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &366869896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366869889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ebd70948338084b8e6faffc674ad05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &366869897
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366869889}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.047110096}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.32, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.6545248}
+  m_EdgeRadius: 0
+--- !u!114 &366869898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366869889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 551f5597eb84bc74dab4fb1a48924dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Chest
+  _affection: 0
+  portrait:
+    _neutral: {fileID: 0}
+    _angry: {fileID: 0}
+    _happy: {fileID: 0}
+    _special: {fileID: 0}
+  _sprite: {fileID: 0}
 --- !u!1001 &516441813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2072,10 +2145,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
+  m_fontSize: 39.35
   m_fontSizeBase: 20
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2168,6 +2241,32 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 7057385207487570887, guid: 6e343d7197604de4d8388c10e4aca250, type: 3}
   m_PrefabInstance: {fileID: 1443631216}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1146483099
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146483089}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.56008863}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.52, y: 0.9216986}
+  m_EdgeRadius: 0
 --- !u!1 &1237018205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2284,6 +2383,7 @@ MonoBehaviour:
   dialogueBox: {fileID: 324775522}
   nameText: {fileID: 936056917}
   NPCSprite: {fileID: 194692163}
+  protraitObj: {fileID: 0}
   dialogueText: {fileID: 1994734519}
 --- !u!1001 &1443631216
 PrefabInstance:
@@ -2582,7 +2682,7 @@ MonoBehaviour:
   m_fontSize: 30
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -2713,10 +2813,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 72
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0

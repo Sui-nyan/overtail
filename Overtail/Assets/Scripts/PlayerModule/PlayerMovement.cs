@@ -11,11 +11,11 @@ namespace Overtail.PlayerModule
     {
 
         [SerializeField] private float _moveSpeed = 32;
-        [SerializeField] private DialogueManager dialogueManager;
+        [SerializeField] public DialogueManager dialogueManager;
 
         public DialogueManager DialogueManager => dialogueManager;
 
-        public IInteractable interactable { get; private set; }
+        public IInteractable interactable { get; set; }
 
         public float CurrentMoveSpeed => IsMoving ? _moveSpeed : 0;
 

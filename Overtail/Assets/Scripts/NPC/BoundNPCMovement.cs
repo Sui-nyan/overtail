@@ -6,15 +6,12 @@ namespace Overtail.NPCs
 {
     public class BoundNPCMovement : MonoBehaviour
     {
-        [SerializeField] Sprite portrait;
-
         private Rigidbody2D NPCBody;
         private Transform transform;
         public Collider2D boundary;
 
         public float moveSpeed;
         private bool isWalking;
-        private bool playerInRange;
 
         private int directions;
         private Vector3 directionVector;

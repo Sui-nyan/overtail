@@ -15,13 +15,11 @@ public class Chest : MonoBehaviour
     void Update()
     {
         
-        if(Input.GetKeyDown(KeyCode.Space)) Magic();
     }
 
     public void OpenChest()
     {
-        //spawnItem();
-        //setActive = false chest object despawns
+        
     }
     public void Magic()
     {

@@ -23,7 +23,6 @@ namespace Overtail.Dialogue
 
         private ResponseHandler responseHandler;
         private TextWriter textWriter;
-        private char[] seperator = { '{', '}' };
 
         private void Start()
         {
@@ -35,12 +34,6 @@ namespace Overtail.Dialogue
 
         public void StartDialogue(DialogueObject dialogueObject, NPC npc = null)
         {
-            //if(dialogueObject.npc != null)
-            //{
-            //    nameText.text = dialogueObject.npc.NPCName;
-            //    NPCSprite.sprite = dialogueObject.npc.portrait.sprite;
-            //}
-
             if (npc != null) _currentNPC = npc;
          
             IsOpen = true;
@@ -100,12 +93,6 @@ namespace Overtail.Dialogue
                 "special" => _currentNPC.portrait.Special,
                 _ => _currentNPC.portrait.Neutral
             };
-        }
-
-        string[] SeperateText(string text)
-        {
-            string[] temp = text.Split(seperator);
-            return temp;
         }
 
         public void CloseDialogue()
