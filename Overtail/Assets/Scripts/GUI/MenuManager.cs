@@ -138,7 +138,6 @@ namespace Overtail.GUI
 
         private void OnSpecialMenuKey(string tabName)
         {
-
             var index = _tabGroup.GetTabIndex(tabName);
             if (index < 0)
             {
