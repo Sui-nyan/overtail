@@ -44,7 +44,7 @@ namespace Overtail.Battle.Encounter
         private void Assign()
         {
             Player = FindObjectOfType<Player>();
-            var grassTiles = GameObject.Find("Environment")?.GetComponent<Tilemap>();
+            var grassTiles = GameObject.Find("TallGrass")?.GetComponent<Tilemap>();
 
             if (_pedometer != null) _pedometer.EventTick -= TryEncounter; //Resubscribe
             _pedometer = new Pedometer(Player, grassTiles);
