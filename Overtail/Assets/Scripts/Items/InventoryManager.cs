@@ -92,7 +92,7 @@ namespace Overtail.Items
 
             data += "]";
 
-            _ = Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
+            Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
         }
 
         public List<ItemStack> GetItems()
