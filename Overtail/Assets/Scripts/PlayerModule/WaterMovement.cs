@@ -20,8 +20,7 @@ namespace Overtail.PlayerModule
         void FixedUpdate()
         {
             isInWater = tilemap.HasTile(Vector3Int.CeilToInt(transform.position));
-            if (isInWater)
-                _movement.externalMultiplier = isInWater ? .5f : 1;
+            _movement.externalMultiplier = isInWater ? .5f : 1;
         }
     }
 }

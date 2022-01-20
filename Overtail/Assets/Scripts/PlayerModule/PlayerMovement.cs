@@ -10,7 +10,7 @@ namespace Overtail.PlayerModule
     public class PlayerMovement : MonoBehaviour
     {
         public bool IsMoving { get; private set; }
-        [SerializeField] private bool sprinting;
+        private bool sprinting = false;
         public float CurrentMoveSpeed => IsMoving ? baseSpeed : 0;
         [SerializeField] public Vector2 direction;
 
@@ -32,7 +32,7 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyDown += () => direction.y = -1;
             InputManager.Instance.KeyLeft += () => direction.x = -1;
             InputManager.Instance.KeyRight += () => direction.x = +1;
-            InputManager.Instance.KeyConfirm += () => sprinting = true;
+            InputManager.Instance.KeyConfirm += () => sprinting = !sprinting;
         }
 
         void FixedUpdate()
@@ -49,11 +49,11 @@ namespace Overtail.PlayerModule
                 Vector2 newPos = oldPos + delta;
                 IsMoving = newPos != oldPos;
                 _rb.MovePosition(newPos);
+                direction = new Vector2();
             }
             else
             {
                 IsMoving = false;
-                sprinting = false;
             }
         }
     }
