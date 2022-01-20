@@ -104,7 +104,16 @@ namespace Overtail.GUI
             if (sel == null)
             {
                 Debug.LogWarning("UI Navigation jumped out of context :: Refocus");
-                EventSystem.current?.SetSelectedGameObject(_lastSelection);
+                if (_lastSelection == null)
+                {
+                    Debug.Log("EnterUI");
+                    _tabGroup.EnterUI();
+                }
+                else
+                {
+                    Debug.Log(_lastSelection.name);
+                    EventSystem.current?.SetSelectedGameObject(_lastSelection);
+                }
             }
 
             if (GameObjectTree.ContainsGameObject(_panelGroup.gameObject, sel))

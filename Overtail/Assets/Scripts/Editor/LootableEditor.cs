@@ -39,6 +39,7 @@ namespace Overtail.Items
             loot.stack.Quantity = Mathf.Clamp(val, 1, maxQuantity);
 
             loot.GetComponent<SpriteRenderer>().sprite = loot.stack.Item.Sprite;
+            loot.name = loot.stack.Item.Name;
 
 
             using (new EditorGUI.DisabledScope(true))
