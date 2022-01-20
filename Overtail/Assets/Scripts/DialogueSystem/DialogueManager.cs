@@ -73,7 +73,10 @@ namespace Overtail.Dialogue
                     dialogue = dialogue.Replace(emotionSpecifier, "").Trim();
                 }
                 string emotion = emotionSpecifier.Replace("{", "").Replace("}", "").Trim();
+
                 TrySetSprite(emotion);
+                if(NPCSprite.sprite!=null) NPCSprite.gameObject.SetActive(true);
+                
 
                 yield return textWriter.Run(dialogue, dialogueText);
 
@@ -107,6 +110,7 @@ namespace Overtail.Dialogue
         public void CloseDialogue()
         {
             dialogueBox.SetActive(false);
+            NPCSprite.gameObject.SetActive(false);
             dialogueText.text = string.Empty;
             nameText.text = string.Empty;
             IsOpen = false;
