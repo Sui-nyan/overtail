@@ -241,62 +241,134 @@ namespace Overtail.Battle.Entity
             }
         }
 
+        /// <summary>
+        /// What the entity says on combat start
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnGreeting(BattleSystem system)
         {
             yield break;
         }
+
+        /// <summary>
+        /// Complete turn logic. Gets called when its their respective turn
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator DoTurnLogic(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called when this entity wins a battle
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnVictory(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called when this entity loses a battle
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnDefeat(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called/Call this when this entity attacks the enemy.
+        /// Include damage calculation here
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnAttack(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called when this entity is attacked.
+        /// Reaction stuff mostly. Don't do damage calculation!
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnGetAttacked(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called/call this to Flirt with the opponent
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnFlirt(BattleSystem system)
         {
             yield break;
         }
+
+        /// <summary>
+        /// Call this after opponent uses Flirt on entity
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnGetFlirted(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called/call this to bully opponent
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnBully(BattleSystem system)
         {
             yield break;
         }
+
+        /// <summary>
+        /// Called/call this after opponent uses bully()
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnGetBullied(BattleSystem system)
         {
             yield break;
         }
+
+        /// <summary>
+        /// What happens when an item has been selected and is going to be used
+        /// </summary>
+        /// <param name="system"></param>
+        /// <param name="itemStack"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnItemUse(BattleSystem system, ItemStack itemStack)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Called when entity is going to escape
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnEscape(BattleSystem system)
         {
             yield break;
         }
 
+        /// <summary>
+        /// Call this after opponent's <see cref="OnEscape"/>
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         public virtual IEnumerator OnOpponentEscapes(BattleSystem system)
         {
             yield break;

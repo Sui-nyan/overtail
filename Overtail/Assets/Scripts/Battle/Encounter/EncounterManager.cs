@@ -58,6 +58,7 @@ namespace Overtail.Battle.Encounter
 
         private void TryEncounter(float current, float max)
         {
+            Debug.Log("Pedometer evento");
             bool trigger = current > max;
             if (trigger)
             {

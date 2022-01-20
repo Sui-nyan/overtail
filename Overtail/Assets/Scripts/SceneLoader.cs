@@ -48,7 +48,7 @@ namespace Overtail
             }
         }
 
-        private void OnDestroy()
+        private void OnDestroyolol()
         {
             // Save player inventory
             InventoryManager.Instance.SaveInvToAPI();

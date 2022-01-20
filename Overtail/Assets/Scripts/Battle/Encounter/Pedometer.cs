@@ -17,6 +17,8 @@ namespace Overtail.Battle.Encounter
         private readonly Tilemap _tilemap;
         private readonly PlayerMovement _playerMovement;
 
+        public bool Danger = false;
+
         internal Pedometer(Player p, Tilemap m)
         {
             UnityEngine.Debug.Log($"[Pedometer] Player::{p}");
@@ -46,7 +48,7 @@ namespace Overtail.Battle.Encounter
             if (!isMoving) return;
 
             bool tallGrass = _tilemap != null && _tilemap.HasTile(Vector3Int.FloorToInt(pos));
-            if (tallGrass)
+            if (tallGrass || Danger)
             {
                 timeSpentWalking += Time.fixedDeltaTime;
                 distanceWalked += _playerMovement.CurrentMoveSpeed * Time.fixedDeltaTime;

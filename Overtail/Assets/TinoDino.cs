@@ -10,6 +10,16 @@ public class TinoDino : EnemyEntity
 {
     private bool firstTurn = true;
     private bool escape = false;
+
+    public override int HP
+    {
+        get => base.HP;
+        set
+        {
+            base.HP = Mathf.Max(value, 1);
+        }
+    }
+
     public override IEnumerator OnGreeting(BattleSystem system)
     {
         yield return system.GUI.StartDialogue("Hey, who are you?!");
@@ -21,8 +31,8 @@ public class TinoDino : EnemyEntity
     {
         if (system.Player.HP >= HP * 2)
         {
-            StartCoroutine(OnEscape(system));
-            StartCoroutine(system.Player.OnOpponentEscapes(system));
+            yield return StartCoroutine(OnEscape(system));
+            yield return StartCoroutine(system.Player.OnOpponentEscapes(system));
             system.Exit();
             yield break;
         }
@@ -47,7 +57,7 @@ public class TinoDino : EnemyEntity
 
     public override IEnumerator OnGetAttacked(BattleSystem system)
     {
-        return base.OnGetAttacked(system);
+        yield break;
     }
 
 

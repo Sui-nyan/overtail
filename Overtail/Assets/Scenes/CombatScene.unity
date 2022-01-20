@@ -1334,16 +1334,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1491720152}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8485af875bd4fd3499cfddf5b9b55ba8, type: 3}
+  m_Script: {fileID: 11500000, guid: a22d176784ab5db40969d0e9ec06b1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _setup: {fileID: 11400000, guid: 3e9fdfc6f2b2e194fbc51e88b9baf3ff, type: 2}
   _result: {fileID: 11400000, guid: c0321eaa751c29241976d199907b5895, type: 2}
   _playerStation: {fileID: 1929546384}
   _enemyStation: {fileID: 1202270077}
-  _playerUnit: {fileID: 0}
-  _enemyUnit: {fileID: 0}
-  _gui: {fileID: 1032224193}
+  _playerEntity: {fileID: 0}
+  _enemyEntity: {fileID: 0}
 --- !u!4 &1491720154
 Transform:
   m_ObjectHideFlags: 0

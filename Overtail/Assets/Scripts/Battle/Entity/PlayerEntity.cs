@@ -74,8 +74,10 @@ namespace Overtail.Battle.Entity
 
         public override IEnumerator OnAttack(Overtail.Battle.BattleSystem system)
         {
+            system.Enemy.HP -= Attack;
             yield break;
         }
+
 
         public override IEnumerator OnFlirt(BattleSystem system)
         {
