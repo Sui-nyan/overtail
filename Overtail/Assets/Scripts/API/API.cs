@@ -112,7 +112,7 @@ namespace Overtail
             if (auth)
             {
                 CheckToken();
-                content.Headers.Add("Authorization", "Bearer " + Token);
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
             }
             HttpResponseMessage res = await _client.PostAsync(_base + endpoint, content);
             res.EnsureSuccessStatusCode();

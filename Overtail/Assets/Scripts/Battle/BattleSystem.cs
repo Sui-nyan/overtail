@@ -17,19 +17,19 @@ namespace Overtail.Battle
     public class BattleSystem : StateMachine
     {
         [Header("TransferedData")]
-        [SerializeField] private BattleSetup _setup;
-        [SerializeField] private BattleResult _result;
+        [SerializeField] private BattleSetup setup;
+        [SerializeField] private BattleResult result;
 
-        [SerializeField] private Transform _playerStation;
-        [SerializeField] private Transform _enemyStation;
+        [SerializeField] private Transform playerStation;
+        [SerializeField] private Transform enemyStation;
 
-        [SerializeField] private PlayerEntity _playerEntity;
-        [SerializeField] private EnemyEntity _enemyEntity;
+        [SerializeField] private PlayerEntity playerEntity;
+        [SerializeField] private EnemyEntity enemyEntity;
 
         private BattleGUI _gui;
         public BattleGUI GUI => _gui;
-        public PlayerEntity Player => _playerEntity;
-        public EnemyEntity Enemy => _enemyEntity;
+        public PlayerEntity Player => playerEntity;
+        public EnemyEntity Enemy => enemyEntity;
 
         void Awake()
         {
@@ -39,17 +39,17 @@ namespace Overtail.Battle
             var playerPrefab = Resources.Load<PlayerEntity>("Prefabs/PlayerEntity")?.gameObject;
             if (playerPrefab is null) Debug.LogError($"No player prefab found{playerPrefab}");
 
-            _playerEntity = Instantiate(playerPrefab, _playerStation).GetComponent<PlayerEntity>();
+            playerEntity = Instantiate(playerPrefab, playerStation).GetComponent<PlayerEntity>();
 
-            GameObject enemyGO = Instantiate(_setup.enemy.gameObject, _enemyStation);
-            _enemyEntity = enemyGO.GetComponent<EnemyEntity>();
+            var enemyGo = Instantiate(setup.enemy.gameObject, enemyStation);
+            enemyEntity = enemyGo.GetComponent<EnemyEntity>();
         }
 
         void Start()
         {
             var p = FindObjectOfType<Player>();
-            //_playerEntity.Load(_setup.player);
-            _playerEntity.Load(p);
+            // playerEntity.Load(_setup.player);
+            playerEntity.Load(p);
 
             GUI.Setup(this);
             SetState(new StartState(this));
@@ -58,9 +58,9 @@ namespace Overtail.Battle
         public void Exit()
         {
             var p = FindObjectOfType<Player>();
-            //_playerEntity.Save(_result);
-            _playerEntity.Save(p);
-            // Destroy(_setup.player.gameObject);
+            // playerEntity.Save(result);
+            playerEntity.Save(p);
+            // Destroy(setup.player.gameObject);
             StartCoroutine(TransitionOut());
         }
 

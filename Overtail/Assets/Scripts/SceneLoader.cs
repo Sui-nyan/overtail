@@ -27,6 +27,8 @@ namespace Overtail
 
         void Awake()
         {
+            API.Token = "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkVkbk5sbGFWSEZvTkd4WFF6Uk1RV2hNU1haNVJDNVNTVGh6U1hSQk5XUkJNbVJYUzFSWlFXbEZVM3AyTmpOUU5GaHRPVlJILk1qQXlNaTB3TWkweE9RPT0=";
+
             MonoBehaviourExtension.MakeSingleton(this, ref _instance, keepAlive: true, destroyOnSceneZero: true);
             SceneManager.sceneLoaded += TriggerLoaded;
             SceneManager.sceneUnloaded += TriggerUnloaded;
@@ -34,7 +36,6 @@ namespace Overtail
 
         void Start()
         {
-
 
         }
 
@@ -46,18 +47,16 @@ namespace Overtail
                 if (Input.GetKeyDown(KeyCode.Alpha1)) LoadOverWorldScene();
                 if (Input.GetKeyDown(KeyCode.Alpha2)) LoadCombatScene();
             }
-        }
 
-        private void OnDestroy()
-        {
-            // Save player inventory
-            InventoryManager.Instance.SaveInvToAPI();
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
+            {
+                // Save player inventory
+                InventoryManager.Instance.SaveInvToAPI();
 
-            // Save player position
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Vector2 pos = player.gameObject.GetComponent<Rigidbody2D>().position;
-
-            _ = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", SceneManager.GetActiveScene().name } }));
+                var pos = FindObjectOfType<Player>().GetComponent<Rigidbody2D>().position;
+                string scene = SceneManager.GetActiveScene().name;
+                Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", scene } }));
+            }
         }
 
         private void TriggerLoaded(Scene next, LoadSceneMode mode)

@@ -9,24 +9,17 @@ namespace Overtail.PlayerModule
     [DisallowMultipleComponent]
     public class PlayerMovement : MonoBehaviour
     {
-
-        [SerializeField] private float _moveSpeed = 32;
-        [SerializeField] public DialogueManager dialogueManager;
-
-        public IInteractable interactable { get; set; }
-
-        public float CurrentMoveSpeed => IsMoving ? _moveSpeed : 0;
-
-        private Rigidbody2D rb;
+        public bool IsMoving { get; private set; }
+        public float CurrentMoveSpeed => IsMoving ? moveSpeed : 0;
         [SerializeField] public Vector2 direction;
 
-        public Animator animator; // TODO Remove null check
-
-        public bool IsMoving { get; private set; }
+        [SerializeField] private bool inMenu, inDialogue, inCombat;
+        [SerializeField] private float moveSpeed = 32;
+        private Rigidbody2D _rb;
 
         void Awake()
         {
-            rb = gameObject.GetComponent<Rigidbody2D>();
+            _rb = gameObject.GetComponent<Rigidbody2D>();
         }
 
         void Start()
@@ -37,17 +30,13 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyRight += () => direction.x = +1;
         }
 
-        [SerializeField] private bool inMenu, inDialogue, inCombat;
-
         void FixedUpdate()
         {
             inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
             inDialogue = dialogueManager?.IsOpen ?? false;
             inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
 
-            var enabled = !(inMenu || inDialogue || inCombat);
-
-            if (enabled && (direction.x != 0 || direction.y != 0))
+            if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
             {
 
                 if (direction.x < 0)
@@ -60,9 +49,10 @@ namespace Overtail.PlayerModule
                     transform.localScale = new Vector3(1, 1, 1);
                 }
 
-                var newPos = rb.position + direction.normalized * _moveSpeed * Time.fixedDeltaTime;
-                IsMoving = newPos != rb.position;
-                rb.MovePosition(newPos);
+                var oldPos = _rb.position;
+                var newPos = oldPos + direction.normalized * moveSpeed * Time.fixedDeltaTime;
+                IsMoving = newPos != oldPos;
+                _rb.MovePosition(newPos);
             }
             else
             {
