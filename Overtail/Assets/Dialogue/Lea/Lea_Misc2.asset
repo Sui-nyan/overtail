@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Lea_Misc2
   m_EditorClassIdentifier: 
   dialogue:
-  - '{special} UNACCEPTABLE'
+  - '{angry} UNACCEPTABLE'
   responses: []

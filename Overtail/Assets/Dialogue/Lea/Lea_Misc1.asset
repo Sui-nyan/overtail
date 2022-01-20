@@ -15,5 +15,5 @@ MonoBehaviour:
   dialogue:
   - Mango balls?
   responses:
-  - responseText: What?
+  - responseText: What? No.
     dialogueObject: {fileID: 11400000, guid: af75aa5b17c3bc84d95b01488a1558a8, type: 2}

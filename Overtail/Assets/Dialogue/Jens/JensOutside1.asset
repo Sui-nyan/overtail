@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: JensOutside1
   m_EditorClassIdentifier: 
   dialogue:
-  - Hello, Traveler
-  - '{angry} Where have you been!'
+  - Hello, Traveler!
+  - Go grab some potions, it's dangerous out there!
   responses:
-  - responseText: At Home or something
+  - responseText: Just one.
     dialogueObject: {fileID: 11400000, guid: 819da55cbb5416b48abe7ca683e6e60a, type: 2}
-  - responseText: None of your concern!
+  - responseText: I'll take all.
     dialogueObject: {fileID: 11400000, guid: 884307ccbb5fbc145a04de8d3ba8ff60, type: 2}
