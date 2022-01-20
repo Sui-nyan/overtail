@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Overtail.Map;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,20 +8,20 @@ namespace Overtail.PlayerModule
     {
         public Tilemap tilemap;
         public bool isInWater { get; private set; }
-        private PlayerMovement movement;
+
+        private PlayerMovement _movement;
 
         void Awake()
         {
-            movement = GetComponent<PlayerMovement>();
+            _movement = GetComponent<PlayerMovement>();
             tilemap = FindObjectOfType<WaterTilemap>().GetComponent<Tilemap>();
         }
         
-        void Update()
+        void FixedUpdate()
         {
             isInWater = tilemap.HasTile(Vector3Int.CeilToInt(transform.position));
-            movement.externalMultiplier = isInWater ? .5f : 1;
+            if (isInWater)
+                _movement.externalMultiplier = isInWater ? .5f : 1;
         }
     }
 }
-
-
