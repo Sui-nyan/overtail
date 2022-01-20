@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿using UnityEngine;
 
 namespace Overtail.NPCs
 {
@@ -10,7 +6,6 @@ namespace Overtail.NPCs
     public class NPC : MonoBehaviour
     {
         [SerializeField] private string _name;
-        [SerializeField] private int _affection; // future features
 
         public Portrait portrait;
         public Sprite _sprite;

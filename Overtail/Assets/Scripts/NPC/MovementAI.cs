@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using Pathfinding; //namespace imported from https://arongranberg.com/astar/front
 
@@ -14,13 +11,13 @@ public class MovementAI : MonoBehaviour
     public float moveSpeed = 5f;
     public float nextWaypointDistance = 3f;
 
-    Path path;
-    int currentWayPoint = 0;
-    bool reachEndofPath = false;
+    private Path path;
+    private int currentWayPoint = 0;
+    private bool reachEndofPath = false;
 
     Seeker seeker; //External Script imported from https://arongranberg.com/astar/front
     Rigidbody2D rb;
-    
+
     void Start()
     {
         seeker = GetComponent<Seeker>();
@@ -72,7 +69,5 @@ public class MovementAI : MonoBehaviour
         {
             currentWayPoint++;
         }
-
     }
-
 }
