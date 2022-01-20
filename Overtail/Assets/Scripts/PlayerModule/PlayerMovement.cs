@@ -10,11 +10,12 @@ namespace Overtail.PlayerModule
     public class PlayerMovement : MonoBehaviour
     {
         public bool IsMoving { get; private set; }
+        [SerializeField] private bool _sprinting;
         public float CurrentMoveSpeed => IsMoving ? moveSpeed : 0;
         [SerializeField] public Vector2 direction;
 
         [SerializeField] private bool inMenu, inDialogue, inCombat;
-        [SerializeField] private float moveSpeed = 32;
+        [SerializeField] private float moveSpeed = 5;
         private Rigidbody2D _rb;
 
         void Awake()
@@ -28,6 +29,7 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyDown += () => direction.y = -1;
             InputManager.Instance.KeyLeft += () => direction.x = -1;
             InputManager.Instance.KeyRight += () => direction.x = +1;
+            InputManager.Instance.KeyConfirm += () => _sprinting = true;
         }
 
         void FixedUpdate()
@@ -38,8 +40,8 @@ namespace Overtail.PlayerModule
 
             if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
             {
-
-                if (direction.x < 0)
+                // TODO: Sprite
+                /* if (direction.x < 0)
                 {
                     transform.localScale = new Vector3(-1, 1, 1);
                 }
@@ -47,19 +49,23 @@ namespace Overtail.PlayerModule
                 if (direction.x > 0)
                 {
                     transform.localScale = new Vector3(1, 1, 1);
-                }
+                } */
 
                 var oldPos = _rb.position;
-                var newPos = oldPos + direction.normalized * moveSpeed * Time.fixedDeltaTime;
+                var multiplier = direction.normalized * moveSpeed * Time.fixedDeltaTime;
+                if (_sprinting)
+                    multiplier *= 1.5f;
+                Vector2 newPos = oldPos + multiplier;
                 IsMoving = newPos != oldPos;
                 _rb.MovePosition(newPos);
             }
             else
             {
                 IsMoving = false;
+                _sprinting = false;
             }
 
-            direction = Vector2.zero;
+            // direction = Vector2.zero;
         }
     }
 }
