@@ -31,12 +31,13 @@ namespace Overtail.PlayerModule
 
         // Inventory
 
-        [SerializeReference] public ItemContainer Inventory;
+        [SerializeField] public ItemContainer Inventory;
 
         // Item interaction
 
-        [SerializeReference] private Item _main;
-        [SerializeReference] private Item _off;
+        [SerializeField] private Item _main;
+        [SerializeField] private Item _off;
+
         public Item MainHand
         {
             get => _main;
@@ -54,20 +55,6 @@ namespace Overtail.PlayerModule
         public void AddStatus(StatusEffect newEffect)
         {
             throw new System.NotImplementedException();
-        }
-
-
-        private bool __enabled = true;
-
-        void OnMouseDown()
-        {
-            var t = FindObjectOfType<WaterTilemap>();
-            if (t is null) return;
-
-            if (__enabled) t.DisableWater();
-            else t.EnableWater();
-
-            __enabled ^= true;
         }
     }
 }
