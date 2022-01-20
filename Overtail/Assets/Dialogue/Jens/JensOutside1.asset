@@ -10,7 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26788e67d1549214a9ed706feded3648, type: 3}
-  m_Name: Hahn2.B
+  m_Name: JensOutside1
   m_EditorClassIdentifier: 
-  dialogue: []
-  responses: []
+  dialogue:
+  - Hello, Traveler
+  - '{angry} Where have you been!'
+  responses:
+  - responseText: At Home or something
+    dialogueObject: {fileID: 11400000, guid: 819da55cbb5416b48abe7ca683e6e60a, type: 2}
+  - responseText: None of your concern!
+    dialogueObject: {fileID: 11400000, guid: 884307ccbb5fbc145a04de8d3ba8ff60, type: 2}
