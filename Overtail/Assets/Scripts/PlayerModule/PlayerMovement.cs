@@ -33,7 +33,7 @@ namespace Overtail.PlayerModule
         void FixedUpdate()
         {
             inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
-            inDialogue = dialogueManager?.IsOpen ?? false;
+            inDialogue = FindObjectOfType<DialogueManager>()?.IsOpen ?? false;
             inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
 
             if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
