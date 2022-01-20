@@ -7,7 +7,7 @@ public class Teleporter : MonoBehaviour
 {
     public Vector2 targetPos;
 
-    [SerializeField] internal bool useDefaultCollider;
+    [SerializeField] public bool useDefaultCollider;
 
     private Collider2D _collider;
 
