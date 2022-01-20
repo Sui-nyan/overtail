@@ -79,8 +79,6 @@ namespace Overtail.Items
 
         public void SaveInvToAPI()
         {
-            API.Token = "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkVkbk5sbGFWSEZvTkd4WFF6Uk1RV2hNU1haNVJDNVNTVGh6U1hSQk5XUkJNbVJYUzFSWlFXbEZVM3AyTmpOUU5GaHRPVlJILk1qQXlNaTB3TWkweE9RPT0=";
-
             // JSON encode inventory data
             string data = "[";
 

@@ -50,19 +50,12 @@ namespace Overtail
 
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
             {
-                Debug.Log("KeyCodes are 对");
-
                 // Save player inventory
                 InventoryManager.Instance.SaveInvToAPI();
 
                 var pos = FindObjectOfType<Player>().GetComponent<Rigidbody2D>().position;
-
-                Debug.Log("Saving player position, x: " + pos.x + " y: " + pos.y);
-
-
                 string scene = SceneManager.GetActiveScene().name;
-                var a = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", scene } })).Result;
-                Debug.Log(a);
+                Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", scene } }));
             }
         }
 
