@@ -18,7 +18,7 @@ namespace Overtail.Dialogue
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out PlayerTalking player))
+            if (collision.TryGetComponent(out PlayerDialoguer player))
             {
                 player.interactable = this;
             }
@@ -26,7 +26,7 @@ namespace Overtail.Dialogue
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.TryGetComponent(out PlayerTalking player))
+            if (collision.TryGetComponent(out PlayerDialoguer player))
             {
                 if (player.interactable is DialogueTrigger dialogueActivator && dialogueActivator == this)
                 {
@@ -37,8 +37,7 @@ namespace Overtail.Dialogue
 
         public void Interact(IInteractor interactor)
         {
-            if (interactor.GetType() != typeof(PlayerTalking)) return;
-            PlayerTalking player = (PlayerTalking) interactor;
+            if (!(interactor is PlayerDialoguer player)) return;
 
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {

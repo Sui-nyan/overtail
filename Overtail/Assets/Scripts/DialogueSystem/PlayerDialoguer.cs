@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Overtail.Dialogue
 {
-    public class PlayerTalking : MonoBehaviour, IInteractor
+    public class PlayerDialoguer : MonoBehaviour, IInteractor
     {
 
         [SerializeField] private DialogueManager dialogueManager;
@@ -26,7 +26,7 @@ namespace Overtail.Dialogue
         
         private void Talk()
         {
-            if (!DialogueManager.IsOpen)
+            if (!DialogueManager.IsOpen && interactable is DialogueTrigger)
             {
                 interactable?.Interact(this);
             }
