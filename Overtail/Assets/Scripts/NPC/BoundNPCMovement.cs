@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Overtail.NPCs
@@ -7,7 +5,7 @@ namespace Overtail.NPCs
     public class BoundNPCMovement : MonoBehaviour
     {
         private Rigidbody2D NPCBody;
-        private Transform transform;
+        private Transform _transform;
         public Collider2D boundary;
 
         public float moveSpeed;
@@ -25,7 +23,7 @@ namespace Overtail.NPCs
         void Start()
         {
             NPCBody = GetComponent<Rigidbody2D>();
-            transform = GetComponent<Transform>();
+            _transform = GetComponent<Transform>();
 
             waitCounter = Random.Range(0, maxWaitTime);
             walkCounter = Random.Range(0, maxWalkTime);
@@ -33,7 +31,6 @@ namespace Overtail.NPCs
         }
 
         void Update()
-
         {
             if (isWalking)
             {
@@ -60,7 +57,7 @@ namespace Overtail.NPCs
 
         public void movement()
         {
-            Vector3 temp = transform.position + directionVector * moveSpeed * Time.deltaTime;
+            Vector3 temp = _transform.position + directionVector * moveSpeed * Time.deltaTime;
             if (boundary.bounds.Contains(temp))
             {
                 NPCBody.MovePosition(temp);
@@ -69,7 +66,6 @@ namespace Overtail.NPCs
             {
                 changeDirection();
             }
-
         }
 
         public void changeDirection() //NPC will randomly change their movement direction
@@ -104,7 +100,6 @@ namespace Overtail.NPCs
 
                 }
             }
-
             else
             {
                 waitCounter -= Time.deltaTime;
@@ -117,4 +112,3 @@ namespace Overtail.NPCs
         }
     }
 }
-

@@ -4,30 +4,30 @@ namespace Overtail.PlayerModule
 {
     public class PlayerAnimation : MonoBehaviour
     {
-        private PlayerMovement movement;
-        private WaterMovement swimming;
-        private SpriteRenderer renderer;
+        private PlayerMovement _movement;
+        private WaterMovement _swimming;
+        private SpriteRenderer _renderer;
 
         private Sprite sprite_water;
         private Sprite sprite_land;
 
         private void Awake()
         {
-            movement = GetComponent<PlayerMovement>();
-            swimming = GetComponent<WaterMovement>();
-            renderer = GetComponent<SpriteRenderer>();
+            _movement = GetComponent<PlayerMovement>();
+            _swimming = GetComponent<WaterMovement>();
+            _renderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
         {
 
             // TODO: Sprite
-            if (movement.direction.x < 0)
+            if (_movement.direction.x < 0)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
             }
 
-            if (movement.direction.x > 0)
+            if (_movement.direction.x > 0)
             {
                 transform.localScale = new Vector3(1, 1, 1);
             }
@@ -38,13 +38,13 @@ namespace Overtail.PlayerModule
 
         void SetSnorkle()
         {
-            if (swimming.isInWater)
+            if (_swimming.isInWater)
             {
-                renderer.sprite = sprite_water;
+                _renderer.sprite = sprite_water;
             }
             else
             {
-                renderer.sprite = sprite_land;
+                _renderer.sprite = sprite_land;
             }
         }
     }
