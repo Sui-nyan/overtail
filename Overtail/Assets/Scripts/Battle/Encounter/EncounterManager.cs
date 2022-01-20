@@ -27,6 +27,7 @@ namespace Overtail.Battle.Encounter
         private void Awake()
         {
             MonoBehaviourExtension.MakeSingleton(this, ref _instance, keepAlive: true, destroyOnSceneZero: true);
+            Player = FindObjectOfType<Player>();
         }
 
         private void Start()
