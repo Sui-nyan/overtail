@@ -20,6 +20,3 @@ MonoBehaviour:
     dialogueObject: {fileID: 11400000, guid: 2446217744b423141bdf64901576fdc2, type: 2}
   - responseText: No
     dialogueObject: {fileID: 11400000, guid: f9f1f82a53d42b5448e1598f5761dd86, type: 2}
-  npc:
-    NPCName: Chest-kun
-    portrait: {fileID: 0}

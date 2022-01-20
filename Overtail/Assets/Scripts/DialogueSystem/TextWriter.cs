@@ -16,7 +16,7 @@ namespace Overtail.Dialogue
         }
 
         /*
-         * Text typed in a typewriter kind of effect letters appear one after each other
+         * Text colour is set to invisible and gets coloured
          */
         private IEnumerator TypeText(string textToType, TMP_Text textLabel)
         {
