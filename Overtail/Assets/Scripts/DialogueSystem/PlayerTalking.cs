@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Overtail.Dialogue
 {
-    public class PlayerTalking : MonoBehaviour
+    public class PlayerTalking : MonoBehaviour, IInteractor
     {
 
         [SerializeField] private DialogueManager dialogueManager;

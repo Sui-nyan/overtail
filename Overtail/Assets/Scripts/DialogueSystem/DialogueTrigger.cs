@@ -18,12 +18,9 @@ namespace Overtail.Dialogue
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("Hello");
             if (collision.TryGetComponent(out PlayerTalking player))
             {
-                
                 player.interactable = this;
-                Debug.Log("Trigger me Elmo²");
             }
         }
 
@@ -31,16 +28,18 @@ namespace Overtail.Dialogue
         {
             if (collision.TryGetComponent(out PlayerTalking player))
             {
-                if (player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
+                if (player.interactable is DialogueTrigger dialogueActivator && dialogueActivator == this)
                 {
                     player.interactable = null;
                 }
             }
         }
 
-        public void Interact(PlayerTalking player)
+        public void Interact(IInteractor interactor)
         {
-            Debug.Log("Interact");
+            if (interactor.GetType() != typeof(PlayerTalking)) return;
+            PlayerTalking player = (PlayerTalking) interactor;
+
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {
                 if (resposeEvents.DialogueObject == dialogueObject)
