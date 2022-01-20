@@ -1,3 +1,5 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Overtail.Items
@@ -49,6 +51,14 @@ namespace Overtail.Items
             loot.spriteRenderer.sprite = loot.stack.Item.Sprite;
 
             return loot;
+        }
+
+        [MenuItem("GameObject/Create OverTail GameObject/Loot (Ground)")]
+        static void CreateLootGameObject()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<Lootable>("Resources/Prefab/Loot");
+            Selection.activeObject = PrefabUtility.InstantiatePrefab(prefab);
+            Debug.Log(Selection.activeObject as GameObject);
         }
     }
 }

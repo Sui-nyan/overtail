@@ -41,7 +41,7 @@ public class PositionalRenderSorter : MonoBehaviour
     {
         if (t.gameObject.TryGetComponent<Renderer>(out var r))
         {
-            r.sortingOrder = (int) (_sortingOrderBase - t.transform.position.y + _player.transform.position.y);
+            r.sortingOrder = Mathf.CeilToInt(_sortingOrderBase - t.transform.position.y + _player.transform.position.y);
             //t.name = $"{r.sortingOrder} : {_player.transform.position.y - t.transform.position.y}";
         }
 
