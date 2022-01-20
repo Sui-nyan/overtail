@@ -1,4 +1,5 @@
 using System;
+using Overtail.PlayerModule;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,8 +16,11 @@ namespace Overtail.Items
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-
             gameObject.AddComponent<CircleCollider2D>();
+            var rb = gameObject.AddComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
+            rb.drag = 5;
+            rb.angularDrag = .5f;
         }
 
         void Start()
@@ -48,6 +52,10 @@ namespace Overtail.Items
 
             loot.stack = stack;
             loot.spriteRenderer.sprite = loot.stack.Item.Sprite;
+
+            loot.spriteRenderer.sortingLayerID =
+                FindObjectOfType<Player>().GetComponent<SpriteRenderer>().sortingLayerID;
+            loot.gameObject.AddComponent<PositionalRenderSorter>();
 
             return loot;
         }

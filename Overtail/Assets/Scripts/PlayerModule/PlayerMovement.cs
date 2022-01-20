@@ -55,6 +55,9 @@ namespace Overtail.PlayerModule
             {
                 IsMoving = false;
             }
+
+            direction = Vector2.zero;
+            
         }
     }
 }

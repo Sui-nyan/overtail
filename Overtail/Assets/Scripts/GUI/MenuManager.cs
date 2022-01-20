@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 using Overtail.Util;
@@ -54,12 +55,12 @@ namespace Overtail.GUI
             _tabGroup = null;
             _mainMenu = null;
 
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects().First(o => o.TryGetComponent<Canvas>(out _));
             if (canvas == null) return;
-
+            
             TryGetFirst<PanelGroup>(canvas.gameObject, ref _panelGroup);
-            _mainMenu = _panelGroup?.transform.parent.gameObject;
-            TryGetFirst<TabGroup>(_mainMenu, ref _tabGroup);
+            if(_panelGroup != null) _mainMenu = _panelGroup.transform.parent.gameObject;
+            if(_mainMenu != null) TryGetFirst<TabGroup>(_mainMenu, ref _tabGroup);
 
             if (_mainMenu == null || _panelGroup == null || _tabGroup == null) Debug.LogWarning("Could not find MainMenu canvas");
 

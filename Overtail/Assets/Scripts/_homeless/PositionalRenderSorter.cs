@@ -15,7 +15,7 @@ public class PositionalRenderSorter : MonoBehaviour
 
     private Player _player;
     [SerializeField] private int _sortingOrderBase;
-    [SerializeField] private string sortingLayer;
+    [SerializeField] private string sortingLayer = "Foreground";
 
     private void Awake()
     {
