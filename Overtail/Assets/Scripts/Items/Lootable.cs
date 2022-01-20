@@ -16,11 +16,13 @@ namespace Overtail.Items
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            gameObject.AddComponent<CircleCollider2D>();
+            var col = gameObject.AddComponent<CircleCollider2D>();
+            col.radius = 0.25f;
             var rb = gameObject.AddComponent<Rigidbody2D>();
             rb.gravityScale = 0;
             rb.drag = 5;
-            rb.angularDrag = .5f;
+            rb.angularDrag = 2f;
+
         }
 
         void Start()
