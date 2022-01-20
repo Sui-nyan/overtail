@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 52607443016685691}
   - component: {fileID: 3285368109022908409}
   m_Layer: 0
-  m_Name: Room
+  m_Name: Room BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,6 +312,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8498265604389905294, guid: 4877400569ca34146910982bba6ba924, type: 3}
+      propertyPath: dialogueObject
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d570df816670034ba9721e3d0fe6f9f, type: 2}
     - target: {fileID: 8877290533197069944, guid: 4877400569ca34146910982bba6ba924, type: 3}
       propertyPath: m_Name
       value: Jens
@@ -336,15 +340,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.6956806
+      value: -1.52
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.08760517
+      value: -2.91
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.79724
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -352,15 +356,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3586378248342831669, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -374,9 +378,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5041990797090776624, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041990797090776624, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041990797090776624, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041990797090776624, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5041990797090776624, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6541912346115565553, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
       propertyPath: m_Name
       value: Teleporter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6941841242707254232, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: targetPos.x
+      value: 35.75336
+      objectReference: {fileID: 0}
+    - target: {fileID: 6941841242707254232, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
+      propertyPath: targetPos.y
+      value: 16.80553
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0e55523b0f8dbf46ba0c53c12d3b2f8, type: 3}
