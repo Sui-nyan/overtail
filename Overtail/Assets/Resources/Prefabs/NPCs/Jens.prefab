@@ -11,6 +11,14 @@ PrefabInstance:
       propertyPath: _name
       value: Jens-UwU Huhn
       objectReference: {fileID: 0}
+    - target: {fileID: 291994666542709437, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 291994666542709437, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.64
+      objectReference: {fileID: 0}
     - target: {fileID: 5612746283606047451, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -75,5 +83,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Jens
       objectReference: {fileID: 0}
+    - target: {fileID: 6410514181373985436, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: dialogueObject
+      value: 
+      objectReference: {fileID: 11400000, guid: c608fdf426cd4b64dbda2ac93f11ba83, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
