@@ -141,6 +141,16 @@ namespace Overtail.GUI
             EventSystem.current.SetSelectedGameObject(_lastSelection is null ? _itemSlots[0].gameObject : _lastSelection);
         }
 
+        public void Refocus()
+        {
+            bool focusOnObjectOutside = !GameObjectTree
+                .ContainsGameObject(this.gameObject, EventSystem.current.currentSelectedGameObject);
+            if (focusOnObjectOutside)
+            {
+                EnterUI();
+            }
+        }
+
         public override void ExitUI()
         {
 

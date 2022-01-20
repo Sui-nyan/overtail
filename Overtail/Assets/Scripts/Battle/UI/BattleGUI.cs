@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Overtail.Battle.Entity;
 using JetBrains.Annotations;
+using Overtail.GUI;
+using Overtail.Items;
+using Overtail.Items.Components;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,15 +14,12 @@ using UnityEngine.UI;
 
 namespace Overtail.Battle.UI
 {
-    public partial class BattleGUI : MonoBehaviour
-    {
-    }
-
-
     [System.Serializable]
     public partial class BattleGUI : MonoBehaviour
     {
-        [Header("UI Elements")] [SerializeField] [NotNull] private BattleHUD _playerHud;
+        [Header("UI Elements")] [SerializeField] [NotNull]
+        private BattleHUD _playerHud;
+
         [SerializeField] [NotNull] private BattleHUD _enemyHud;
         [SerializeField] [NotNull] private TextMeshProUGUI _tmpText;
 
@@ -25,10 +27,13 @@ namespace Overtail.Battle.UI
         [SerializeField] private float _delayMin = 0.5f;
         [SerializeField] private float _delayMax = 4f;
 
-        [Header("Buttons")] [SerializeField] [NotNull] private GameObject _attackButton;
+        [Header("Buttons")] [SerializeField] [NotNull]
+        private GameObject _attackButton;
+
         [SerializeField] [NotNull] private GameObject _interactButton;
         [SerializeField] [NotNull] private GameObject _inventoryButton;
         [SerializeField] [NotNull] private GameObject _escapeButton;
+        [SerializeField] [NotNull] private GameObject _inventoryGUI;
 
         public bool IsIdle { get; private set; } = true;
         public bool GetConfirmKeyDown => Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
@@ -242,6 +247,98 @@ namespace Overtail.Battle.UI
         public Coroutine SmoothExpBar(float progress)
         {
             return StartCoroutine(_playerHud.SmoothExp(progress));
+        }
+
+        private void OpenInventoryContext(BattleSystem system)
+        {
+        }
+
+        public void OpenInventoryGUI(Action<ItemStack> callback)
+        {
+            GameObject s_subMenu = null;
+            var panel = OpenInventoryPanel();
+
+            panel.StartCoroutine(UpdateLoop());
+
+            IEnumerator UpdateLoop()
+            {
+                while (true)
+                {
+                    panel.Refocus();
+                    SetOnClick();
+                    yield return null;
+                }
+            }
+
+            InventoryPanel OpenInventoryPanel()
+            {
+                // Choose item
+                _inventoryGUI.SetActive(true);
+                var invPanel = FindObjectOfType<InventoryPanel>();
+
+
+                return invPanel;
+            }
+
+            void CloseInventoryPanel()
+            {
+                panel.StopAllCoroutines();
+                _inventoryGUI.SetActive(false);
+            }
+
+            void SetOnClick()
+            {
+                var slots = panel.GetComponentsInChildren<InventorySlot>();
+                foreach (var slot in slots)
+                {
+                    var b = slot.GetComponentInChildren<Button>();
+                    b.onClick.RemoveAllListeners();
+
+                    var usable = slot.Stack?.Item.GetComponent<PotionComponent>() != null;
+
+                    if (usable)
+                    {
+                        b.onClick.AddListener(() => CreateSubMenu(slot));
+                    }
+                    else
+                    {
+                        b.onClick.AddListener(panel.CloseSubMenu);
+                    }
+                }
+
+                void CreateSubMenu(InventorySlot slot)
+                {
+                    var stack = slot.Stack;
+                    Debug.Log(stack);
+                    // SubMenu
+                    GameObject newSubMenu = Instantiate(Resources.Load<GameObject>("GUI/SubMenu"), panel.transform);
+                    
+                    {
+                        // Create "Use" option
+                        GameObject useButton = Instantiate(Resources.Load<GameObject>("GUI/SubMenuButton"),
+                            newSubMenu.transform);
+                        useButton.name = "Use";
+                        useButton.GetComponentInChildren<Text>().text = "Use";
+                        Destroy(useButton.GetComponent<ContentSizeFitter>());
+
+                        useButton.GetComponent<Button>().onClick.AddListener(() =>
+                        {
+                            callback(stack);
+                            panel.CloseSubMenu();
+                            CloseInventoryPanel();
+                        });
+                        EventSystem.current.SetSelectedGameObject(useButton);
+                    }
+
+                    newSubMenu.transform.localScale = Vector3.one;
+                    newSubMenu.transform.position = (Vector2) slot.transform.position;// + new Vector2(20, -20);
+                    Debug.Log(slot.transform.position);
+                    
+
+                    panel.SetSubMenu(newSubMenu);
+
+                }
+            }
         }
     }
 }

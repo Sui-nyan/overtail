@@ -5,9 +5,11 @@ using Overtail.PlayerModule;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Overtail.Battle.UI;
+using Overtail.GUI;
 
 namespace Overtail.Battle
 {
+
     /// <summary>
     /// Overarching system for Battle Scenes.
     /// Logical main entry point. Sets up the battle, starts it and manages the state (State machine).
@@ -17,39 +19,39 @@ namespace Overtail.Battle
     public class BattleSystem : StateMachine
     {
         [Header("TransferedData")]
-        [SerializeField] private BattleSetup setup;
-        [SerializeField] private BattleResult result;
+        [SerializeField] private BattleSetup _setup;
+        [SerializeField] private BattleResult _result;
 
-        [SerializeField] private Transform playerStation;
-        [SerializeField] private Transform enemyStation;
+        [SerializeField] private Transform _playerStation;
+        [SerializeField] private Transform _enemyStation;
 
-        [SerializeField] private PlayerEntity playerEntity;
-        [SerializeField] private EnemyEntity enemyEntity;
+        [SerializeField] private PlayerEntity _playerEntity;
+        [SerializeField] private EnemyEntity _enemyEntity;
 
         private BattleGUI _gui;
         public BattleGUI GUI => _gui;
-        public PlayerEntity Player => playerEntity;
-        public EnemyEntity Enemy => enemyEntity;
+        public PlayerEntity Player => _playerEntity;
+        public EnemyEntity Enemy => _enemyEntity;
 
         void Awake()
         {
             _gui = FindObjectOfType<BattleGUI>();
-            if (_gui is null) Debug.LogError("Failed to initialize GUI");
+            if(_gui is null) Debug.LogError("Failed to initialize GUI");
 
             var playerPrefab = Resources.Load<PlayerEntity>("Prefabs/PlayerEntity")?.gameObject;
-            if (playerPrefab is null) Debug.LogError($"No player prefab found{playerPrefab}");
+            if(playerPrefab is null) Debug.LogError($"No player prefab found{playerPrefab}");
 
-            playerEntity = Instantiate(playerPrefab, playerStation).GetComponent<PlayerEntity>();
+            _playerEntity = Instantiate(playerPrefab, _playerStation).GetComponent<PlayerEntity>();
 
-            var enemyGo = Instantiate(setup.enemy.gameObject, enemyStation);
-            enemyEntity = enemyGo.GetComponent<EnemyEntity>();
+            GameObject enemyGO = Instantiate(_setup.enemy.gameObject, _enemyStation);
+            _enemyEntity = enemyGO.GetComponent<EnemyEntity>();
         }
 
         void Start()
         {
             var p = FindObjectOfType<Player>();
-            // playerEntity.Load(_setup.player);
-            playerEntity.Load(p);
+            //_playerEntity.Load(_setup.player);
+            _playerEntity.Load(p);
 
             GUI.Setup(this);
             SetState(new StartState(this));
@@ -58,9 +60,9 @@ namespace Overtail.Battle
         public void Exit()
         {
             var p = FindObjectOfType<Player>();
-            // playerEntity.Save(result);
-            playerEntity.Save(p);
-            // Destroy(setup.player.gameObject);
+            //_playerEntity.Save(_result);
+            _playerEntity.Save(p);
+            // Destroy(_setup.player.gameObject);
             StartCoroutine(TransitionOut());
         }
 
@@ -86,13 +88,13 @@ namespace Overtail.Battle
             // Open interaction >
             // a) Flirt
             // b) Bully
-            GUI.InteractionSubMenu(() => StartCoroutine(_state.Flirt()), () => StartCoroutine(_state.Bully()));
+            GUI.InteractionSubMenu(()=> StartCoroutine(_state.Flirt()),() => StartCoroutine(_state.Bully()));
         }
         public void OnInventoryButton()
         {
             // TODO Open Inventory
             // Choose item
-            StartCoroutine(_state.UseItem(null));
+            GUI.OpenInventoryGUI(callback: (stack) => StartCoroutine(_state.UseItem(stack)));
         }
         public void OnEscapeButton()
         {
