@@ -11,11 +11,14 @@ namespace Overtail.PlayerModule
     {
         public bool IsMoving { get; private set; }
         [SerializeField] private bool _sprinting;
-        public float CurrentMoveSpeed => IsMoving ? moveSpeed : 0;
+        public float CurrentMoveSpeed => IsMoving ? baseSpeed : 0;
         [SerializeField] public Vector2 direction;
 
         [SerializeField] private bool inMenu, inDialogue, inCombat;
-        [SerializeField] private float moveSpeed = 5;
+        [SerializeField] private float baseSpeed = 5;
+        [SerializeField] private float sprintMultiplier = 1.5f;
+        public float externalMultiplier = 1f;
+
         private Rigidbody2D _rb;
 
         void Awake()
@@ -32,6 +35,10 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyConfirm += () => _sprinting = true;
         }
 
+        void LateUpdate()
+        {
+        }
+
         void FixedUpdate()
         {
             inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
@@ -40,22 +47,10 @@ namespace Overtail.PlayerModule
 
             if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
             {
-                // TODO: Sprite
-                /* if (direction.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-
-                if (direction.x > 0)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                } */
-
                 var oldPos = _rb.position;
-                var multiplier = direction.normalized * moveSpeed * Time.fixedDeltaTime;
-                if (_sprinting)
-                    multiplier *= 1.5f;
-                Vector2 newPos = oldPos + multiplier;
+                var delta = direction.normalized * baseSpeed * Time.fixedDeltaTime * externalMultiplier;
+                delta *= _sprinting ? sprintMultiplier : 1;
+                Vector2 newPos = oldPos + delta;
                 IsMoving = newPos != oldPos;
                 _rb.MovePosition(newPos);
             }
@@ -64,8 +59,6 @@ namespace Overtail.PlayerModule
                 IsMoving = false;
                 _sprinting = false;
             }
-
-            // direction = Vector2.zero;
         }
     }
 }

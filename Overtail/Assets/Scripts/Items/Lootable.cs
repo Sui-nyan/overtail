@@ -33,8 +33,7 @@ namespace Overtail.Items
                 Destroy(this.gameObject);
             }
         }
-
-
+        
         public static Lootable Instantiate(Item item, int quantity, Vector3 pos)
         {
             var go = new GameObject();
