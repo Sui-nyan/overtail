@@ -20,6 +20,8 @@ class LayoutView extends View
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1f2348">
 
+	<link rel="icon" href="/animated_favicon.gif" type="image/gif">
+
 	<link rel="stylesheet" href="https://felix-schindler.github.io/nimiq-style/nimiq-style.min.css">
 	<link rel="stylesheet" href="/Frontend/css/main.css">
 </head>

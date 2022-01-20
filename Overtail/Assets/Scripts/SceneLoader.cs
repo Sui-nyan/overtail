@@ -1,6 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Overtail.Items;
 using Overtail.PlayerModule;
 using Overtail.Util;
@@ -46,6 +46,18 @@ namespace Overtail
                 if (Input.GetKeyDown(KeyCode.Alpha1)) LoadOverWorldScene();
                 if (Input.GetKeyDown(KeyCode.Alpha2)) LoadCombatScene();
             }
+        }
+
+        private void OnDestroy()
+        {
+            // Save player inventory
+            InventoryManager.Instance.SaveInvToAPI();
+
+            // Save player position
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector2 pos = player.gameObject.GetComponent<Rigidbody2D>().position;
+
+            _ = Task.Run(() => API.POST("pos/save", new Dictionary<string, string> { { "x", pos.x.ToString() }, { "y", pos.y.ToString() }, { "scene", SceneManager.GetActiveScene().name } }));
         }
 
         private void TriggerLoaded(Scene next, LoadSceneMode mode)
