@@ -52,13 +52,5 @@ namespace Overtail.Items
 
             return loot;
         }
-
-        [MenuItem("GameObject/Create OverTail GameObject/Loot (Ground)")]
-        static void CreateLootGameObject()
-        {
-            var prefab = AssetDatabase.LoadAssetAtPath<Lootable>("Resources/Prefab/Loot");
-            Selection.activeObject = PrefabUtility.InstantiatePrefab(prefab);
-            Debug.Log(Selection.activeObject as GameObject);
-        }
     }
 }

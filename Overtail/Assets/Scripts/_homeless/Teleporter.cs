@@ -6,7 +6,6 @@ using UnityEngine;
 public class Teleporter : MonoBehaviour
 {
     public Vector2 targetPos;
-    public GameObject targetObject;
 
     [SerializeField] internal bool useDefaultCollider;
 

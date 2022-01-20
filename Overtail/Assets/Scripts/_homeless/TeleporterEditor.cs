@@ -18,24 +18,6 @@ public class TeleporterEditor : Editor
         }
     }
 
-    private static void CreateObject(Teleporter tp)
-    {
-        var go = new GameObject();
-        go.transform.SetParent(tp.transform);
-
-        go.name = "Teleport Destination";
-        go.tag = "EditorOnly";
-        go.transform.position = tp.transform.position;
-
-        var sr = go.AddComponent<SpriteRenderer>();
-        sr.sprite = Resources.Load<Sprite>("Square");
-        sr.color = Color.red;
-        sr.sortingLayerName = "UI";
-
-
-        tp.targetObject = go;
-    }
-
     public void OnSceneGUI()
     {
         // Settings
