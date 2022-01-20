@@ -1,20 +1,24 @@
+using Overtail.Dialogue;
 using UnityEngine;
 
-namespace Overtail.Items
+namespace Overtail.PlayerModule
 {
-    public class Looter : MonoBehaviour
+    public class Interactor : MonoBehaviour
     {
-        [SerializeReference] private Lootable nearestLootable;
+        private IInteractable nearbyInteractable;
         [SerializeField] private float radius = .5f;
 
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) nearestLootable?.Interact();
-        }
+        [SerializeField] private string debugName;
 
+        void Start()
+        {
+            InputManager.Instance.KeyConfirm += () => nearbyInteractable?.Interact(this);
+        }
+        
         void FixedUpdate()
         {
-            nearestLootable = null;
+            nearbyInteractable = null;
+            debugName = "";
 
             var pos = gameObject.transform.position;
             if (Physics2D.OverlapCircle(pos, radius) == null) return;
@@ -25,14 +29,15 @@ namespace Overtail.Items
 
             foreach (var obj in nearby)
             {
-                if (!obj.gameObject.TryGetComponent<Lootable>(out var component)) continue;
+                if (!obj.gameObject.TryGetComponent<IInteractable>(out var component)) continue;
 
                 var d = Vector2.Distance(pos, obj.transform.position);
 
                 if (d > dist) continue;
 
                 dist = d;
-                nearestLootable = component;
+                nearbyInteractable = component;
+                debugName = obj.name;
             }
         }
     }

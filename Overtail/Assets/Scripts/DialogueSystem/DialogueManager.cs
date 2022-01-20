@@ -7,13 +7,16 @@ using UnityEngine.UI;
 using Overtail.NPCs;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Overtail.Util;
 
 namespace Overtail.Dialogue
 {
     public class DialogueManager : MonoBehaviour
     {
         [SerializeField] private GameObject dialogueBox;
-
+        
+        private static DialogueManager _instance;
+        public static DialogueManager Instance => _instance;
         public bool IsOpen { get; private set; }
         public TMP_Text nameText;
         public Image NPCSprite;
@@ -23,6 +26,12 @@ namespace Overtail.Dialogue
 
         private ResponseHandler responseHandler;
         private TextWriter textWriter;
+
+        private void Awake()
+        {
+            MonoBehaviourExtension.MakeSingleton(this, ref _instance);
+        }
+
 
         private void Start()
         {

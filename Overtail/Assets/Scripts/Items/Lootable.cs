@@ -1,4 +1,5 @@
 using System;
+using Overtail.Dialogue;
 using Overtail.PlayerModule;
 using UnityEditor;
 using UnityEngine;
@@ -6,10 +7,9 @@ using UnityEngine;
 namespace Overtail.Items
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class Lootable : MonoBehaviour
+    public class Lootable : MonoBehaviour, IInteractable
     {
         [SerializeField] public ItemStack stack;
-
 
         private SpriteRenderer spriteRenderer;
 
@@ -30,13 +30,6 @@ namespace Overtail.Items
             spriteRenderer.sprite = stack.Item.Sprite;
         }
 
-        public void Interact()
-        {
-            if (InventoryManager.Instance?.PickUp(stack) ?? false)
-            {
-                Destroy(this.gameObject);
-            }
-        }
         
         public static Lootable Instantiate(Item item, int quantity, Vector3 pos)
         {
@@ -58,6 +51,14 @@ namespace Overtail.Items
             loot.gameObject.AddComponent<PositionalRenderSorter>();
 
             return loot;
+        }
+
+        public void Interact(Interactor interactor)
+        {
+            if (InventoryManager.Instance?.PickUp(stack) ?? false)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

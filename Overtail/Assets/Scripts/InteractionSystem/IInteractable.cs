@@ -7,11 +7,7 @@ namespace Overtail.Dialogue
 {
     public interface IInteractable
     {
-        void Interact(IInteractor player);
+        void Interact(Interactor interactor);
     }
 
-    public interface IInteractor
-    {
-
-    }
 }
