@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Overtail.PlayerModule;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 // TODO namespace
 public class PositionalRenderSorter : MonoBehaviour
@@ -13,7 +14,8 @@ public class PositionalRenderSorter : MonoBehaviour
     private float _timerMax = .1f;
 
     private Player _player;
-    private int _sortingOrderBase;
+    [SerializeField] private int _sortingOrderBase;
+    [SerializeField] 
 
     private void Awake()
     {
@@ -29,22 +31,23 @@ public class PositionalRenderSorter : MonoBehaviour
 
         SetSortingOrder(this.transform);
 
-        foreach (Transform child in transform)
-        {
-            SetSortingOrder(child);
-        }
-
         if (_runOnlyOnce)
         {
             Destroy(this);
         }
     }
-
-    private void SetSortingOrder(Transform child)
+    
+    private void SetSortingOrder(Transform t)
     {
-        if (child.gameObject.TryGetComponent<Renderer>(out var r))
+        if (t.gameObject.TryGetComponent<Renderer>(out var r))
         {
-            r.sortingOrder = (int) (_sortingOrderBase - child.transform.position.y + _player.transform.position.y);
+            r.sortingOrder = (int) (_sortingOrderBase - t.transform.position.y + _player.transform.position.y);
+            //t.name = $"{r.sortingOrder} : {_player.transform.position.y - t.transform.position.y}";
+        }
+
+        foreach (Transform child in t)
+        {
+            SetSortingOrder(child);
         }
     }
 }

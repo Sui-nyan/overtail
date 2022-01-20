@@ -33,7 +33,7 @@ namespace Overtail.Items
         }
 
 
-        public static void Instantiate(Item item, int quantity, Vector3 pos)
+        public static Lootable Instantiate(Item item, int quantity, Vector3 pos)
         {
             var go = new GameObject();
             go.name = item.Name + "x" + quantity;
@@ -47,6 +47,8 @@ namespace Overtail.Items
 
             loot.stack = stack;
             loot.spriteRenderer.sprite = loot.stack.Item.Sprite;
+
+            return loot;
         }
     }
 }

@@ -1,6 +1,7 @@
 using Overtail.GUI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Overtail.Dialogue;
 
 namespace Overtail.PlayerModule
 {
@@ -9,7 +10,10 @@ namespace Overtail.PlayerModule
     public class PlayerMovement : MonoBehaviour
     {
 
-        [SerializeField] private float _moveSpeed = 2;
+        [SerializeField] private float _moveSpeed = 32;
+        [SerializeField] public DialogueManager dialogueManager;
+
+        public IInteractable interactable { get; set; }
 
         public float CurrentMoveSpeed => IsMoving ? _moveSpeed : 0;
 
@@ -37,14 +41,15 @@ namespace Overtail.PlayerModule
 
         void FixedUpdate()
         {
-            inMenu = FindObjectOfType<MenuManager>().MenuIsActive;
-            inDialogue = false;
+            inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
+            inDialogue = dialogueManager?.IsOpen ?? false;
             inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
 
             var enabled = !(inMenu || inDialogue || inCombat);
 
             if (enabled && (direction.x != 0 || direction.y != 0))
             {
+
                 if (direction.x < 0)
                 {
                     transform.localScale = new Vector3(-1, 1, 1);
@@ -57,14 +62,11 @@ namespace Overtail.PlayerModule
 
                 var newPos = rb.position + direction.normalized * _moveSpeed * Time.fixedDeltaTime;
                 IsMoving = newPos != rb.position;
-                //animator?.SetBool("isWalking", true);
                 rb.MovePosition(newPos);
-                //playerStatus.SetPosition(transform.localPosition);
             }
             else
             {
                 IsMoving = false;
-                //animator?.SetBool("isWalking", false);
             }
 
             direction = Vector2.zero;

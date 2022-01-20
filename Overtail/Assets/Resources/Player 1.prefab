@@ -15,9 +15,12 @@ GameObject:
   - component: {fileID: 8621387590772995821}
   - component: {fileID: 8621387590772995814}
   - component: {fileID: 8621387590772995815}
+  - component: {fileID: 8318009493873013142}
+  - component: {fileID: 676714637974512834}
+  - component: {fileID: 7057385207487570887}
   m_Layer: 0
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,10 +72,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a850a9aa7cfeec24a8eb1ff203cec83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
-  direction: {x: 0, y: 0}
+  dialogueManager: {fileID: 0}
+  moveSpeed: 0
   animator: {fileID: 0}
-  _enabled: 1
 --- !u!114 &8621387590772995818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,3 +213,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nearestLootable: {fileID: 0}
   radius: 0.5
+--- !u!114 &8318009493873013142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621387590772995820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d038be2c5f1571544aeb903e7da6d215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 2
+  dialogueManager: {fileID: 0}
+  direction: {x: 0, y: 0}
+  animator: {fileID: 0}
+  inMenu: 0
+  inDialogue: 0
+  inCombat: 0
+--- !u!111 &676714637974512834
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621387590772995820}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 77fed4163d896054abda386db21002d6, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!95 &7057385207487570887
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8621387590772995820}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6835054bf115ae9468a311acf1a49d20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
