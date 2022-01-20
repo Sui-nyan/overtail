@@ -8,7 +8,7 @@ class PosSaveController extends Controller
 	protected bool $userRequired = true;
 
 	protected function execute(): void {
-		$save = new Query('INSERT INTO `PlayerData` (`uuid`, `x`, `y`, `scene`) VALUES (:uuid, :x, :y, :scene) ON DUPLICATE KEY UPDATE `x`=:x, `y`=:y `scene`=:scene;',
+		$save = new Query('INSERT INTO `PlayerData` (`uuid`, `x`, `y`, `scene`) VALUES (:uuid, :x, :y, :scene) ON DUPLICATE KEY UPDATE `x`=:x, `y`=:y, `scene`=:scene;',
 			[
 				':uuid' => Auth::tokenUuid(),
 				':x' => IO::POST('x'),
