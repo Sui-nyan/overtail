@@ -8,37 +8,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: _name
-      value: Lea Groundrunner
-      objectReference: {fileID: 0}
-    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: portrait.angry
-      value: 
-      objectReference: {fileID: 21300000, guid: 2abd61790bf65534d8809eaa60e25701, type: 3}
-    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: portrait.happy
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: portrait._angry
       value: 
-      objectReference: {fileID: 21300000, guid: 2ebd3f52f6b7c194ca765a98bda6dd43, type: 3}
-    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: portrait.neutral
-      value: 
-      objectReference: {fileID: 21300000, guid: af498ccbe1174a34ba322155e7c6f480, type: 3}
-    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: portrait.special
-      value: 
-      objectReference: {fileID: 21300000, guid: 2ebd3f52f6b7c194ca765a98bda6dd43, type: 3}
+      objectReference: {fileID: 21300000, guid: a968c339bace211449c99e87d0e343e7, type: 3}
     - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: portrait._neutral
       value: 
-      objectReference: {fileID: 21300000, guid: af498ccbe1174a34ba322155e7c6f480, type: 3}
+      objectReference: {fileID: 21300000, guid: ec2a67dd10b5ae946a5effe2d14cbc70, type: 3}
     - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: portrait._special
       value: 
-      objectReference: {fileID: 21300000, guid: 2abd61790bf65534d8809eaa60e25701, type: 3}
+      objectReference: {fileID: 21300000, guid: 015e6a62753c43b489cbd2dd20704d15, type: 3}
+    - target: {fileID: 291994666542709437, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 291994666542709437, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5612746283606047451, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -84,111 +72,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: m_Size.x
-      value: 2.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: m_Size.y
-      value: 2.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: d8c03e9b02475f648be8122e269653b9, type: 3}
-    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6209100015585206122, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_Name
       value: Lea
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
---- !u!1 &531035855430597977 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6209100015585206122, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
-  m_PrefabInstance: {fileID: 5869802048827662899}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &2029668195
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531035855430597977}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 10000
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!61 &2029668194
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531035855430597977}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0101982355, y: -0.08280761}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 2.56, y: 2.56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5716703, y: 0.54455817}
-  m_EdgeRadius: 2
---- !u!114 &2029668189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531035855430597977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19e41d2086c17a044af3751c21ea5948, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: 31b71f7f6b51d9148a18d7d02ad53fd6, type: 2}
---- !u!114 &2029668193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531035855430597977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb49b6d9add927e41bd7e0e14ad1925e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueObject: {fileID: 11400000, guid: 31b71f7f6b51d9148a18d7d02ad53fd6, type: 2}
-  events:
-  - name: ye
-    OnPickedResponse:
-      m_PersistentCalls:
-        m_Calls: []
-  - name: no
-    OnPickedResponse:
-      m_PersistentCalls:
-        m_Calls: []

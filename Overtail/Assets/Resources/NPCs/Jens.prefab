@@ -55,6 +55,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_Size.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_Size.y
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c506b6aa695ec25438f2d42392f29590, type: 3}
+    - target: {fileID: 5662031670506854802, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6209100015585206122, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: m_Name
       value: Jens

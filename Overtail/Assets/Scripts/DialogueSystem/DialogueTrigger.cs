@@ -18,8 +18,10 @@ namespace Overtail.Dialogue
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+            Debug.Log("Hello");
+            if (collision.TryGetComponent(out PlayerTalking player))
             {
+                
                 player.interactable = this;
                 Debug.Log("Trigger me Elmo²");
             }
@@ -27,7 +29,7 @@ namespace Overtail.Dialogue
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player") && collision.TryGetComponent(out PlayerMovement player))
+            if (collision.TryGetComponent(out PlayerTalking player))
             {
                 if (player.interactable is DialogueTrigger dialogueActivatior && dialogueActivatior == this)
                 {
@@ -36,22 +38,9 @@ namespace Overtail.Dialogue
             }
         }
 
-        public void Interact(PlayerMove player)
+        public void Interact(PlayerTalking player)
         {
-            foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
-            {
-                if (resposeEvents.DialogueObject == dialogueObject)
-                {
-                    player.DialogueManager.AddResponseEvents(resposeEvents.Events);
-                    break;
-                }
-            }
-            player.DialogueManager.StartDialogue(dialogueObject, GetComponent<NPC>());
-        }
-
-        public void Interact(PlayerMovement player)
-        {
-            Debug.Log("Trying to interact");
+            Debug.Log("Interact");
             foreach (DialogueResposeEvents resposeEvents in GetComponents<DialogueResposeEvents>())
             {
                 if (resposeEvents.DialogueObject == dialogueObject)

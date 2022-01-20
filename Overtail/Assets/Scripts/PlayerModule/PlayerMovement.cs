@@ -13,8 +13,6 @@ namespace Overtail.PlayerModule
         [SerializeField] private float _moveSpeed = 32;
         [SerializeField] public DialogueManager dialogueManager;
 
-        public DialogueManager DialogueManager => dialogueManager;
-
         public IInteractable interactable { get; set; }
 
         public float CurrentMoveSpeed => IsMoving ? _moveSpeed : 0;
@@ -43,8 +41,8 @@ namespace Overtail.PlayerModule
 
         void FixedUpdate()
         {
-            inMenu = FindObjectOfType<MenuManager>().MenuIsActive;
-            inDialogue = DialogueManager.IsOpen;
+            inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
+            inDialogue = dialogueManager?.IsOpen ?? false;
             inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
 
             var enabled = !(inMenu || inDialogue || inCombat);
@@ -64,16 +62,11 @@ namespace Overtail.PlayerModule
 
                 var newPos = rb.position + direction.normalized * _moveSpeed * Time.fixedDeltaTime;
                 IsMoving = newPos != rb.position;
-                //animator?.SetBool("isWalking", true);
                 rb.MovePosition(newPos);
-                //playerStatus.SetPosition(transform.localPosition);
-                if (Input.GetKeyDown(KeyCode.E))
-                    interactable?.Interact(this);
             }
             else
             {
                 IsMoving = false;
-                //animator?.SetBool("isWalking", false);
             }
 
             direction = Vector2.zero;

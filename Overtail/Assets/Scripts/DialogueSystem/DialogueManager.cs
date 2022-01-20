@@ -17,8 +17,8 @@ namespace Overtail.Dialogue
         public bool IsOpen { get; private set; }
         public TMP_Text nameText;
         public Image NPCSprite;
-        public Sprite protraitObj;
         public TMP_Text dialogueText;
+
         private NPC _currentNPC;
 
         private ResponseHandler responseHandler;
