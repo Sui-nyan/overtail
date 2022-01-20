@@ -120,6 +120,12 @@ namespace Overtail.Items
             PruneEmpty(itemStack);
         }
 
+        internal void UseItem(ItemStack itemStack, IItemInteractor player)
+        {
+            _potionSystem.UseItem(itemStack, player);
+            PruneEmpty(itemStack);
+        }
+
         internal void EquipItem(ItemStack itemStack)
         {
             // 0) Equippable? (Yes, unless UI fcks up)
