@@ -1,9 +1,7 @@
 using Overtail.Battle.Entity;
 using System.Collections;
-using System.Collections.Generic;
 using Overtail.Battle;
 using Overtail.Items;
-using UnityEditorInternal;
 using UnityEngine;
 
 public class TinoDino : EnemyEntity

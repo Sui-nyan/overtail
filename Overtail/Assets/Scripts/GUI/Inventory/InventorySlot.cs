@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Overtail;
@@ -8,7 +9,10 @@ using UnityEngine.UI;
 using Overtail.Items;
 using Overtail.Items.Components;
 using Overtail.PlayerModule;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using PointerType = UnityEngine.PointerType;
 
 [RequireComponent(typeof(Button))]
 public class InventorySlot : MonoBehaviour
@@ -34,7 +38,7 @@ public class InventorySlot : MonoBehaviour
 
     private InventoryPanel panel;
     private GameObject root;
-
+    
     void Awake()
     {
         panel = FindObjectOfType<InventoryPanel>();
@@ -43,7 +47,7 @@ public class InventorySlot : MonoBehaviour
         icon = GetComponentsInChildren<Image>().First(c => c.gameObject != this.gameObject);
         button = GetComponent<Button>();
 
-        root = GameObject.FindObjectOfType<PanelGroup>().gameObject;
+        root = GameObject.FindObjectOfType<InventoryPanel>().gameObject;
 
         if (subMenuButtonPrefab is null || subMenuPrefab is null) throw new ArgumentNullException();
         if (label is null || icon is null || button is null) throw new ArgumentNullException();
@@ -51,10 +55,13 @@ public class InventorySlot : MonoBehaviour
 
     private void SetupButton()
     {
-        button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(CreateSubMenu);
+        if (!SceneManager.GetActiveScene().name.Equals("CombatScene"))
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(CreateSubMenu);
+        }
     }
-
+    
     public void Update()
     {
         // Hide/Show Icon & Label
@@ -66,7 +73,7 @@ public class InventorySlot : MonoBehaviour
 
     private void SetContent()
     {
-
+        
         icon.sprite = stack.Item?.Sprite;
         label.text = stack.Quantity > 0 ? stack.Quantity.ToString() : "";
     }
@@ -85,7 +92,7 @@ public class InventorySlot : MonoBehaviour
         }
 
         var subMenu = Instantiate(subMenuPrefab, root.transform);
-        subMenu.transform.position = (Vector2)transform.position + offset;
+        subMenu.transform.position = (Vector2) transform.position + offset;
         subMenu.transform.localScale = Vector3.one;
         panel.SetSubMenu(subMenu);
 
@@ -100,7 +107,7 @@ public class InventorySlot : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++)
         {
             var nav = buttons[i].navigation;
-
+            
             nav.mode = Navigation.Mode.Explicit;
             nav.selectOnDown = buttons[(i + 1) % buttons.Count];
             nav.selectOnUp = buttons[(buttons.Count + i - 1) % buttons.Count];
@@ -119,7 +126,7 @@ public class InventorySlot : MonoBehaviour
         Destroy(obj.GetComponent<ContentSizeFitter>());
 
 
-        void CancelSubMenu()
+        void CancelSubMenu() 
         {
             panel.CloseSubMenu();
             InputManager.Instance.KeyCancel -= CancelSubMenu;

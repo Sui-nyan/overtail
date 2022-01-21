@@ -44,7 +44,7 @@ namespace Overtail.GUI
         {
             var selection = EventSystem.current.currentSelectedGameObject;
 
-            if (GameObjectTree.ContainsGameObject(this.gameObject, selection))
+            if (selection != subMenu && GameObjectTree.ContainsGameObject(this.gameObject, selection))
             {
                 _lastSelection = selection;
             }
@@ -138,7 +138,18 @@ namespace Overtail.GUI
 
         public override void EnterUI()
         {
+            Debug.Log(_lastSelection?.name ?? _itemSlots[0].name);
             EventSystem.current.SetSelectedGameObject(_lastSelection is null ? _itemSlots[0].gameObject : _lastSelection);
+        }
+
+        public void Refocus()
+        {
+            bool focusOnObjectOutside = !GameObjectTree
+                .ContainsGameObject(this.gameObject, EventSystem.current.currentSelectedGameObject);
+            if (focusOnObjectOutside)
+            {
+                EnterUI();
+            }
         }
 
         public override void ExitUI()
@@ -168,7 +179,7 @@ namespace Overtail.GUI
         {
             if (subMenu == null) return;
             Destroy(subMenu);
-            EventSystem.current.SetSelectedGameObject(_lastSelection);
+            EventSystem.current.SetSelectedGameObject(_itemSlots[0].gameObject);
         }
 
         public void SetSubMenu(GameObject newSubMenu)

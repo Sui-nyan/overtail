@@ -7,48 +7,36 @@ using Newtonsoft.Json;
 using Overtail.PlayerModule;
 using System.Threading.Tasks;
 using System.Collections;
+using TMPro;
 
 namespace Overtail.GUI
 {
     public class LoginMenu : MonoBehaviour
     {
-        struct LoginData
+        private struct LoginData
         {
             public string token;
             public Position position;
-
-            public LoginData(string token, Position position)
-            {
-                this.token = token;
-                this.position = position;
-            }
         }
 
-        struct Position
+        private struct Position
         {
             public float x;
             public float y;
             public string scene;
-
-            public Position(float x, float y, string scene)
-            {
-                this.x = x;
-                this.y = y;
-                this.scene = scene;
-            }
         }
 
-        public Text status;             // Status label
-        public Button RegBtn;           // Register button
-        public Button LogBtn;           // Login button
+        [SerializeField] private TMP_Text status;           // Status label
+        [SerializeField] private Button regBtn;             // Register button
+        [SerializeField] private Button logBtn;             // Login button
 
-        public InputField MailField;    // Email input field
-        public InputField PassField;    // Password input field
+        [SerializeField] private TMP_InputField mailField;  // Email input field
+        [SerializeField] private TMP_InputField passField;  // Password input field
 
         private void Start()
         {
-            RegBtn.onClick.AddListener(Register);
-            LogBtn.onClick.AddListener(Login);
+            regBtn.onClick.AddListener(Register);
+            logBtn.onClick.AddListener(Login);
         }
 
         private void Login() => Auth("login");
@@ -56,8 +44,8 @@ namespace Overtail.GUI
 
         private async void Auth(string action)
         {
-            string mail = MailField.text;
-            string pass = PassField.text;
+            string mail = mailField.text;
+            string pass = passField.text;
 
             Dictionary<string, string> authData = new Dictionary<string, string> { { "email", mail }, { "password", pass } };
 
@@ -87,7 +75,7 @@ namespace Overtail.GUI
                             }
 
                             // TODO: This simply does not work but is not an error
-                            Player player = GameObject.FindObjectOfType<Player>();
+                            Player player = FindObjectOfType<Player>();
                             Rigidbody2D rb = player.gameObject.GetComponent<Rigidbody2D>();
                             rb.MovePosition(new Vector2(loginData.position.x, loginData.position.y));   // Move player to the saved position
                         }
@@ -101,7 +89,6 @@ namespace Overtail.GUI
                         Debug.LogException(e);
                         status.text = "Login failed";
                     }
-
                     break;
                 case "register":
                     try
@@ -113,7 +100,6 @@ namespace Overtail.GUI
                     {
                         status.text = "Registration failed, please try again";
                     }
-
                     break;
                 default:
                     throw new ArgumentException("Undefined action was called");

@@ -1,8 +1,11 @@
 using Overtail.Battle.Entity;
+using Overtail.Dialogue;
+using Overtail.GUI;
 using UnityEngine;
 using Overtail.Items;
 using Overtail.Map;
 using Overtail.Util;
+using UnityEngine.SceneManagement;
 
 namespace Overtail.PlayerModule
 {
@@ -24,19 +27,28 @@ namespace Overtail.PlayerModule
 
         // Flags/States
 
-        public bool IsFreeRoaming { get; private set; }
+        public bool IsFreeRoaming{
+            get
+            {
+                bool inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
+                bool inDialogue = FindObjectOfType<DialogueManager>()?.IsOpen ?? false;
+                bool inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
+                return !(inMenu || inDialogue || inCombat);
+            } 
+        } 
 
         // Initialization
 
 
         // Inventory
 
-        [SerializeReference] public ItemContainer Inventory;
+        [SerializeField] public ItemContainer Inventory;
 
         // Item interaction
 
-        [SerializeReference] private Item _main;
-        [SerializeReference] private Item _off;
+        [SerializeField] private Item _main;
+        [SerializeField] private Item _off;
+
         public Item MainHand
         {
             get => _main;
@@ -54,20 +66,6 @@ namespace Overtail.PlayerModule
         public void AddStatus(StatusEffect newEffect)
         {
             throw new System.NotImplementedException();
-        }
-
-
-        private bool __enabled = true;
-
-        void OnMouseDown()
-        {
-            var t = FindObjectOfType<WaterTilemap>();
-            if (t is null) return;
-
-            if (__enabled) t.DisableWater();
-            else t.EnableWater();
-
-            __enabled ^= true;
         }
     }
 }

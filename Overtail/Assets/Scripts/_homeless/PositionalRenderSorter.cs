@@ -15,7 +15,7 @@ public class PositionalRenderSorter : MonoBehaviour
 
     private Player _player;
     [SerializeField] private int _sortingOrderBase;
-    [SerializeField] 
+    [SerializeField] private string sortingLayer = "Foreground";
 
     private void Awake()
     {
@@ -41,8 +41,8 @@ public class PositionalRenderSorter : MonoBehaviour
     {
         if (t.gameObject.TryGetComponent<Renderer>(out var r))
         {
-            r.sortingOrder = (int) (_sortingOrderBase - t.transform.position.y + _player.transform.position.y);
-            //t.name = $"{r.sortingOrder} : {_player.transform.position.y - t.transform.position.y}";
+            r.sortingOrder = Mathf.CeilToInt(_sortingOrderBase - t.transform.position.y + _player.transform.position.y);
+            r.sortingLayerName = sortingLayer;
         }
 
         foreach (Transform child in t)

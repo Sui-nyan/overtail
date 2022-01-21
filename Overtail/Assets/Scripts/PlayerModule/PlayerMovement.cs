@@ -10,11 +10,15 @@ namespace Overtail.PlayerModule
     public class PlayerMovement : MonoBehaviour
     {
         public bool IsMoving { get; private set; }
-        public float CurrentMoveSpeed => IsMoving ? moveSpeed : 0;
+        private bool sprinting = false;
+        public float CurrentMoveSpeed => IsMoving ? baseSpeed : 0;
         [SerializeField] public Vector2 direction;
 
         [SerializeField] private bool inMenu, inDialogue, inCombat;
-        [SerializeField] private float moveSpeed = 32;
+        [SerializeField] private float baseSpeed = 5;
+        [SerializeField] private float sprintMultiplier = 1.5f;
+        public float externalMultiplier = 1f;
+
         private Rigidbody2D _rb;
 
         void Awake()
@@ -28,6 +32,7 @@ namespace Overtail.PlayerModule
             InputManager.Instance.KeyDown += () => direction.y = -1;
             InputManager.Instance.KeyLeft += () => direction.x = -1;
             InputManager.Instance.KeyRight += () => direction.x = +1;
+            InputManager.Instance.KeyConfirm += () => sprinting = !sprinting;
         }
 
         void FixedUpdate()
@@ -38,21 +43,13 @@ namespace Overtail.PlayerModule
 
             if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
             {
-
-                if (direction.x < 0)
-                {
-                    transform.localScale = new Vector3(-1, 1, 1);
-                }
-
-                if (direction.x > 0)
-                {
-                    transform.localScale = new Vector3(1, 1, 1);
-                }
-
                 var oldPos = _rb.position;
-                var newPos = oldPos + direction.normalized * moveSpeed * Time.fixedDeltaTime;
+                var delta = direction.normalized * baseSpeed * Time.fixedDeltaTime * externalMultiplier;
+                delta *= sprinting ? sprintMultiplier : 1;
+                Vector2 newPos = oldPos + delta;
                 IsMoving = newPos != oldPos;
                 _rb.MovePosition(newPos);
+                direction = new Vector2();
             }
             else
             {
@@ -60,6 +57,7 @@ namespace Overtail.PlayerModule
             }
 
             direction = Vector2.zero;
+            
         }
     }
 }

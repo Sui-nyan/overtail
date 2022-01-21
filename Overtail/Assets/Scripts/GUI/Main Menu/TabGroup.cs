@@ -97,19 +97,17 @@ namespace Overtail.GUI
 
         private void SetIndicator(int index)
         {
-            //var indicatorOffset = 40;
-
             var rect = _tabs[index].GetComponent<RectTransform>();
             // no null check because shouldn't be null
 
             Vector3[] v = new Vector3[4];
-            rect.GetLocalCorners(v);
+            rect.GetWorldCorners(v);
             var leftBottom = v[0];
 
-            var pos = rect.localPosition;
+            var pos = rect.position;
             pos.x = leftBottom.x - indicatorOffset;
 
-            indicator.GetComponent<RectTransform>().localPosition = pos;
+            indicator.GetComponent<RectTransform>().position = pos;
         }
 
         public void SetTab(int index)

@@ -47,7 +47,7 @@ namespace Overtail.Battle.Encounter
             bool isMoving = _playerMovement.IsMoving;
             if (!isMoving) return;
 
-            bool tallGrass = _tilemap != null && _tilemap.HasTile(Vector3Int.FloorToInt(pos));
+            bool tallGrass = _tilemap != null && (_tilemap?.HasTile(Vector3Int.FloorToInt(pos)) ?? false);
             if (tallGrass || Danger)
             {
                 timeSpentWalking += Time.fixedDeltaTime;

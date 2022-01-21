@@ -69,9 +69,8 @@ namespace Overtail.Items
             }
             catch (Exception e)
             {
-                Debug.LogError(e.Message);
-                Debug.LogError("<color=red>Could not load Inventory from API</color>");
-                Debug.LogError(e);
+                Debug.LogError("[API] <color=red>Could not load Inventory from API</color>");
+                Debug.LogError("[API]" + e);
             }
 
             return inv;
@@ -118,6 +117,12 @@ namespace Overtail.Items
         internal void UseItem(ItemStack itemStack)
         {
             _potionSystem.UseItem(itemStack, _player);
+            PruneEmpty(itemStack);
+        }
+
+        internal void UseItem(ItemStack itemStack, IItemInteractor player)
+        {
+            _potionSystem.UseItem(itemStack, player);
             PruneEmpty(itemStack);
         }
 

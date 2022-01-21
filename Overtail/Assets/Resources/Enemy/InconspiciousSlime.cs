@@ -14,7 +14,14 @@ namespace Overtail.Battle.Entity
         private readonly List<string> _responses = new List<string>();
 
 
+
+
         // Public
+        public override int HP
+        {
+            get => base.HP;
+            set => base.HP = Mathf.Max(value, 1);
+        }
 
         public override IEnumerator OnGreeting(BattleSystem system)
         {
@@ -41,6 +48,7 @@ namespace Overtail.Battle.Entity
         public override IEnumerator OnAttack(BattleSystem system)
         {
             yield return system.GUI.StartDialogue($"{Name.ToUpper()} body slams {system.Player.Name}.");
+            system.Player.HP -= system.Player.HP;
         }
 
         public override IEnumerator OnGetFlirted(BattleSystem system)
@@ -62,14 +70,10 @@ namespace Overtail.Battle.Entity
                 yield return system.GUI.StartDialogue($"{Name} is unfazed by {system.Player.Name}'s attack.");
                 yield break;
             }
-
-            var dmg = Math.Max(system.Player.Attack - this.Defense, 0);
-            HP = Mathf.Clamp(HP - dmg, (int)Math.Ceiling(0.1*MaxHP), MaxHP); // Won't drop below threshold
             yield return new WaitForSeconds(1f);
             
             // Text Reactions
 
-            _responses.Add("Please let me go.");
             _responses.Add("I'll get angry!");
             _responses.Add("I'm warning you!");
 
