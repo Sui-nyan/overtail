@@ -33,7 +33,7 @@ namespace Overtail.Items
             _equipSystem = new EquipSystem();
             _trashSystem = new TrashSystem();
 
-            _inventory = LoadInvFromAPI();
+            _inventory = LoadAPIPlayerData();
             _playerObject.Inventory = _inventory;
         }
 
@@ -47,7 +47,16 @@ namespace Overtail.Items
             return inv;
         }
 
-        private static ItemContainer LoadInvFromAPI() // might not be instantaneous
+
+        private struct APIPosition
+        {
+            public float x;
+            public float y;
+            public string scene;
+        }
+
+
+        private static ItemContainer LoadAPIPlayerData() // might not be instantaneous
         {
             Debug.Log("[InventoryManager] LoadFromAPI()");
             ItemContainer inv = new ItemContainer();
@@ -55,14 +64,25 @@ namespace Overtail.Items
             try
             {
                 // Get Items from API
-                string jsonStr = Task.Run(() => API.GET("inv")).Result;
+                string jsonStr = Task.Run(() => API.GET("playerData")).Result;
                 Debug.Log("[InventoryManager] jsonStr written");
                 // UnityEngine.Debug.Log("[InventoryManager] " + jsonStr);
 
-                Dictionary<string, string>[] items =
-                    JsonConvert.DeserializeObject<Dictionary<string, string>[]>(jsonStr);
+                var playerData = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                /* var pos = JsonConvert.DeserializeObject<APIPosition>(playerData["pos"]);
 
-                foreach (Dictionary<string, string> item in items)
+                // Player position
+                var playerPos = new Vector2(pos.x, pos.y);
+                Debug.Log(playerPos);
+                Player player = FindObjectOfType<Player>();
+                Rigidbody2D rb = player.gameObject.GetComponent<Rigidbody2D>();
+                rb.MovePosition(playerPos);   // Move player to the saved position */
+
+                // Inventory
+                Debug.Log(playerData["inv"]);
+                var invArr = JsonConvert.DeserializeObject<Dictionary<string, string>[]>(playerData["inv"]);
+
+                foreach (Dictionary<string, string> item in invArr)
                 {
                     inv.Append(new ItemStack(ItemDatabase.GetFromId(item["id"]), int.Parse(item["amount"])));
                 }

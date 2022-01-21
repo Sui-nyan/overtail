@@ -7,8 +7,6 @@ namespace Overtail.PlayerModule
 {
     public class StatComponent : MonoBehaviour
     {
-
-
         [Header("Base Stats")]
         [SerializeField] private int _baseMaxHp;
         [SerializeField] private int _baseAttack;
