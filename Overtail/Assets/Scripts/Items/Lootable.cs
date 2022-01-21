@@ -57,6 +57,7 @@ namespace Overtail.Items
 
         public void Interact(Interactor interactor)
         {
+            if (!FindObjectOfType<Player>().IsFreeRoaming) return;
             if (InventoryManager.Instance?.PickUp(stack) ?? false)
             {
                 Destroy(this.gameObject);

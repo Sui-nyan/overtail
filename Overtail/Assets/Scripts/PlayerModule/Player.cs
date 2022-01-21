@@ -1,8 +1,11 @@
 using Overtail.Battle.Entity;
+using Overtail.Dialogue;
+using Overtail.GUI;
 using UnityEngine;
 using Overtail.Items;
 using Overtail.Map;
 using Overtail.Util;
+using UnityEngine.SceneManagement;
 
 namespace Overtail.PlayerModule
 {
@@ -24,7 +27,15 @@ namespace Overtail.PlayerModule
 
         // Flags/States
 
-        public bool IsFreeRoaming { get; private set; }
+        public bool IsFreeRoaming{
+            get
+            {
+                bool inMenu = FindObjectOfType<MenuManager>()?.MenuIsActive ?? false;
+                bool inDialogue = FindObjectOfType<DialogueManager>()?.IsOpen ?? false;
+                bool inCombat = SceneManager.GetActiveScene().name.Contains("Combat");
+                return !(inMenu || inDialogue || inCombat);
+            } 
+        } 
 
         // Initialization
 
