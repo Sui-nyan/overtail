@@ -6,8 +6,9 @@ class PlayerDataController extends Controller
 	protected bool $userRequired = true;
 
 	protected function execute(): void {
-		$inv = (new Query('SELECT `item` id, `amount` FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => Auth::tokenUuid()]))->fetchAll();
-		$pos = (new Query('SELECT `x`, `y`, `scene` FROM `PlayerData` WHERE `uuid`=:uuid;', [':uuid' => $user['uuid']]))->fetch();
+		$uuid = Auth::tokenUuid();
+		$inv = (new Query('SELECT `item` id, `amount` FROM `Inventory` WHERE `uuid`=:uuid;', [':uuid' => $uuid]))->fetchAll();
+		$pos = (new Query('SELECT `x`, `y`, `scene` FROM `PlayerData` WHERE `uuid`=:uuid;', [':uuid' => $uuid]))->fetch();
 
         (new APIView([
 			'pos' => $pos,		// Player position [x, y]
