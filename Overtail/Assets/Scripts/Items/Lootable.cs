@@ -63,5 +63,10 @@ namespace Overtail.Items
                 Destroy(this.gameObject);
             }
         }
+
+        public void SELFDESTROY()
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

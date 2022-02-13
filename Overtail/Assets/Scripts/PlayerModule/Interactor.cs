@@ -12,7 +12,10 @@ namespace Overtail.PlayerModule
 
         void Start()
         {
-            InputManager.Instance.KeyConfirm += () => nearbyInteractable?.Interact(this);
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.KeyConfirm += Act;
+            }
         }
         
         void FixedUpdate()
@@ -39,6 +42,22 @@ namespace Overtail.PlayerModule
                 nearbyInteractable = component;
                 debugName = obj.name;
             }
+        }
+
+        public void Act()
+        {
+            nearbyInteractable?.Interact(this);
+        }
+
+        public bool CanAct()
+        {
+            return nearbyInteractable != null;
+        }
+
+
+        public IInteractable test()
+        {
+            return nearbyInteractable;
         }
     }
 }
