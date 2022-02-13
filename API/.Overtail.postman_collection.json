@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "f83bc954-a2fd-4e1b-b9e6-094774a853bf",
+		"name": "Overtail",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Activate account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Activate account\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/activate/bac00934-8236-4471-9001-ae7931b738ff",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"activate",
+						"bac00934-8236-4471-9001-ae7931b738ff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Player data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get player data\", () => {\r",
+							"    pm.expect(pm.response.text()).to.equal('{\"pos\":{\"x\":10,\"y\":10,\"scene\":\"OverworldScene\"},\"inv\":[{\"id\":\"overtail:potion_snow\",\"amount\":1},{\"id\":\"overtail:sword\",\"amount\":1}]}');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/playerData",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"playerData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inventory",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Inventory\", () => {\r",
+							"    pm.expect(pm.response.text()).to.equal('[{\"id\":\"overtail:potion_snow\",\"amount\":1},{\"id\":\"overtail:sword\",\"amount\":1}]');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/inv",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"inv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Activate account\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "fs146@hdm-stuttgart.de",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "schindler",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/login",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Register request\", () => {\r",
+							"    pm.response.to.have.status(486);\r",
+							"    pm.expect(pm.response.text()).equals('{\"486\":\"E-Mail already taken\"}');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "fs146@hdm-stuttgart.de",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "schindler",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/register",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Save position\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "x",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "y",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "scene",
+							"value": "OverworldScene",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://overtail.schindlerfelix.de/pos/save",
+					"protocol": "https",
+					"host": [
+						"overtail",
+						"schindlerfelix",
+						"de"
+					],
+					"path": [
+						"pos",
+						"save"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "TVdWa1pUQmxOekF0TlRoaE1pMDBabVkyTFdGa1pHSXRaR00xTWpJMFkySXpaVFZoLkpESjVKREV3SkZVNGJVaDJXbXRMTkZKRVkwVTNTbUZYVWk1YWJTNXdiRFo1YzNkWGREaHVWVnB0THpkMFlqSnVNRFZuTjJ0dVRrMXFTWGxQLk1qQXlNaTB3TWkweU1BPT0=",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
