@@ -28,11 +28,18 @@ namespace Overtail.PlayerModule
 
         void Start()
         {
-            InputManager.Instance.KeyUp += () => direction.y = 1;
-            InputManager.Instance.KeyDown += () => direction.y = -1;
-            InputManager.Instance.KeyLeft += () => direction.x = -1;
-            InputManager.Instance.KeyRight += () => direction.x = +1;
-            InputManager.Instance.KeyConfirm += () => sprinting = !sprinting;
+            if (InputManager.Instance != null)
+            {
+                InputManager.Instance.KeyUp += () => direction.y = 1;
+                InputManager.Instance.KeyDown += () => direction.y = -1;
+                InputManager.Instance.KeyLeft += () => direction.x = -1;
+                InputManager.Instance.KeyRight += () => direction.x = +1;
+                InputManager.Instance.KeyConfirm += () => sprinting = !sprinting;
+            }
+            else
+            {
+                Debug.LogWarning("No InputManager found");
+            }
         }
 
         void FixedUpdate()
@@ -43,21 +50,23 @@ namespace Overtail.PlayerModule
 
             if (!(inMenu || inDialogue || inCombat) && (direction.x != 0 || direction.y != 0))
             {
-                var oldPos = _rb.position;
-                var delta = direction.normalized * baseSpeed * Time.fixedDeltaTime * externalMultiplier;
-                delta *= sprinting ? sprintMultiplier : 1;
-                Vector2 newPos = oldPos + delta;
-                IsMoving = newPos != oldPos;
-                _rb.MovePosition(newPos);
-                direction = new Vector2();
+                Move();
+                IsMoving = true;
+                direction = Vector2.zero;
             }
             else
             {
                 IsMoving = false;
             }
+        }
 
-            direction = Vector2.zero;
-            
+        public void Move()
+        {
+            var oldPos = _rb.position;
+            var delta = direction.normalized * baseSpeed * Time.fixedDeltaTime * externalMultiplier;
+            delta *= sprinting ? sprintMultiplier : 1;
+            Vector2 newPos = oldPos + delta;
+            _rb.MovePosition(newPos);
         }
     }
 }
