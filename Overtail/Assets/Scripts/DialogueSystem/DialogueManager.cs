@@ -43,7 +43,11 @@ namespace Overtail.Dialogue
 
         public void StartDialogue(DialogueObject dialogueObject, NPC npc = null)
         {
-            if (npc != null) _currentNPC = npc;
+            if (npc != null)
+            {
+                _currentNPC = npc;
+                nameText.text = npc.Name;
+            }
          
             IsOpen = true;
             dialogueBox.SetActive(true);

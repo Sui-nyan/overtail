@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
+      propertyPath: _name
+      value: Leia GroundRunner
+      objectReference: {fileID: 0}
+    - target: {fileID: -6574147069633613897, guid: f19298a96213e4949a5d187a84dfb070, type: 3}
       propertyPath: portrait._angry
       value: 
       objectReference: {fileID: 21300000, guid: a968c339bace211449c99e87d0e343e7, type: 3}
