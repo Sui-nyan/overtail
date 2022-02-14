@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Overtail.Dialogue
 {
+    /// <summary>
+    /// Class handling reply options in conversations/dialgues.
+    /// </summary>
     public class ResponseHandler : MonoBehaviour
     {
         [SerializeField] private RectTransform responseBox;
@@ -21,13 +24,19 @@ namespace Overtail.Dialogue
             dialogueManager = GetComponent<DialogueManager>();
         }
 
+        /// <summary>
+        /// Sets currently possible responses
+        /// </summary>
+        /// <param name="responseEvents"></param>
         public void AddResponseEvents(ResponseEvent[] responseEvents)
         {
             this.responseEvents = responseEvents;
         }
-        /*
-         * shows responses and makes all the options clickable, the height will be adjusted by the amount of options that are possible
-         */
+
+        /// <summary>
+        /// shows responses and makes all the options clickable, the height will be adjusted by the amount of options that are possible
+        /// </summary>
+        /// <param name="responses"></param>
         public void showResponses(Response[] responses)
         {
             float responseBoxHeight = 0;
@@ -51,9 +60,11 @@ namespace Overtail.Dialogue
 
         }
 
-        /*
-         * Clears out all the options as soon as one is picked
-         */
+        /// <summary>
+        /// Clears out all the options as soon as one is picked
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="responseIndex"></param>
         private void OnPickedResponse(Response response, int responseIndex)
         {
             responseBox.gameObject.SetActive(false);

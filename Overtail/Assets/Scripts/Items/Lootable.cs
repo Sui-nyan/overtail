@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Overtail.Items
 {
+    /// <summary>
+    /// Lootable items on the ground.
+    /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public class Lootable : MonoBehaviour, IInteractable
     {
@@ -33,6 +36,13 @@ namespace Overtail.Items
         }
 
         
+        /// <summary>
+        /// Instantiates a ground loot at a specified position
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="quantity"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static Lootable Instantiate(Item item, int quantity, Vector3 pos)
         {
             var go = new GameObject();
@@ -55,6 +65,7 @@ namespace Overtail.Items
             return loot;
         }
 
+
         public void Interact(Interactor interactor)
         {
             if (!FindObjectOfType<Player>().IsFreeRoaming) return;
@@ -62,11 +73,6 @@ namespace Overtail.Items
             {
                 Destroy(this.gameObject);
             }
-        }
-
-        public void SELFDESTROY()
-        {
-            Destroy(this.gameObject);
         }
     }
 }

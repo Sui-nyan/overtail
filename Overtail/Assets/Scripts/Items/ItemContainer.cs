@@ -6,6 +6,10 @@ using UnityEngine;
 
 namespace Overtail.Items
 {
+    /// <summary>
+    /// Custom Collection class. A collection of <see cref="ItemStack"/>. Handles "topping up" item slots when picking up items.
+    /// And sorting.
+    /// </summary>
     [System.Serializable]
     public class ItemContainer
     {

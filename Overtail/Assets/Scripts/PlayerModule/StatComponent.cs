@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Overtail.PlayerModule
 {
+    /// <summary>
+    /// Player's stats and growth encapsulated into own component
+    /// </summary>
     public class StatComponent : MonoBehaviour
     {
         [Header("Base Stats")]
@@ -42,16 +45,33 @@ namespace Overtail.PlayerModule
             Defense = ScaledDefense(Level);
         }
 
+        /// <summary>
+        /// Returns how much exp is needed for next level up
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
         public static int ExpLevelUp(int level)
         {
             return Mathf.CeilToInt((float)(0.8f * Math.Pow(level, 3)));
         }
 
+        /// <summary>
+        /// Scales base health to level.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="baseMaxHp"></param>
+        /// <returns></returns>
         public static int ScaledMaxHP(int level, int baseMaxHp)
         {
             return Mathf.CeilToInt((baseMaxHp * 2f) * (level / 100f) + level + 10);
         }
 
+        /// <summary>
+        /// Scales base stat to level.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="baseValue"></param>
+        /// <returns></returns>
         public static int ScaledOtherStat(int level, int baseValue)
         {
             return Mathf.CeilToInt((baseValue * 2f) * (level / 100f) + 5);

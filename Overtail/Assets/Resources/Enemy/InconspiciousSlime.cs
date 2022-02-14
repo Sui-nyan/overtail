@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Overtail.Battle.Entity
 {
+    /// <summary>
+    /// Implementation of special slime combabt behaviour
+    /// </summary>
     public class InconspiciousSlime : EnemyEntity
     {
         // Private fields
@@ -85,6 +88,11 @@ namespace Overtail.Battle.Entity
 
 
         // Private Methods
+        /// <summary>
+        /// Grow larger and enhance stats.
+        /// </summary>
+        /// <param name="system"></param>
+        /// <returns></returns>
         private IEnumerator GoSuperSaiyan(BattleSystem system)
         {
             _enraged = true;
@@ -107,6 +115,11 @@ namespace Overtail.Battle.Entity
 
             yield return system.GUI.StartDialogue("THAT'S IT, YOU LITTLE SH*T");
         }
+
+        /// <summary>
+        /// Animation Coroutine
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator FlipAround()
         {
             var sprRend = GetComponentInChildren<SpriteRenderer>();

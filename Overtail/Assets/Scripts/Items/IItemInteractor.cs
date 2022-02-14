@@ -3,6 +3,9 @@
 namespace Overtail.Items
 {
     // player wears weapon/armor
+    /// <summary>
+    /// Interface to use certain ItemComponents
+    /// </summary>
     public interface IItemInteractor
     {
         Item MainHand { get; set; }

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Overtail.PlayerModule
 {
+    /// <summary>
+    /// Interactor component to interact with <see cref="IInteractable"/>
+    /// </summary>
     public class Interactor : MonoBehaviour
     {
         private IInteractable nearbyInteractable;
@@ -44,20 +47,21 @@ namespace Overtail.PlayerModule
             }
         }
 
+        /// <summary>
+        /// Act on nearby interactable
+        /// </summary>
         public void Act()
         {
             nearbyInteractable?.Interact(this);
         }
 
+        /// <summary>
+        /// Returns whether there is an interactable in range
+        /// </summary>
+        /// <returns></returns>
         public bool CanAct()
         {
             return nearbyInteractable != null;
-        }
-
-
-        public IInteractable test()
-        {
-            return nearbyInteractable;
         }
     }
 }

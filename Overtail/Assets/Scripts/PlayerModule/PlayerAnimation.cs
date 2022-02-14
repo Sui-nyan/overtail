@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace Overtail.PlayerModule
 {
+
+    /// <summary>
+    /// Handles player animations and visuals.
+    /// e.g. swimming animation, running and considers direction
+    /// </summary>
     public class PlayerAnimation : MonoBehaviour
     {
         private PlayerMovement _movement;

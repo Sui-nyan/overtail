@@ -41,6 +41,11 @@ namespace Overtail.Dialogue
             CloseDialogue();
         }
 
+        /// <summary>
+        /// Starts a given dialogue with a given npc
+        /// </summary>
+        /// <param name="dialogueObject"></param>
+        /// <param name="npc"></param>
         public void StartDialogue(DialogueObject dialogueObject, NPC npc = null)
         {
             if (npc != null)
@@ -54,6 +59,10 @@ namespace Overtail.Dialogue
             StartCoroutine(StepThroughDialogue(dialogueObject));
         }
 
+        /// <summary>
+        /// Adds responses to the current dialogue (Reply options)
+        /// </summary>
+        /// <param name="responseEvents"></param>
         public void AddResponseEvents(ResponseEvent[] responseEvents)
         {
             responseHandler.AddResponseEvents(responseEvents);
@@ -111,6 +120,9 @@ namespace Overtail.Dialogue
             };
         }
 
+        /// <summary>
+        /// Closes the current dialogue. Clears elements and hides it.
+        /// </summary>
         public void CloseDialogue()
         {
             dialogueBox.SetActive(false);

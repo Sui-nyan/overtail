@@ -4,7 +4,9 @@ using Overtail.PlayerModule;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-// TODO namespace
+/// <summary>
+/// Assigns a render order to each element in the scene in respect to the player. 
+/// </summary>
 public class PositionalRenderSorter : MonoBehaviour
 {
     [SerializeField]

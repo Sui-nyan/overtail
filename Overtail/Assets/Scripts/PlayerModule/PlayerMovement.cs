@@ -5,6 +5,9 @@ using Overtail.Dialogue;
 
 namespace Overtail.PlayerModule
 {
+    /// <summary>
+    ///  Responsible for player movement
+    /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [DisallowMultipleComponent]
     public class PlayerMovement : MonoBehaviour

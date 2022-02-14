@@ -8,6 +8,9 @@ using UnityEngine.EventSystems;
 
 namespace Overtail.GUI
 {
+    /// <summary>
+    /// Singleton Manager which handles GUI in the overworld.
+    /// </summary>
     public class MenuManager : MonoBehaviour
     {
         private static MenuManager _instance;
@@ -49,6 +52,9 @@ namespace Overtail.GUI
             //_tabGroup.EnterUI();
         }
 
+        /// <summary>
+        /// Subroutine to try and self assign needed components. Call this when scene changes
+        /// </summary>
         private void TryAssign()
         {
             _panelGroup = null;
@@ -78,6 +84,13 @@ namespace Overtail.GUI
             }
         }
 
+        /// <summary>
+        /// Tries to get first child object of type T in parent GameObject
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="parent"></param>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         private bool TryGetFirst<T>(GameObject parent, ref T obj) where T : MonoBehaviour
         {
             if (parent == null) return false;//throw new ArgumentNullException(nameof(parent));
@@ -127,6 +140,9 @@ namespace Overtail.GUI
             }
         }
 
+        /// <summary>
+        /// Call when menu hotkey is pressed. Toggles/Opens/Closes Menu
+        /// </summary>
         private void OnMenuKey()
         {
             if (_mainMenu.activeSelf)
@@ -150,6 +166,10 @@ namespace Overtail.GUI
             }
         }
 
+        /// <summary>
+        /// Called when a specific menu key for a submenu is pressed
+        /// </summary>
+        /// <param name="tabName"></param>
         private void OnSpecialMenuKey(string tabName)
         {
             var index = _tabGroup.GetTabIndex(tabName);
@@ -185,6 +205,9 @@ namespace Overtail.GUI
             }
         }
 
+        /// <summary>
+        /// Setup for when a menu is opened
+        /// </summary>
         public void OpenMenu()
         {
             _mainMenu.SetActive(true);
@@ -192,6 +215,9 @@ namespace Overtail.GUI
             //EventSystem.current.SetSelectedGameObject(_lastSelection);
         }
 
+        /// <summary>
+        /// Cleanup. Closes a Menu.
+        /// </summary>
         public void CloseMenu()
         {
             _mainMenu.SetActive(false);

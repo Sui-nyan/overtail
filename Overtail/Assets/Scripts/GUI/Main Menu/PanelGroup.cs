@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Overtail.GUI
 {
+    /// <summary>
+    /// Group of menu panels. Handles switching between panels and navigation
+    /// </summary>
     [DisallowMultipleComponent]
     public class PanelGroup : MonoBehaviour
     {

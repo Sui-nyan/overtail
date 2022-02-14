@@ -4,7 +4,8 @@ using UnityEngine.UI;
 namespace Overtail.GUI
 {
     /// <summary>
-    /// IT'S BROKEN, DONT TOUCH
+    /// Custom Unity LayoutGroup Component. More flexible grid layout
+    /// IT'S BROKEN
     /// </summary>
     public class FlexLayout : LayoutGroup
     {

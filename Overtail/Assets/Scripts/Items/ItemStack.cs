@@ -1,6 +1,8 @@
 ﻿namespace Overtail.Items
 {
-    // Unit of item. "One slot" in inventory
+    /// <summary>
+    /// Unit of item. "One slot" in inventory
+    /// </summary>
     [System.Serializable]
     public class ItemStack
     {

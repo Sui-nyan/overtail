@@ -3,6 +3,10 @@ using System.Collections;
 using Overtail.Battle.Entity;
 using UnityEngine;
 
+
+/// <summary>
+/// Implementation of a generic enemy. No special behaviours. Simply attacks player on turn.
+/// </summary>
 namespace Overtail.Battle.Entity
 {
     /// <inheritdoc />

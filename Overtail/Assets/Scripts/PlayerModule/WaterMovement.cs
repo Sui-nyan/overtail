@@ -4,6 +4,9 @@ using UnityEngine.Tilemaps;
 
 namespace Overtail.PlayerModule
 {
+    /// <summary>
+    /// Handles player movement behaviour when entering water bodies.
+    /// </summary>
     public class WaterMovement : MonoBehaviour
     {
         public Tilemap tilemap;

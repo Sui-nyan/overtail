@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Overtail
 {
-    // Currently only overworld
+    /// <summary>
+    /// Handles Unity Keycodes and passes those events to other classes. (By subscription and event invocation)
+    /// Custom Keybindings can be changed here.
+    /// </summary>
     public class InputManager : MonoBehaviour
     {
         private static InputManager _instance;

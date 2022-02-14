@@ -2,6 +2,9 @@ using System;
 using Overtail.PlayerModule;
 using UnityEngine;
 
+/// <summary>
+/// Teleports Player to prespecified position on entering collision box. 
+/// </summary>
 [DisallowMultipleComponent]
 public class Teleporter : MonoBehaviour
 {

@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace Overtail.GUI
 {
+
+    /// <summary>
+    /// Submenus are divided into Panels.
+    /// </summary>
     [DisallowMultipleComponent]
     public class Panel : MonoBehaviour
     {

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace Overtail.GUI
 {
+    /// <summary>
+    /// Group of tabs. Handles navigation between tabs and interaction.
+    /// </summary>
     [DisallowMultipleComponent]
     public class TabGroup : MonoBehaviour
     {

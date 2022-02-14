@@ -96,6 +96,9 @@ namespace Overtail.Items
             return inv;
         }
 
+        /// <summary>
+        /// Saves inventory content to database
+        /// </summary>
         public void SaveInvToAPI()
         {
             // JSON encode inventory data
@@ -114,25 +117,45 @@ namespace Overtail.Items
             Task.Run(() => API.POST("inv/save", new Dictionary<string, string> { { "invData", data } })); // Save to API
         }
 
+        /// <summary>
+        /// Returns the list of items in inventory
+        /// </summary>
+        /// <returns></returns>
         public List<ItemStack> GetItems()
         {
             return _inventory.ItemList;
         }
 
+        /// <summary>
+        /// Tells whether an item is usable
+        /// </summary>
+        /// <param name="itemStack"></param>
+        /// <returns></returns>
         internal bool IsUseable(ItemStack itemStack)
         {
             return _potionSystem.IsCompatible(itemStack);
         }
 
+        /// <summary>
+        /// Returns whether item is equippable
+        /// </summary>
+        /// <param name="itemStack"></param>
+        /// <returns></returns>
         internal bool IsEquippable(ItemStack itemStack)
         {
             return _equipSystem.IsCompatible(itemStack);
         }
 
+        /// <summary>
+        /// returns whether item can be trashed
+        /// </summary>
+        /// <param name="itemStack"></param>
+        /// <returns></returns>
         public bool IsTrashable(ItemStack itemStack)
         {
             return _trashSystem.IsCompatible(itemStack);
         }
+
 
         internal void UseItem(ItemStack itemStack)
         {
@@ -140,12 +163,20 @@ namespace Overtail.Items
             PruneEmpty(itemStack);
         }
 
+        /// <summary>
+        /// Uses item. Contains logic about how data from potion component should be handled
+        /// </summary>
+        /// <param name="itemStack"></param>
         internal void UseItem(ItemStack itemStack, IItemInteractor player)
         {
             _potionSystem.UseItem(itemStack, player);
             PruneEmpty(itemStack);
         }
 
+        /// <summary>
+        /// Equips item. Contains logic about how data from equip component should be handled
+        /// </summary>
+        /// <param name="itemStack"></param>
         internal void EquipItem(ItemStack itemStack)
         {
             // 0) Equippable? (Yes, unless UI fcks up)
@@ -167,12 +198,21 @@ namespace Overtail.Items
             PruneEmpty(itemStack);
         }
 
+        /// <summary>
+        /// Trashes item. Contains logic about how data from trash component should be handled
+        /// </summary>
+        /// <param name="itemStack"></param>
         internal void TrashItem(ItemStack itemStack, int quantity = 1)
         {
             _trashSystem.TrashItem(itemStack, quantity); // Reduce from stack
             PruneEmpty(itemStack);
         }
 
+        /// <summary>
+        /// Tries to pick up an item. Returns false if not available (e.g. inventory is full)
+        /// </summary>
+        /// <param name="itemStack"></param>
+        /// <returns></returns>
         public bool PickUp(ItemStack itemStack)
         {
             if (!_inventory.IsFull())
