@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 
 namespace Overtail.PlayerModule
 {
+    /// <summary>
+    /// Core Player class, accessed from many other classes.
+    /// </summary>
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(StatComponent))]
     [DisallowMultipleComponent]
